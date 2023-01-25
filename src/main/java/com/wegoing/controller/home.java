@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.wegoing.dto.MemberDTO;
 import com.wegoing.service.MemberService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class home {
-	@Autowired
-	MemberService service;
+	
+	private final MemberService service;
 	
 	@GetMapping("/home")
 	public String hello(Model model) {
