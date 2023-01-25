@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/register.css" />
+</head>
+<body>
+	<div class="title">
+		<h2>
+			회원가입
+		</h2>
+	</div>
+	<div class="register-form">
+		 <form action="registerOk.jsp" method="get" name = "frm" >
+			<table id="register-table">
+				<tr>
+					<th class="th-title">이메일</th>
+					<td>
+						<input type="text" name="email1" id="email1"  class="text" size="11" />@
+						<input type="text" name="email2" id="email2"  class="text" size="11" />
+						<select name="emailList" id="emailList">
+							<option value="">직접입력</option>
+							<option value="naver.com">naver.com</option>
+							<option value="daum.net">daum.net</option>
+							<option value="google.com">google.com</option>
+						</select>
+					</td>
+					<!-- <td>
+					 <%
+					Object obj = session.getAttribute("idtest");
+					int con = 0;
+					
+					String isOk = "";
+				
+					if(obj != null) {
+						
+						String id = (String)obj;
+						if(id=="") {
+							isOk = "사용이 불가능한 아이디 입니다.";
+							con = 0;
+						}else {
+							isOk = "사용이 가능한 아이디 입니다.";
+							con = 1;
+						}
+					%>
+					<input type="text" name="id" class="text" id="id" size="20" value="<%=id %>" />
+					<%
+						}else {
+													
+					%>
+					<input type="text" name="id" class="text" id="id" size="20" value="" placeholder="아이디를 입력하세요." />
+					<%
+						}
+						session.invalidate(); 
+					%>	 
+					
+					<p><span><%= isOk %></span></p> 
+					</td> -->
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td>
+						<input type="text" name="name" id="name"  class="text" size="7" /> 
+					</td>
+				<tr>
+				<tr>
+					<th>닉네임</th>
+					<td>
+						<input type="text" name="nickname" id="nickname"  class="text" size="7" /> 
+					</td>
+				<tr>
+				<tr>
+					<th>비밀번호</th>
+					<td>
+						<input type="password" name="pw" id="pw"  class="text" size="20" /> 
+					</td>
+				<tr>
+					<th>비밀번호 재확인</th>
+					<td>
+						<input type="password" name="repw" id="repw"  class="text" size="20" />
+						<p><span id="nopw"></span></p>
+					</td>
+				</tr>
+				<tr>
+					<th>휴대전화</th>
+					<td>
+						<input type="text" name="mp" id=""  class="text" placeholder="010-xxxx-xxxx" size="15" />
+					</td>			
+				</tr>
+				
+				<tr>
+					<td colspan="2" class="btn-box">
+						<input type="submit" value="가입하기" class="btn btn-outline-success" />
+						<a href="../mainPage/main.jsp">
+						<input type="button" value="돌아가기" class="btn btn-outline-success" />
+						</a>
+					</td>
+				</tr>
+			</table>
+		</form> 
+	</div>
+
+</body>
+</html>
