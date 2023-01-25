@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
   
  <mapper namespace="com.wegoing.dao.Dao">
   	<select id="select" resultType="MemberDTO">
@@ -9,3 +10,8 @@
   	</select>
   	
   </mapper>
+=======
+ <mapper namespace=" ">
+ 	
+ </mapper>
+>>>>>>> branch 'master' of https://github.com/jemok96/finalProject.git
