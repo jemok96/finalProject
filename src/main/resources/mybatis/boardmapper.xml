@@ -12,11 +12,26 @@
   	</select>
   	
   	<!-- 나중에 page처리할 떄 변경해서 사용 -->
-  	<select id="selectboard" resultType="BOardDTO" parameterType="int">
+  	<select id="selectboard" resultType="BoardDTO" parameterType="int">
   		select * from 
   		board
   		where cateno = #{no}
   		limit 8
   	</select>
   	
+  	<insert id="insert"  parameterType="BoardDTO" >
+  		INSERT INTO board
+  		(email,cateno,btitle,bcontent,nickname)
+  		VALUES
+  		(#{email}, #{cateno}, #{btitle}, #{bcontent}, #{nickname})
+  	</insert>
+  	
+  	<delete id="deleteCategoryNum" parameterType="int">
+  		delete from board
+  		where cateno = #{cateno}
+  	</delete>
+  	
+  	<delete id="deleteAll">
+  		delete from board
+  	</delete>
   </mapper>
