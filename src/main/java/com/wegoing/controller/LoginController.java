@@ -21,7 +21,8 @@ public class LoginController {
 	@PostMapping("/register")
 	public String registerOk() {
 		log.info("<<<<<<<<<<<<<<<<<<< postmapping");
+		// mapper 통해서 DB에 insert하기
 		
-		return null;
+		return "redirect:/wegoing/main";
 	}
 }
