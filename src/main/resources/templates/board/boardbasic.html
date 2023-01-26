@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+<script
+      src="https://kit.fontawesome.com/8cc4eb714e.js"
+      crossorigin="anonymous"
+    ></script>
+	<style>
+	
+</style>
+
+	<div class="container-fluid">
+		<div class="d-sm-flex align-items-center justify-content-between mb-5">
+			<h2 class="h4 mb-0 text-gray-800">WEGOING에 오신것을 환영합니다!</h2>
+			<!-- Topbar Search -->
+			<form
+				class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+				<div class="input-group">
+					<input type="text" class="form-control bg-white border-0 small"
+						placeholder="협업공간 이름 검색" aria-label="Search"
+						aria-describedby="basic-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-primary" type="button">
+							<i class="fas fa-search fa-sm"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+	
+
+</th:block>
+</html>
