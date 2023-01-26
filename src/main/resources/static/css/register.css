@@ -6,6 +6,10 @@
 	/* font-family:  */
 }
 
+#emailCk{
+	font-size: small;
+}
+
 .title {
 	margin: 80px auto;
 	text-align: center;
@@ -17,7 +21,7 @@
 
 table {
 	width: 780px;
-	height: 1000px;
+	height: 800px;
 	margin : 10px auto;
 	display: table-cell;
 	text-align: center;
@@ -26,7 +30,7 @@ table {
 
 .register-form {
 	width: 800px;
-	height: 1200px;
+	height: 900px;
 	margin: 50px auto;
 	padding: 20px;
 	border: solid 1px grey;
