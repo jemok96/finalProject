@@ -12,6 +12,9 @@ import com.wegoing.dto.MemberDTO;
 @Repository
 @Mapper
 public interface BoardDao {
-	List<BoardDTO> selectCategory(int no);
-	List<BoardDTO> selectboard(int no);
+	 List<BoardDTO> selectCategory(int no);
+	 List<BoardDTO> selectboard(int no);
+	 int insert(BoardDTO dto);
+	 int deleteCategoryNum(int cateno);
+	 int deleteAll();
 }

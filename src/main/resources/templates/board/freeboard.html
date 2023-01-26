@@ -4,64 +4,105 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-<script
-      src="https://kit.fontawesome.com/8cc4eb714e.js"
-      crossorigin="anonymous"
-    ></script>
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous">
+	</script>
 	<style>
-	.grid {
-        display: grid;
-        gap: 10px;
+.section {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 200px);
+	grid-auto-flow: row;
+	grid-auto-rows: 200px;
+	width: 95%;
+	margin-left: 50px;
+}
 
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 200px);
-        grid-auto-flow: row;
-        grid-auto-rows: 200px;
+.item {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
 
-       
-      }
-      .item{
-      	border: 1px solid rgba(0,0,0,0.2);
-      }
-      .list{
-      display: flex;
-      justify-content: flex-end;
-      }
-      
-</style>
-
-	<div class="container-fluid">
-		<div class="d-sm-flex align-items-center justify-content-between mb-5">
-			<h2 class="h4 mb-0 text-gray-800">WEGOING에 오신것을 환영합니다!</h2>
-			<!-- Topbar Search -->
-			<form
-				class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-				<div class="input-group">
-					<input type="text" class="form-control bg-white border-0 small"
-						placeholder="협업공간 이름 검색" aria-label="Search"
-						aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-primary" type="button">
-							<i class="fas fa-search fa-sm"></i>
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
-		
-	</div>
-	<div class="list">
-		<div>검색</div>
-	</div>
-	<div class="grid">
-      <div class="item" th:each="free:${free}">
-      	<a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}"><div th:text="${free.btitle}"></div></a>
-      	<div th:text="${free.bcontent}"> 내용</div>
-      </div>
-      
-      
-    </div>
+.list {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 10px;
+	margin-right: 15px;
+}
+.list__column{
+	display: flex;
+	justify-content: space-around;
+	align-items:center;
 	
+}
+.list__column div{
+	margin-right: 10px;
+}
+form{
+	display: flex;
+	align-items: center;
+}
+.item {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.item__column{
+margin-left: 20px;}
+.item__column:nth-child(4) {
+	display: flex;
+	
+}
+.item__hits{
+display: flex;
+width: 50%;
+}
+.item__regdt{
+	display: flex;
+	width: 50%;
+	justify-content: flex-end;
+	margin-right: 10px;
+}
+</style>
+<script th:inline="javascript">
+	
+</script>
+	<h2 th:if="${param.msg}" th:text="세션없음">ㄹㅇ</h2>
+	<div class="list">
+		<div class="list__column">
+			<div>블라블라</div> 
+			<div>취미</div>
+			<div>반려동물</div>
+			<div>이직 커리어</div>
+			<form action="">
+				<div class="list__search">
+				<input type="text" />
+			</div>
+			<div><input type="button" value="검색"/></div>
+			</form>
+			<div><a th:href="@{/wegoing/board/add}"><input type="button" value="글쓰기"/></a></div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="item" th:each="free:${free}">
+			<div class="item__column"><a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}" th:text="${free.btitle}">
+				</a>
+			</div>
+			<div class="item__column" th:text="${free.bcontent}">내용</div>
+			<div class="item__column" th:text="${free.nickname}">일단email</div>
+			<div class="item__column">
+				<div class="item__hits">
+					<span th:text="${free.bhits}">조회수</span>
+					<span>댓글수</span>
+				</div>
+				<div class="item__regdt" th:text="${free.reg_dt}">등록날짜
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
 
 </th:block>
 </html>

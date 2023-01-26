@@ -3,14 +3,18 @@ package com.wegoing.controller;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.service.BoardService;
@@ -25,7 +29,12 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	private final BoardService service;
 	
-	
+	/**
+	 * 
+	 * 	SELECT
+        DATE_FORMAT(reg_dt, '%m월%d일%h시%m분') AS reg_dt
+		FROM board;
+	 */
 	
 	@GetMapping("/board")
 	public String boardMain(Model model, HttpSession session) {
@@ -44,8 +53,25 @@ public class BoardController {
 		model.addAttribute("career",career);
 		return "board/boardmain";
 	}
+	@GetMapping("/board/add")
+	public String addboard(HttpServletRequest request,RedirectAttributes rattr) {
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			rattr.addAttribute("msg","로그인해주세요");
+			return "redirect:/wegoing/freeboard";
+		}
+		return "board/addboard";
+	}
+	@PostMapping("/board/add")
+	public String insertBoard(@ModelAttribute("board")BoardDTO board) {
+		
+		log.info("board = {}",board);
+		service.insert(board);
+		return "board/addboard";
+	}
 
-	// 이거 존나 중복되는데 
+
+	// 중복많..??
 	@GetMapping("/freeboard")
 	public String freeboardBno(Model model) {
 		List<BoardDTO> free = service.selectboard(2);
@@ -93,8 +119,6 @@ public class BoardController {
 		log.info("bno={}",bno);
 		return "board/freeboard";
 	}
-	
-	
 	
 	
 	

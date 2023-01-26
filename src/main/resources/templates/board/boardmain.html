@@ -31,6 +31,7 @@
 	height: 80vh;
 	width: 80%;
 	gap: 40px;
+	margin-left:70px;
 	grid-template: "section1 section1 section2 section2" 1fr
 		"section1 section1 section2 section2" 1fr
 		"section3 section3 section4 section4" 1fr
@@ -81,24 +82,8 @@ a {
 </style>
 	<span th:text="${#session}">hi</span>
 	<span th:text="${session.nickName}">hi</span>
-	<div class="container-fluid">
-		<div class="d-sm-flex align-items-center justify-content-between mb-5">
-			<h2 class="h4 mb-0 text-gray-800">WEGOING에 오신것을 환영합니다!</h2>
-			<!-- Topbar Search -->
-			<form
-				class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-				<div class="input-group">
-					<input type="text" class="form-control bg-white border-0 small"
-						placeholder="협업공간 이름 검색" aria-label="Search"
-						aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-primary" type="button">
-							<i class="fas fa-search fa-sm"></i>
-						</button>
-					</div>
-				</div>
-			</form>
-		</div>
+	
+		
 		<div class="main-contents">
 			<div class="section1">
 				<div class="section__column">
@@ -182,8 +167,7 @@ a {
 				</div>
 			</div>
 		</div>
-	</div>
-
+	
 
 </th:block>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous">
+	</script>
+	<style>
+
+</style>
+<div class="main__content">
+	<form th:action method="POST">
+		email<input type="text"  name="email"/>
+		cateno<input type="text" name="cateno"/>
+		btitle<input type="text" name="bcontent"/>
+		bcontent<input type="text" name="btitle"/>
+		nickname<input type="text" name="nickname"/>
+		<input type="submit"  value="저장"/>
+	</form>
+</div>
+	
+
+
+</th:block>
+</html>
