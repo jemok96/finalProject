@@ -128,8 +128,9 @@
 			if(email != ""){
 				/* console.log("클릭"); */
 				$.ajax({
-					type : 'get',
-					url : '/member/checkNum?email=' +email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+					type : 'post',
+					url : '/account/mailConfirm',
+					data : { "email" : email },
 					success : function (data) {
 						console.log("data : " +  data);
 						checkInput.attr('disabled',false);
