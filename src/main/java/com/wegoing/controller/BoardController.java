@@ -9,11 +9,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.BoardDTO;
@@ -57,7 +60,11 @@ public class BoardController {
 		return "board/addboard";
 	}
 	@PostMapping("/board/add")
-	public String insertBoard(@ModelAttribute("board")BoardDTO board, HttpServletRequest request) {
+	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult, HttpServletRequest request) {
+		if(bindingResult.hasErrors()) {
+			log.info("erros={}",bindingResult);
+			return "board/addboard";
+		}
 		
 		HttpSession session = request.getSession(false);
 		
@@ -69,19 +76,42 @@ public class BoardController {
 	}
 
 	@GetMapping("/freeboard")
-	public String freeboardBno(Model model) {
+	public String freeboard(Model model) {
 		List<BoardDTO> free = service.selectboard(2);
 		model.addAttribute("free",free);
 		return "board/freeboard";
 	}
 	@GetMapping("/freeboard/{bno}")
-	public String freeboardBno(@PathVariable int bno,Model model) {
+	public String freeboardDetail(@PathVariable int bno,Model model) {
 		
 		model.addAttribute("free",service.selectOne(bno));
 		
 		log.info("dto={}",service.selectOne(bno));
 		return "board/freeboardDetail";
 	}
+	@GetMapping("/freeboard/{bno}/edit")
+	public String freeboardEdit(@PathVariable int bno,Model model) {
+		
+		model.addAttribute("free",service.selectOne(bno));
+		
+		log.info("dto={}",service.selectOne(bno));
+		return "board/freeboardEdit";
+	}
+	@PostMapping("/freeboard/{bno}/edit")
+	public String freeboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+		BoardDTO free = service.selectOne(bno);
+		model.addAttribute("free",free);
+		
+		free.setBtitle(btitle);
+		free.setBcontent(content);
+		log.info("free={}",free);
+		service.update(free);
+		
+		
+		return "redirect:/wegoing/freeboard";
+	}
+	
+	
 	
 	
 	

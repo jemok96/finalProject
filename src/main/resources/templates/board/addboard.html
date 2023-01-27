@@ -17,9 +17,15 @@
       .form__column {
         display: flex;
         flex-direction: row-reverse;
+        
       }
+      .field-error{
+            font-size: 20px;
+            border-color: #dc3545;
+            color: #dc3545;
+        }
 </style>
-<div class="main__content">
+<div class="main__content" th:obect="${board}">
       <form th:action method="POST">
         <div class="form__column">
           <select class="form__select" name="cateno">
@@ -28,7 +34,8 @@
             <option value=3>반려동물</option>
             <option value=4>이직 커리어</option>
           </select>
-          <div class="form__title">제목<input type="text" name="btitle" /></div>
+          <div class="form__title">
+          <input type="text" name="btitle" /></div>
         </div>
 
         <div><textarea name="bcontent" cols="80" rows="30"></textarea></div>

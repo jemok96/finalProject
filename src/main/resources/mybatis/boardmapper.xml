@@ -47,6 +47,6 @@
   	<update id="update" parameterType="BoardDTO">
   		update board
   		set btitle= #{btitle}, bcontent= #{bcontent}, up_dt=#{up_dt}
-  		where nickname = #{nickname}
+  		where bno = #{bno}
   	</update>
   </mapper>
