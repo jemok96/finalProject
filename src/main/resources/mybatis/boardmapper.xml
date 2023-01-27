@@ -18,7 +18,11 @@
   		where cateno = #{no}
   		limit 8
   	</select>
-  	
+  	<select  id="selectOne" resultType="BoardDTO" parameterType="int">
+  		select * from 
+  		board
+  		where bno = #{no}
+  	</select>
   	<insert id="insert"  parameterType="BoardDTO" >
   		INSERT INTO board
   		(email,cateno,btitle,bcontent,nickname)
@@ -39,4 +43,8 @@
   		select count(*) from board
   		where cateno = #{cateno}
   	</select>
+  	
+  	<update id="update">
+  	
+  	</update>
   </mapper>

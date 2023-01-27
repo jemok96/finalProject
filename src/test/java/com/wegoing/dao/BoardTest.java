@@ -1,19 +1,20 @@
 package com.wegoing.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.wegoing.dao.BoardDao;
 import com.wegoing.dto.BoardDTO;
-import com.wegoing.dto.MemberDTO;
 import com.wegoing.service.BoardService;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 @SpringBootTest
+@Slf4j
 class BoardTest {
 	
 	@Autowired
@@ -21,11 +22,11 @@ class BoardTest {
 
 	// Test시 메서드 이름에 올려놓고 ctrl + F11해야 그것만 실행됨
 	
-	@BeforeEach
-	void deleteAll() {
-		boardService.deleteAll();
-	}
-	
+//	@BeforeEach
+//	void deleteAll() {
+//		boardService.deleteAll();
+//	}
+//	
 	@Test
 	void insertTest() {
 		BoardDTO dto =
@@ -44,7 +45,6 @@ class BoardTest {
 		assertTrue(boardService.countBoard(4) == 100);
 		assertTrue(boardService.deleteAll() == 100);
 	}
-	
 	@Test
 	void deleteCategory() {
 		BoardDTO dto =

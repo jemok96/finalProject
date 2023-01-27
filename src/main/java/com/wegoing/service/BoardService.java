@@ -23,6 +23,9 @@ public class BoardService {
 	public List<BoardDTO> selectboard(int no){
 		return dao.selectboard(no);
 	}
+	public BoardDTO selectOne(int no){
+		return dao.selectOne(no);
+	}
 	public int insert(BoardDTO dto) {
 		return dao.insert(dto);
 	}

@@ -68,8 +68,6 @@ public class BoardController {
 		return "redirect:/wegoing/board";
 	}
 
-
-
 	@GetMapping("/freeboard")
 	public String freeboardBno(Model model) {
 		List<BoardDTO> free = service.selectboard(2);
@@ -78,9 +76,25 @@ public class BoardController {
 	}
 	@GetMapping("/freeboard/{bno}")
 	public String freeboardBno(@PathVariable int bno,Model model) {
-		log.info("bno={}",bno);
-		return "board/freeboard";
+		
+		model.addAttribute("free",service.selectOne(bno));
+		
+		log.info("dto={}",service.selectOne(bno));
+		return "board/freeboardDetail";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/petboard")
 	public String petboard(Model model) {

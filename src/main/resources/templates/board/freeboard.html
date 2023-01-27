@@ -63,6 +63,10 @@ width: 50%;
 	justify-content: flex-end;
 	margin-right: 10px;
 }
+a{
+	text-decoration: none;
+        color: inherit;
+}
 </style>
 <script th:inline="javascript">
 	
@@ -88,8 +92,8 @@ width: 50%;
 			<div class="item__column"><a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}" th:text="${free.btitle}">
 				</a>
 			</div>
-			<div class="item__column" th:text="${free.bcontent}">내용</div>
-			<div class="item__column" th:text="${free.nickname}">일단email</div>
+			<div class="item__column"><a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}" th:text="${free.bcontent}"></a></div>
+			<div class="item__column"><a th:href="@{/wegoing/freeboard/ {bno} (bno=${free.bno}) }" th:text="${free.bcontent}"></a></div>
 			<div class="item__column">
 				<div class="item__hits">
 					<span th:text="${free.bhits}">조회수</span>

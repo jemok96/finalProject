@@ -14,6 +14,7 @@ import com.wegoing.dto.MemberDTO;
 public interface BoardDao {
 	 List<BoardDTO> selectCategory(int no);
 	 List<BoardDTO> selectboard(int no);
+	 BoardDTO selectOne(int no);
 	 int insert(BoardDTO dto);
 	 int deleteCategory(int cateno);
 	 int deleteAll();
