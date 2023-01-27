@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/wegoing")
 public class HomeController {
 	@GetMapping("/main")
 	public String main() {
