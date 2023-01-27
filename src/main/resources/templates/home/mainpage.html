@@ -2,13 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/default}">
+
 <th:block layout:fragment="content">
-	<!-- Begin Page Content -->	
+	<!-- Begin Page Content -->
 	<!-- 나중에 반복문 쓸 것도 있음 -->
 	<div class="container-fluid">
 		<div class="d-sm-flex align-items-center justify-content-between mb-5">
 			<h2 class="h4 mb-0 text-gray-800">WEGOING에 오신것을 환영합니다!</h2>
-		</div>	
+		</div>
+		
 		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-3">
 			<h6 class="h6 mb-0 text-gray-600">최근접속순</h6>
@@ -22,9 +24,12 @@
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div
-									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1"><a href="#" style="text-decoration-line: none;">
-									앱 리뉴얼 > Q&A 테스트</a></div>
-								<div class="text-xs font font-weight-bold text-gray-800">마감일은 2023년 9월까지입니다.</div>								
+									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1">
+									<a href="#" style="text-decoration-line: none;"> 앱 리뉴얼 >
+										Q&A 테스트</a>
+								</div>
+								<div class="text-xs font font-weight-bold text-gray-800">마감일은
+									2023년 9월까지입니다.</div>
 							</div>
 							<div class="col-auto">
 								</i>
@@ -189,6 +194,35 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="d-sm-flex align-items-center justify-content-between mb-3">
+			<h6 class="h6 mb-0 text-gray-600">내 협업공간 진행상태</h6>
+		</div>
+		<div style="background: white; height: 380px;"
+			class="d-sm-flex align-items-center justify-content-between mb-5">
+			<div style="margin-left: 6%;">
+				<select name="pets" id="pet-select" style="">
+					<option value="">-----------------협업공간 선택-----------------</option>
+					<option value="dog">Dog</option>
+					<option value="cat">Cat</option>
+					<option value="hamster">Hamster</option>
+					<option value="parrot">Parrot</option>
+					<option value="spider">Spider</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+					<option value="goldfish">Goldfish</option>
+				</select>
+			</div>
+			<div id="live-poll-area">
+				<div class="graph-container">
+					<div class="graph"></div>
+				</div>
+				<div class="answer-list"></div>
 			</div>
 		</div>
 	</div>
