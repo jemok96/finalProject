@@ -40,4 +40,7 @@ public class BoardService {
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
 	}
+	public int deleteOne(int bno) {
+		return dao.deleteOne(bno);
+	}
 }

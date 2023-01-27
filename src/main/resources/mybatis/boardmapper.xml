@@ -35,6 +35,10 @@
   		where cateno = #{cateno}
   	</delete>
   	
+  	<delete id="deleteOne" parameterType="int">
+  		delete from board
+  		where bno = #{bno}
+  	</delete>
   	<delete id="deleteAll">
   		delete from board
   	</delete>

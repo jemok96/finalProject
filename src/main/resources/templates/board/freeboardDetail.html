@@ -4,45 +4,55 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-<script
-      src="https://kit.fontawesome.com/8cc4eb714e.js"
-      crossorigin="anonymous"
-    ></script>
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous"></script>
 	<style>
-	.content__wrapper{
-		width:80%;
-		height: 80%;
-		margin-left: 70px;
-	}
-	.content__header{
+.content__wrapper {
+	width: 80%;
+	height: 80%;
+	margin-left: 70px;
+}
+
+.content__header {
 	display: flex;
 	flex-direction: column;
-	border-bottom: 1px solid rgba(0,0,0,0.2);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	margin-bottom: 20px;
-	}
-	.content__more{
+}
+
+.content__more {
 	display: flex;
-	}
-	.content__more__thc{
+}
+
+.content__more__thc {
 	display: flex;
 	width: 50%;
-	}
-	.content__button{
+}
+
+.content__button {
 	display: flex;
-	justify-content:flex-end;
-	width: 50%;}
-	.content__title, .content__nick, .content__more{margin-bottom: 13px;}
-	.content__time, .content__hits, .content__comments{margin-right: 13px;}
-	.content__main{
-		border-bottom: 1px solid rgba(0,0,0,0.2);
-		display: flex;
-		align-items:flex-start;
-		height: 200px;
-		}
-	</style>
-	
+	justify-content: flex-end;
+	width: 50%;
+}
+
+.content__title, .content__nick, .content__more {
+	margin-bottom: 13px;
+}
+
+.content__time, .content__hits, .content__comments {
+	margin-right: 13px;
+}
+
+.content__main {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: flex-start;
+	height: 200px;
+}
+</style>
+
 	<div class="content__wrapper" th:each="free:${free}">
-		<div class="content__header" >
+		<div class="content__header">
 			<div class="content__title" th:text="${free.btitle}">제목</div>
 			<div class="content__nick" th:text="${free.nickname}">닉네임</div>
 			<div class="content__more">
@@ -51,25 +61,36 @@
 					<div class="content__comments">댓글수</div>
 					<div class="content__time" th:text="${free.reg_dt}">시간</div>
 				</div>
-				
+
 				<div class="content__button">
-					<div class="content__edit"><a th:href="@{/wegoing/freeboard/{bno}/edit(bno=${free.bno})}">
-					<input  value="수정" th:if="${free.nickname} == ${session.nickname}" th:type="hidden"/>
-					<input  value="수정" th:unless="${free.nickname} == ${session.nickname}" th:type="submit"/>
-					</a></div>
+					<div class="content__edit">
+						<a th:href="@{/wegoing/freeboard/{bno}/edit(bno=${free.bno})}">
+							<input value="수정" th:if="${free.nickname} == ${session.nickname}"
+							th:type="hidden" /> <input value="수정"
+							th:unless="${free.nickname} == ${session.nickname}"
+							th:type="submit" class="edit-btn" />
+						</a>
+					</div>
 					<div class="content__delete">
-					<input  value="삭제" th:if="${free.nickname} == ${session.nickname}" th:type="hidden"/>
-					<input  value="삭제" th:unless="${free.nickname} == ${session.nickname}" th:type="submit"/></div>
+					<form th:action="@{/wegoing/freeboard/{bno}/delete(bno=${free.bno})}" method="POST">
+						<input value="삭제"
+							th:if="${free.nickname} == ${session.nickname}" th:type="hidden" />
+						<input class="delete-btn" value="삭제"
+							th:unless="${free.nickname} == ${session.nickname}"
+							th:type="submit" />
+					</form>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="content__main">
-			<div class="content__contents" th:text="${free.bcontent}">
-				내용
-			</div>
+			<div class="content__contents" th:text="${free.bcontent}">내용</div>
 		</div>
-		
+
 	</div>
 
+	<script>
+	
+	</script>
 </th:block>
 </html>

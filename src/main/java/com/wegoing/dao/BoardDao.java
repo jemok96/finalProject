@@ -18,6 +18,8 @@ public interface BoardDao {
 	 int insert(BoardDTO dto);
 	 int deleteCategory(int cateno);
 	 int deleteAll();
+	 int deleteOne(int bno);
 	 int countBoard(int cateno);
 	 int update(BoardDTO dto);
+	 
 }

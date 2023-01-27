@@ -107,8 +107,13 @@ public class BoardController {
 		log.info("free={}",free);
 		service.update(free);
 		
-		
 		return "redirect:/wegoing/freeboard";
+	}
+	@PostMapping("/freeboard/{bno}/delete")
+	public String freeboardDelete(@PathVariable int bno) {
+		log.info("bno={}",bno);
+		return "redirect:/wegoing/board";
+		
 	}
 	
 	
