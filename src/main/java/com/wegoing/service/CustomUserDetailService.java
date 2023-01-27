@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.MemberDAO;
 import com.wegoing.dto.MemberDTO;
-import com.wegoing.dto.PrincipalUserDetails;
+import com.wegoing.dto.PrincipalDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService{
 		if(mdto == null) {
 			throw new UsernameNotFoundException("user not authorized");
 		}
-		return new PrincipalUserDetails(mdto);
+		return new PrincipalDetails(mdto);
 	}
 
 }

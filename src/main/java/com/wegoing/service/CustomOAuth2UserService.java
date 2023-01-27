@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.MemberDAO;
 import com.wegoing.dto.MemberDTO;
-import com.wegoing.dto.PrincipalUserDetails;
+import com.wegoing.dto.PrincipalDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +57,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 			log.info("dto : " + mdto);
 			log.info("user : " + userMap);
-			return new PrincipalUserDetails(mdto, userMap);			
+			return new PrincipalDetails(mdto, userMap);			
 		}
 }
