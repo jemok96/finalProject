@@ -93,14 +93,16 @@ a{
 				</a>
 			</div>
 			<div class="item__column"><a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}" th:text="${free.bcontent}"></a></div>
-			<div class="item__column"><a th:href="@{/wegoing/freeboard/ {bno} (bno=${free.bno}) }" th:text="${free.bcontent}"></a></div>
 			<div class="item__column">
-				<div class="item__hits">
-					<span th:text="${free.bhits}">조회수</span>
-					<span>댓글수</span>
+				<div class="item__column">
+					<div class="item__more">
+						<span th:text="${free.bhits}">조회수</span>
+						<span>댓글수</span>
+					</div>
+					<div class="item__regdt" th:text="${free.reg_dt}">등록날짜
 				</div>
-				<div class="item__regdt" th:text="${free.reg_dt}">등록날짜
 				</div>
+				
 			</div>
 		</div>
 

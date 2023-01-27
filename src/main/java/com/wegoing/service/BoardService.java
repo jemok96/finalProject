@@ -3,7 +3,6 @@ package com.wegoing.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.BoardDao;
@@ -37,5 +36,8 @@ public class BoardService {
 	}
 	public int countBoard(int cateno) {
 		return dao.countBoard(cateno);
+	}
+	public int update(BoardDTO dto) {
+		return dao.update(dto);
 	}
 }

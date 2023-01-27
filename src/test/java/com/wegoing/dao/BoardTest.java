@@ -46,12 +46,16 @@ class BoardTest {
 		assertTrue(boardService.deleteAll() == 100);
 	}
 	@Test
-	void deleteCategory() {
+	void deleteCategoryTest() {
 		BoardDTO dto =
 				new BoardDTO("rudnf9605@naver.com", 2, "testTitle", "titleContent", "testNickname");
 		boardService.insert(dto);
 		assertTrue(boardService.deleteCategory(2) == 1);
 	}
 
+	@Test 
+	void updateTest() {
+		
+	}
 
 }

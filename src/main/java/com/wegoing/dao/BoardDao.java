@@ -19,4 +19,5 @@ public interface BoardDao {
 	 int deleteCategory(int cateno);
 	 int deleteAll();
 	 int countBoard(int cateno);
+	 int update(BoardDTO dto);
 }
