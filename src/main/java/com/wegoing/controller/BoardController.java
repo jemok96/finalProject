@@ -29,16 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	private final BoardService service;
 	
-	/**
-	 * 
-	 * 	SELECT
-        DATE_FORMAT(reg_dt, '%m월%d일%h시%m분') AS reg_dt
-		FROM board;
-	 */
-	
 	@GetMapping("/board")
 	public String boardMain(Model model, HttpSession session) {
-		session.setAttribute("nickName","제목스");
+		session.setAttribute("nickname","제목스");
+		session.setAttribute("email", "rudnf9605@naver.com");
 		/**
 		 * 1번 취미 2번 블라블라  3번 반려동물  4번 커리어
 		 */
@@ -63,15 +57,19 @@ public class BoardController {
 		return "board/addboard";
 	}
 	@PostMapping("/board/add")
-	public String insertBoard(@ModelAttribute("board")BoardDTO board) {
+	public String insertBoard(@ModelAttribute("board")BoardDTO board, HttpServletRequest request) {
 		
+		HttpSession session = request.getSession(false);
+		
+		board.setEmail((String) request.getAttribute("nickname"));
+		board.setEmail((String)request.getAttribute("nickname"));
 		log.info("board = {}",board);
 		service.insert(board);
-		return "board/addboard";
+		return "redirect:/wegoing/board";
 	}
 
 
-	// 중복많..??
+
 	@GetMapping("/freeboard")
 	public String freeboardBno(Model model) {
 		List<BoardDTO> free = service.selectboard(2);

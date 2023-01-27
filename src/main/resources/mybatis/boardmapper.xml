@@ -26,7 +26,7 @@
   		(#{email}, #{cateno}, #{btitle}, #{bcontent}, #{nickname})
   	</insert>
   	
-  	<delete id="deleteCategoryNum" parameterType="int">
+  	<delete id="deleteCategory" parameterType="int">
   		delete from board
   		where cateno = #{cateno}
   	</delete>
@@ -34,4 +34,9 @@
   	<delete id="deleteAll">
   		delete from board
   	</delete>
+  	
+  	<select  id="countBoard" resultType="int" parameterType="int">
+  		select count(*) from board
+  		where cateno = #{cateno}
+  	</select>
   </mapper>

@@ -15,6 +15,7 @@ public interface BoardDao {
 	 List<BoardDTO> selectCategory(int no);
 	 List<BoardDTO> selectboard(int no);
 	 int insert(BoardDTO dto);
-	 int deleteCategoryNum(int cateno);
+	 int deleteCategory(int cateno);
 	 int deleteAll();
+	 int countBoard(int cateno);
 }

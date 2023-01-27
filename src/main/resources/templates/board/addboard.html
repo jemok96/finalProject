@@ -8,18 +8,34 @@
 		crossorigin="anonymous">
 	</script>
 	<style>
-
+	form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .form__column {
+        display: flex;
+        flex-direction: row-reverse;
+      }
 </style>
 <div class="main__content">
-	<form th:action method="POST">
-		email<input type="text"  name="email"/>
-		cateno<input type="text" name="cateno"/>
-		btitle<input type="text" name="bcontent"/>
-		bcontent<input type="text" name="btitle"/>
-		nickname<input type="text" name="nickname"/>
-		<input type="submit"  value="저장"/>
-	</form>
-</div>
+      <form th:action method="POST">
+        <div class="form__column">
+          <select class="form__select" name="cateno">
+            <option value=1>취미</option>
+            <option value=2>블라블라</option>
+            <option value=3>반려동물</option>
+            <option value=4>이직 커리어</option>
+          </select>
+          <div class="form__title">제목<input type="text" name="btitle" /></div>
+        </div>
+
+        <div><textarea name="bcontent" cols="80" rows="30"></textarea></div>
+
+        <input type="submit" value="저장" />
+      </form>
+    </div>
 	
 
 

@@ -26,10 +26,13 @@ public class BoardService {
 	public int insert(BoardDTO dto) {
 		return dao.insert(dto);
 	}
-	public int deleteCategoryNum(int cateno) {
-		return dao.deleteCategoryNum(cateno);
+	public int deleteCategory(int cateno) {
+		return dao.deleteCategory(cateno);
 	}
 	public int deleteAll() {
 		return dao.deleteAll();
+	}
+	public int countBoard(int cateno) {
+		return dao.countBoard(cateno);
 	}
 }
