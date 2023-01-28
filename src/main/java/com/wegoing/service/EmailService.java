@@ -30,12 +30,12 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String id;
 
-    public MimeMessage createMessage(String to)throws MessagingException, UnsupportedEncodingException {
-        log.info("보내는 대상 : "+ to);
+    public MimeMessage createMessage(String email)throws MessagingException, UnsupportedEncodingException {
+        log.info("보내는 대상 : "+ email);
         log.info("인증 번호 : " + ePw);
         MimeMessage  message = javaMailSender.createMimeMessage();
 
-        message.addRecipients(MimeMessage.RecipientType.TO, to); // to 보내는 대상
+        message.addRecipients(MimeMessage.RecipientType.TO, email); // to 보내는 대상
         message.setSubject("회원가입 인증 코드: "); //메일 제목
 
         // 메일 내용 메일의 subtype을 html로 지정하여 html문법 사용 가능
@@ -69,8 +69,8 @@ public class EmailService {
         MimeMessage 객체 안에 내가 전송할 메일의 내용을 담아준다.
         bean으로 등록해둔 javaMailSender 객체를 사용하여 이메일 send
      */
-    public String sendSimpleMessage(String to)throws Exception {
-        MimeMessage message = createMessage(to);
+    public String sendSimpleMessage(String email)throws Exception {
+        MimeMessage message = createMessage(email);
         try{
             javaMailSender.send(message); // 메일 발송
         }catch(MailException es){
