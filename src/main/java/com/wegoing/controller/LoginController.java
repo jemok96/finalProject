@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/wegoing")
 public class LoginController {
 
 	@GetMapping("/register")
@@ -22,7 +21,16 @@ public class LoginController {
 	public String registerOk() {
 		log.info("<<<<<<<<<<<<<<<<<<< postmapping");
 		// mapper 통해서 DB에 insert하기
-		
-		return "redirect:/wegoing/main";
+		return "redirect:/main";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "home/login";
+	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		return "redirect:/";
 	}
 }
