@@ -39,37 +39,43 @@
                 <div class="modal-header">
                 	<div>
                     <h5 class="modal-title  text-gray-900 " id="exampleModalLabel">협업공간 생성</h5>
-                    </div>
-                    <div>
-                	<font size="2px;" >협업공간은 멤버들끼리만 사용가능합니다.</font><br />
-                    <font size="2px;">만들기 후 파트너들 중에 멤버로 초대하세요.</font>
-                	</div>
+                    </div> 
+                      
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                </div>
-                
-                <form action="해당 번호의 협업공간" method="get">
-                <div class="modal-body">
-                	<div>
-                	<h6 class="h6 text-gray-900 ">협업공간 이름</h6>                
-                	<input type="text" class="form-control" name="clubName" id="clubName"  placeholder="ex ) WEGOING 프로젝트 "/>
+                </div> 
+                         
+                <form th:action="@{/club}" name="frm" method="get" >
+						<div class="modal-body">
+							<div>
+								<h6 class="h6 text-gray-900 ">협업공간 이름</h6>
+								<input type="text" class="form-control" name="clname"
+									id="clname" placeholder="ex ) WEGOING 프로젝트 " />
+							</div>
+							<font size="2px;" style="padding-left: 5px; color:#aaa;">25자이내</font>
+							<div>
+								<hr />
+								<h6 class="h6 text-gray-900">협업공간 내용</h6>
+								<textarea class="form-control" id="clexplain" name="clexplain"
+									rows="3" cols="50" style="resize: none;"
+									placeholder="ex ) WEGOING 프로젝트와 관련된 협업공간 "
+									onKeyUp="checkLength();" onKeyDown="checkLength();"></textarea>
+							</div>
+							<font size="2px;" style="padding-left: 5px;"><span style="color:#aaa;" id="counter">(0 / 최대 150자)</span></font>
+						</div>
+							<div>
+                		<span style="margin-left: 23px;"><font size="2px;" >*협업공간은 멤버들끼리만 사용가능합니다.</font></span><br />
+                   	 	<span style="margin-left: 23px;"><font size="2px;">*만들기 후 파트너들 중에 멤버로 초대하세요.</font></span>
                 	</div>
-                	<font size="2px;" style="padding-left: 5px;">25자이내</font>
-                	<div>
-                	<hr />
-                	<h6 class="h6 text-gray-900">협업공간 내용</h6>           	
-                	<textarea class="form-control" name="clubContent" rows="3" cols="50" style="resize: none; overflow: hidden;" 
-                		placeholder="ex ) WEGOING 프로젝트와 관련된 협업공간 "></textarea>
-                	</div>
-                	<font size="2px;" style="padding-left: 5px;">100자이내</font>
-                </div>
-                </form>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <input type="submit" id="creatClubBtn" class="btn btn-primary" value="만들기"/>
-                    
-                </div>
+						<div class="modal-footer">
+						  
+							<button class="btn btn-secondary" type="reset"
+								>다시 작성</button>
+							<input type="button" id="creatClubBtn" class="btn btn-primary"
+								value="만들기" onclick="createClub()" />
+						</div>
+					</form>               
             </div>
         </div>
     </div>
@@ -114,6 +120,7 @@
 			</div></li>
 	</ul>
 	<!-- End of Sidebar -->
+	 <script th:src="@{/js/createClub.js}"></script>
 	</th:block>
 </html>
 
