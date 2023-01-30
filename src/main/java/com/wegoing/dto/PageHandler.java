@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class PageHandler {
 	private int totalCnt; // 총 게시물 개수
-    private int pageSize; // 한 페이지의 크기 ,default = 10 , 한페이지에 10개 row씩
+    private int pageSize; // 한 페이지의 크기 
     private int naviSize =10; // 페이지 내비게이션의 크기
     private int totalPage; //전체 페이지의 개수
     private int page; // 현재 페이지

@@ -74,7 +74,7 @@ margin-right: 3px;}
 
 				<div class="content__button">
 					<div class="content__edit">
-						 <a th:href="@{/freeboard/{bno}/edit(bno=${free.bno})}">	
+						 <a th:href="@{/hobby/{bno}/edit(bno=${free.bno})}">	
 							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
 							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
 						</a> 
@@ -83,7 +83,7 @@ margin-right: 3px;}
 					
 				
 					<div class="content__delete">
-					<form th:action="@{/freeboard/{bno}/delete(bno=${free.bno})}" method="POST">
+					<form th:action="@{/hobby/{bno}/delete(bno=${free.bno})}" method="POST">
 						 <input value="삭제" th:if="${nick}!='YES'" th:type="hidden"  class="btn btn-outline-primary"/>
 						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary" /> 
 					</form>

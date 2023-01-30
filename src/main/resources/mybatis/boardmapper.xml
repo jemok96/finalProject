@@ -6,26 +6,27 @@
 <!-- * 사용하는 거 안좋음 -->
  <mapper namespace="com.wegoing.dao.BoardDao">
   	<select id="selectCategory" resultType="BoardDTO" parameterType="int">
-  		select * from 
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
   		board
   		where cateno = #{no}
   		limit 5
   	</select>
   	
-  	<!-- 나중에 page처리할 떄 변경해서 사용 -->
+  
   	<select id="selectboard" resultType="BoardDTO" parameterType="int">
-  		select * from 
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
   		board
   		where cateno = #{no}
   		limit 8
   	</select>
   	<select id="selectPage" parameterType="map" resultType="BoardDTO">
-        SELECT * FROM board
+        SELECT bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname FROM board
+        WHERE cateno= #{bno}
         ORDER BY reg_dt DESC, bno DESC
         LIMIT #{offset}, #{pageSize}
     </select>
   	<select  id="selectOne" resultType="BoardDTO" parameterType="int">
-  		select * from 
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
   		board
   		where bno = #{no}
   	</select>

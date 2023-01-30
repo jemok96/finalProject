@@ -22,10 +22,10 @@ class BoardTest {
 	@Autowired
 	BoardService boardService;
 	
-//	@BeforeEach
-//	void deleteAll() {
-//		boardService.deleteAll();
-//	}
+	@BeforeEach
+	void deleteAll() {
+		boardService.deleteAll();
+	}
 	
 	@Test
 	void insertTest() {
@@ -35,13 +35,13 @@ class BoardTest {
 	}
 	@Test
 	void insetTest2(){
-		BoardDTO[] dto = new BoardDTO[30];
+		BoardDTO[] dto = new BoardDTO[100];
 		for(int i=0; i<dto.length; i++) {
 			dto[i] = BoardDTO.builder().email("aaa@gmail.com").cateno(2).bcontent("test").btitle("test").nickname("da").build();
 			boardService.insert(dto[i]);
 		}
-		assertTrue(boardService.countBoard(2) == 230);
-//		assertTrue(boardService.deleteAll() == 100);
+		assertTrue(boardService.countBoard(2) == 100);
+		assertTrue(boardService.deleteAll() == 100);
 	}
 	@Test
 	void deleteCategoryTest() {
@@ -59,7 +59,7 @@ class BoardTest {
 	@Test
     public void test(){
         PageHandler ph = new PageHandler(255,11);
-        System.out.println("11/10*10+1 = " + 11/10*10+1);
+        log.info("11/10*10+1 = {}" , 11/10*10+1);
         ph.print();
 
        assertTrue(ph.getBeginPage() ==11);

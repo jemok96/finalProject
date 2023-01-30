@@ -1,8 +1,11 @@
 package com.wegoing.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -39,12 +42,11 @@ public class BoardController {
 		List<BoardDTO> free = service.selectCategory(2);
 		List<BoardDTO> pet = service.selectCategory(3);
 		List<BoardDTO> career = service.selectCategory(4);
-		log.info("pet ={}",pet);
 		model.addAttribute("hobby",hobby);
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
-		return "board/free/boardmain";
+		return "board/boardmain";
 	}
 	@GetMapping("/board/add")
 	public String addboard(@AuthenticationPrincipal PrincipalDetails userDetails,RedirectAttributes rattr,Model model) {
@@ -54,13 +56,13 @@ public class BoardController {
 			return "redirect:/freeboard";
 		}
 		model.addAttribute("board",new BoardDTO());
-		return "board/free/addboard";
+		return "board/addboard";
 	}
 	@PostMapping("/board/add")
 	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails) {
 		if(bindingResult.hasErrors()) {
 			log.info("erros={}",bindingResult);
-			return "board/free/addboard";
+			return "board/addboard";
 		}
 		board.setEmail(userDetails.getMdto().getEmail());
 		board.setNickname(userDetails.getMdto().getNickname());
@@ -68,7 +70,9 @@ public class BoardController {
 		return "redirect:/board";
 	}
 
-	//pageHandler
+	
+	
+	
 	@GetMapping("/freeboard")
 	public String freeboard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
@@ -79,7 +83,7 @@ public class BoardController {
         map.put("offset",(page-1)*pageSize);
         map.put("pageSize",pageSize);
         map.put("bno",2);
-//		List<BoardDTO> free = service.selectboard(2);
+
         List<BoardDTO> free = service.selectPage(map);
 		
 		model.addAttribute("ph",pageHandler);
@@ -87,15 +91,16 @@ public class BoardController {
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("free",free);
 		
-		log.info("page = {}",page);
-		log.info("pageSize = {}",pageSize);
-		log.info("ph = {}",pageHandler);
-		
 		return "board/free/freeboard";
 	}
 	@GetMapping("/freeboard/{bno}")
-	public String freeboardDetail(@PathVariable int bno,Model model,@AuthenticationPrincipal PrincipalDetails userDetails) {
+	public String freeboardDetail(@PathVariable Integer bno,Model model,
+			@AuthenticationPrincipal PrincipalDetails userDetails) {
+		
 		BoardDTO free =  service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
 		String nickname =null;
 		String writer = free.getNickname();
 		service.updateHit(bno);
@@ -113,9 +118,11 @@ public class BoardController {
 	
 	@GetMapping("/freeboard/{bno}/edit")
 	public String freeboardEdit(@PathVariable int bno,Model model) {
-		
+		BoardDTO free = service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
 		model.addAttribute("free",service.selectOne(bno));
-		
 		return "board/free/editBoard";
 	}
 	@PostMapping("/freeboard/{bno}/edit")
@@ -134,66 +141,219 @@ public class BoardController {
 	public String freeboardDelete(@PathVariable int bno) {
 		service.deleteOne(bno);
 		return "redirect:/board";
+	}
+	
+	
+	
+//	================================================
+	
+	@GetMapping("/pet")
+	public String petboard(Model model,Integer page, Integer pageSize) {
+		if(page == null) page =1;
+        if(pageSize ==null) pageSize = 10;
+        int totalCnt = service.countBoard(3);
+        PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
+        Map map = new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        map.put("bno",3);
+
+        List<BoardDTO> free = service.selectPage(map);
 		
+		model.addAttribute("ph",pageHandler);
+		model.addAttribute("page",page);
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("free",free);
+		return "board/pet/petBoard";
+	}
+	@GetMapping("/pet/{bno}")
+	public String petboardDetail(@PathVariable Integer bno,Model model,
+			@AuthenticationPrincipal PrincipalDetails userDetails) {
+		
+		BoardDTO free =  service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		String nickname =null;
+		String writer = free.getNickname();
+		service.updateHit(bno);
+		
+		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
+		if(nickname !=null &&nickname.equals(writer)) {
+			model.addAttribute("nick","YES");
+		}
+		else {
+			model.addAttribute("nick","NO");
+		}
+		model.addAttribute("free",free);
+		return "board/pet/detailBoard";
 	}
 	
-	
-//	@PathVariable int bno 값 검증하기 + selectBoard했을 때 조회된거없으면 errorpage
-	private String pathVariable() {
-		return null;
+	@GetMapping("/pet/{bno}/edit")
+	public String petboardEdit(@PathVariable int bno,Model model) {
+		BoardDTO free = service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		model.addAttribute("free",service.selectOne(bno));
+		return "board/pet/editBoard";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@GetMapping("/petboard")
-	public String petboard(Model model) {
-		List<BoardDTO> pet = service.selectboard(3);
-		model.addAttribute("pet",pet);
-		return "board/freeboard";
+	@PostMapping("/pet/{bno}/edit")
+	public String petboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+		BoardDTO free = service.selectOne(bno);
+		model.addAttribute("free",free);
+		
+		free.setBtitle(btitle);
+		free.setBcontent(content);
+		
+		service.update(free);
+		
+		return "redirect:/pet";
 	}
-	@GetMapping("/petboard/{bno}")
-	public String petboardBno(@PathVariable int bno,Model model) {
-		log.info("bno={}",bno);
-		return "board/freeboard";
+	@PostMapping("/pet/{bno}/delete")
+	public String petboardDelete(@PathVariable int bno) {
+		service.deleteOne(bno);
+		return "redirect:/board";
 	}
-	
-	@GetMapping("/career")
-	public String career(Model model) {
-		List<BoardDTO> career = service.selectboard(4);
-		model.addAttribute("career",career);
-		return "board/freeboard";
-	}
-	@GetMapping("/career/{bno}")
-	public String careerboardBno(@PathVariable int bno,Model model) {
-		log.info("bno={}",bno);
-		return "board/freeboard";
-	}
+//	================================================
 	
 	@GetMapping("/hobby")
-	public String hobby(Model model) {
-		List<BoardDTO> hobby = service.selectboard(1);
-		model.addAttribute("hobby",hobby);
-		return "board/freeboard";
+	public String hobbyBoard(Model model,Integer page, Integer pageSize) {
+		if(page == null) page =1;
+        if(pageSize ==null) pageSize = 10;
+        int totalCnt = service.countBoard(1);
+        PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
+        Map map = new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        map.put("bno",1);
+
+        List<BoardDTO> free = service.selectPage(map);
+		
+		model.addAttribute("ph",pageHandler);
+		model.addAttribute("page",page);
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("free",free);
+		return "board/hobby/hobbyBoard";
 	}
 	@GetMapping("/hobby/{bno}")
-	public String hobbyBoardBno(@PathVariable int bno,Model model) {
-		log.info("bno={}",bno);
-		return "board/freeboard";
+	public String hobbyboardDetail(@PathVariable Integer bno,Model model,
+			@AuthenticationPrincipal PrincipalDetails userDetails) {
+		
+		BoardDTO free =  service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		String nickname =null;
+		String writer = free.getNickname();
+		service.updateHit(bno);
+		
+		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
+		if(nickname !=null &&nickname.equals(writer)) {
+			model.addAttribute("nick","YES");
+		}
+		else {
+			model.addAttribute("nick","NO");
+		}
+		model.addAttribute("free",free);
+		return "board/hobby/detailBoard";
 	}
 	
+	@GetMapping("/hobby/{bno}/edit")
+	public String hobbyboardEdit(@PathVariable int bno,Model model) {
+		BoardDTO free = service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		model.addAttribute("free",service.selectOne(bno));
+		return "board/hobby/editBoard";
+	}
+	@PostMapping("/hobby/{bno}/edit")
+	public String hobbyboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+		BoardDTO free = service.selectOne(bno);
+		model.addAttribute("free",free);
+		
+		free.setBtitle(btitle);
+		free.setBcontent(content);
+		
+		service.update(free);
+		
+		return "redirect:/hobby";
+	}
+	@PostMapping("/hobby/{bno}/delete")
+	public String hobbyboardDelete(@PathVariable int bno) {
+		service.deleteOne(bno);
+		return "redirect:/board";
+	}
 	
+//	================================================
 	
-	@GetMapping("/boardbasic")
-	public String basic() {
-		return "board/boardbasic";
+	@GetMapping("/career")
+	public String careerBoard(Model model,Integer page, Integer pageSize) {
+		if(page == null) page =1;
+        if(pageSize ==null) pageSize = 10;
+        int totalCnt = service.countBoard(4);
+        PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
+        Map map = new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        map.put("bno",4);
+
+        List<BoardDTO> free = service.selectPage(map);
+		
+		model.addAttribute("ph",pageHandler);
+		model.addAttribute("page",page);
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("free",free);
+		return "board/career/careerBoard";
+	}
+	@GetMapping("/career/{bno}")
+	public String careerboardDetail(@PathVariable Integer bno,Model model,
+			@AuthenticationPrincipal PrincipalDetails userDetails) {
+		
+		BoardDTO free =  service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		String nickname =null;
+		String writer = free.getNickname();
+		service.updateHit(bno);
+		
+		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
+		if(nickname !=null &&nickname.equals(writer)) {
+			model.addAttribute("nick","YES");
+		}
+		else {
+			model.addAttribute("nick","NO");
+		}
+		model.addAttribute("free",free);
+		return "board/career/detailBoard";
+	}
+	
+	@GetMapping("/career/{bno}/edit")
+	public String careerboardEdit(@PathVariable int bno,Model model) {
+		BoardDTO free = service.selectOne(bno);
+		if(free ==null) {
+			return "error-page/500";
+		}
+		model.addAttribute("free",service.selectOne(bno));
+		return "board/career/editBoard";
+	}
+	@PostMapping("/career/{bno}/edit")
+	public String careerboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+		BoardDTO free = service.selectOne(bno);
+		model.addAttribute("free",free);
+		
+		free.setBtitle(btitle);
+		free.setBcontent(content);
+		
+		service.update(free);
+		
+		return "redirect:/career";
+	}
+	@PostMapping("/career/{bno}/delete")
+	public String careerboardDelete(@PathVariable int bno) {
+		service.deleteOne(bno);
+		return "redirect:/board";
 	}
 }

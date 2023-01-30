@@ -136,12 +136,12 @@ margin-right: 1px;}
 	<div class="section">
 		<div class="item" th:each="free:${free}">
 			<div class="item__column">
-				<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"
+				<a th:href="@{/hobby/{bno}(bno=${free.bno})}"
 					th:text="${free.btitle}" class="item__title"> </a>
 			</div>
 
 			<div class="item__column">
-				<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"
+				<a th:href="@{/hobby/{bno}(bno=${free.bno})}"
 					th:text="${free.bcontent}"></a>
 			</div>
 			<div class="item__column">

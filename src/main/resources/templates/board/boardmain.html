@@ -116,12 +116,12 @@ color:black;
 						<span id="image"><i class="fa-solid fa-paw fa-2xl"></i> </span> <span>반려동물</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/petboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/pet}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="pet: ${pet}">
 					<div class="section__title">
-						<a th:href="@{/petboard/{bno}(bno=${pet.bno})}"><span th:text="${pet.btitle}">제목</span></a>
+						<a th:href="@{/pet/{bno}(bno=${pet.bno})}"><span th:text="${pet.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -137,12 +137,12 @@ color:black;
 							class="fa-solid fa-bag-shopping fa-2xl"></i></span> <span>이직·커리어</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/careerboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/career}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="career : ${career}">
 					<div class="section__title">
-						<a th:href="@{/careeboard/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
+						<a th:href="@{/caree/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -157,12 +157,12 @@ color:black;
 							취미생활</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/hobbyboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/hobby}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="hobby: ${hobby}">
 					<div class="section__title">
-						<a th:href="@{/hobbyboard/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
+						<a th:href="@{/hobby/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
