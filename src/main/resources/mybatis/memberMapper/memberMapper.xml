@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.wegoing.dao.MemberDAO">
+    <select id="findMemberByEmail" parameterType="String" resultType="com.wegoing.dto.MemberDTO">
+        select *
+        from member
+        where email = #{email}
+    </select>
+    <insert id="insertOne" parameterType="com.wegoing.dto.MemberDTO">
+        insert into member
+        values (#{email}, #{name}, #{nickname}, #{pw}, #{tel}, null, #{auth}, sysdate())
+    </insert>
+    <select id="findEmailByNameAndTel" parameterType="com.wegoing.dto.MemberDTO" resultType="String">
+        select email
+        from member
+        where name = #{name}
+        and tel = #{tel}
+    </select>
+</mapper>
