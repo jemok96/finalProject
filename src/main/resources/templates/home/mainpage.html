@@ -35,7 +35,8 @@
 		</div>
 		<!-- Content Row -->
 		<div class="row" >
-			<div class="col-xl-3 col-md-6 mb-4"  th:each="dto: ${myClub}" >
+			<th:block th:each="dto, dtoStat: ${myClub}">
+			<div class="col-xl-3 col-md-6 mb-4"  th:if="${dtoStat.index < 4}"  >
 				<div class="card border-left-primary shadow h-100 py-2">
 					<div class="card-body">
 						<div class="row no-gutters align-items-center">
@@ -52,7 +53,8 @@
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
+			</th:block>			
 		</div> 
 		<div class="d-sm-flex align-items-center justify-content-between mb-3" style="margin-top: 10px;">
 			<h6 class="h6 mb-0 text-gray-600">최근접속순</h6>
