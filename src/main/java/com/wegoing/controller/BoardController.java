@@ -1,5 +1,6 @@
 package com.wegoing.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,25 +21,35 @@ import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.PageHandler;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.BoardService;
+import com.wegoing.service.CommentService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@AllArgsConstructor
 @Slf4j
 public class BoardController {
 	private final BoardService service;
+	private final CommentService commentService;
+	private static final Integer HOBBY =1;
+	private static final Integer FREE =2;
+	private static final Integer PET =3;
+	private static final Integer CAREER =4;
+	
+	public BoardController(BoardService service,CommentService commentService) {
+		this.service = service;
+		this.commentService = commentService;
+	}
 	
 	@GetMapping("/board")
 	public String boardMain(Model model) {
 		/**
 		 * 1번 취미 2번 블라블라  3번 반려동물  4번 커리어
 		 */
-		List<BoardDTO> hobby = service.selectCategory(1);
-		List<BoardDTO> free = service.selectCategory(2);
-		List<BoardDTO> pet = service.selectCategory(3);
-		List<BoardDTO> career = service.selectCategory(4);
+		List<BoardDTO> hobby = service.selectCategory(HOBBY);
+		List<BoardDTO> free = service.selectCategory(FREE);
+		List<BoardDTO> pet = service.selectCategory(PET);
+		List<BoardDTO> career = service.selectCategory(CAREER);
 		model.addAttribute("hobby",hobby);
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
@@ -74,19 +85,26 @@ public class BoardController {
 	public String freeboard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(2);
+        int totalCnt = service.countBoard(FREE);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset",(page-1)*pageSize);
         map.put("pageSize",pageSize);
-        map.put("bno",2);
+        map.put("bno",FREE);
 
         List<BoardDTO> free = service.selectPage(map);
-		
+        List<Integer> getBno =new ArrayList<Integer>();
+        List<Integer> comCount = new ArrayList<Integer>();
+        
+        for(int i = 0; i<free.size(); i++) {
+        	comCount.add(commentService.commentCount(free.get(i).getBno()));
+        }
+        
 		model.addAttribute("ph",pageHandler);
 		model.addAttribute("page",page);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("free",free);
+		model.addAttribute("comCount",comCount);
 		
 		return "board/free/freeboard";
 	}
@@ -148,15 +166,23 @@ public class BoardController {
 	public String petboard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(3);
+        int totalCnt = service.countBoard(PET);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset",(page-1)*pageSize);
         map.put("pageSize",pageSize);
-        map.put("bno",3);
+        map.put("bno",PET);
 
         List<BoardDTO> free = service.selectPage(map);
-		
+        List<Integer> getBno =new ArrayList<Integer>();
+        List<Integer> comCount = new ArrayList<Integer>();
+        
+        for(int i = 0; i<free.size(); i++) {
+        	comCount.add(commentService.commentCount(free.get(i).getBno()));
+        }
+        model.addAttribute("comCount",comCount);
+        
+        
 		model.addAttribute("ph",pageHandler);
 		model.addAttribute("page",page);
 		model.addAttribute("pageSize",pageSize);
@@ -218,19 +244,26 @@ public class BoardController {
 	public String hobbyBoard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(1);
+        int totalCnt = service.countBoard(HOBBY);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset",(page-1)*pageSize);
         map.put("pageSize",pageSize);
-        map.put("bno",1);
+        map.put("bno",HOBBY);
 
         List<BoardDTO> free = service.selectPage(map);
-		
+        List<Integer> getBno =new ArrayList<Integer>();
+        List<Integer> comCount = new ArrayList<Integer>();
+        
+        for(int i = 0; i<free.size(); i++) {
+        	comCount.add(commentService.commentCount(free.get(i).getBno()));
+        }
+        
 		model.addAttribute("ph",pageHandler);
 		model.addAttribute("page",page);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("free",free);
+		model.addAttribute("comCount",comCount);
 		return "board/hobby/hobbyBoard";
 	}
 	@GetMapping("/hobby/{bno}")
@@ -289,19 +322,25 @@ public class BoardController {
 	public String careerBoard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(4);
+        int totalCnt = service.countBoard(CAREER);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map map = new HashMap();
+        Map<String, Integer> map = new HashMap();
         map.put("offset",(page-1)*pageSize);
         map.put("pageSize",pageSize);
-        map.put("bno",4);
+        map.put("bno",CAREER);
 
         List<BoardDTO> free = service.selectPage(map);
-		
+        List<Integer> getBno =new ArrayList<Integer>();
+        List<Integer> comCount = new ArrayList<Integer>();
+        
+        for(int i = 0; i<free.size(); i++) {
+        	comCount.add(commentService.commentCount(free.get(i).getBno()));
+        }
 		model.addAttribute("ph",pageHandler);
 		model.addAttribute("page",page);
 		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("free",free);
+		model.addAttribute("comCount",comCount);
 		return "board/career/careerBoard";
 	}
 	@GetMapping("/career/{bno}")

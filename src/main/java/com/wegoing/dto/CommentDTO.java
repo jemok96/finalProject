@@ -11,9 +11,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class CommentDTO {
 	private Integer cmno;
@@ -22,4 +19,18 @@ public class CommentDTO {
 	private String cmcontent;
 	private Date reg_dt;
 	private Date up_dt;
+	
+	public CommentDTO(){}
+
+	@Builder
+	public CommentDTO(Integer cmno, Integer bno, String cmwriter, String cmcontent, Date reg_dt, Date up_dt) {
+		this.cmno = cmno;
+		this.bno = bno;
+		this.cmwriter = cmwriter;
+		this.cmcontent = cmcontent;
+		this.reg_dt = reg_dt;
+		this.up_dt = up_dt;
+	}
+	
+	
 }

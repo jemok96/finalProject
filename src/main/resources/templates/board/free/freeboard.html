@@ -147,7 +147,7 @@ button[type="button"] {
 		</div>
 	</div>
 	<div class="section">
-		<div class="item" th:each="free:${free}">
+		<div class="item" th:each="free,idx:${free}">
 			<div class="item__column">
 				<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"
 					th:text="${free.btitle}" class="item__title"> </a>
@@ -163,7 +163,7 @@ button[type="button"] {
 						<span class="item__eye"><i class="fa-regular fa-eye"></i></span> <span
 							class="item__hits" th:text="${free.bhits}">조회수</span> <span
 							class="item__comment"><i class="fa-regular fa-comment"></i></span>
-						<span>댓글수</span>
+						<span th:text="${comCount[idx.index]}">댓글수</span>
 					</div>
 					<div class="item__regdt"
 						th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">등록날짜</div>

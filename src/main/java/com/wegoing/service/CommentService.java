@@ -10,12 +10,14 @@ import com.wegoing.dto.CommentDTO;
 @Service
 public class CommentService {
 	private final CommentDao dao;
+	
 	public CommentService(CommentDao dao) {
 		this.dao = dao;
 	}
+	
 	// 댓글 개수
-    public int commentCount() {
-    	return dao.commentCount();
+    public int commentCount(int bno) {
+    	return dao.commentCount(bno);
     }
  
     // 댓글 목록

@@ -12,7 +12,7 @@ import com.wegoing.dto.CommentDTO;
 @Mapper
 public interface CommentDao {
 	    // 댓글 개수
-	    public int commentCount();
+	    public int commentCount(int bno);
 	 
 	    // 댓글 목록
 	    public List<CommentDTO> commentList() ;

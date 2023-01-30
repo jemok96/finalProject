@@ -29,12 +29,12 @@ public class CommentTest {
 				builder().btitle("안녕").bcontent("하이").cateno(4).nickname("JM").build();
 		assertTrue(boardService.insert(boardDTO) == 1);
 		BoardDTO boardDTO2 = boardService.selectTest(boardDTO.getCateno());
-//		log.info("{}",boardDTO2);
+
 		CommentDTO commentDTO = 
 				CommentDTO.builder().
 				cmwriter(boardDTO2.getNickname()).
 				cmcontent("좋은 글입니다~~").bno(boardDTO2.getBno()).build();
-//		log.info("{}",commentDTO);
+
 		assertTrue(commentService.commentInsert(commentDTO) == 1);
 		
 		
