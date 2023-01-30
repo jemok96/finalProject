@@ -18,21 +18,21 @@ function createClub() {
 function checkLength() {
 	checkEnter();
 	var content = $('#clexplain').val();
-    $('#counter').html("("+content.length+" / 최대 150자)");    //글자수 실시간 카운팅
+    $('#counter').html("("+content.length+" / 최대 100자)");    //글자수 실시간 카운팅
 
-    if (content.length > 150){
-        $(this).val(content.substring(0, 150));
-        $('#counter').html("(150 / 최대 150자)");
-        alert("최대 150자까지 입력 가능합니다.");
+    if (content.length > 100){
+        $(this).val(content.substring(0, 100));
+        $('#counter').html("(100 / 최대 100자)");
+        alert("최대 100자까지 입력 가능합니다.");
         return false;  
     }
 }
 
 function checkEnter() { 
 	 var rows = $('#clexplain').val().split('\n').length;
-            var maxRows = 2; 
+            var maxRows = 1; 
             if( rows > maxRows){
-                alert('엔터는 2번만 가능합니다');
+                alert('엔터는 불가합니다');
                 modifiedText = $('#clexplain').val().split("\n").slice(0, maxRows);
                 $('#clexplain').val(modifiedText.join("\n"));
                 return false; 

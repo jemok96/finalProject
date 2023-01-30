@@ -46,7 +46,7 @@
                     </button>
                 </div> 
                          
-                <form th:action="@{/club}" name="frm" method="get" >
+                <form th:action="@{/club}" name="frm" method="post" >
 						<div class="modal-body">
 							<div>
 								<h6 class="h6 text-gray-900 ">협업공간 이름</h6>
@@ -62,7 +62,7 @@
 									placeholder="ex ) WEGOING 프로젝트와 관련된 협업공간 "
 									onKeyUp="checkLength();" onKeyDown="checkLength();"></textarea>
 							</div>
-							<font size="2px;" style="padding-left: 5px;"><span style="color:#aaa;" id="counter">(0 / 최대 150자)</span></font>
+							<font size="2px;" style="padding-left: 5px;"><span style="color:#aaa;" id="counter">(0 / 최대 100자)</span></font>
 						</div>
 							<div>
                 		<span style="margin-left: 23px;"><font size="2px;" >*협업공간은 멤버들끼리만 사용가능합니다.</font></span><br />
