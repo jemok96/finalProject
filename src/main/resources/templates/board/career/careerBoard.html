@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous">
+	</script>
+	<style>
+.section {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(2, 200px);
+	grid-auto-flow: row;
+	grid-auto-rows: 200px;
+	width: 95%;
+	margin-left: 50px;
+}
+
+.item__title {
+	font-weight: 700;
+	font-size: 22px;
+	color: black;
+}
+
+.item {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.list {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 10px;
+	margin-right: 15px;
+}
+
+.list__column {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.list__column div {
+	margin-right: 10px;
+}
+
+form {
+	display: flex;
+	align-items: center;
+}
+
+.item {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.item__column {
+	margin-left: 20px;
+}
+
+.item__column__left{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.item__regdt {
+	display: flex;
+	width: 50%;
+	justify-content: flex-end;
+	margin-right: 20px;
+}
+
+.item__more {
+	display: flex;
+	width: 50%;
+	justify-content: flex-start;
+	margin-right: 50px;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+.color{
+	border-color: gray;
+	color:gray;
+	border: 1px solid rgba(0,0,0,0.2);
+}
+#search {
+	border-radius: 5px;
+	border: 1px solid rgba(0,0,0,0.4);
+	height: 37px;
+}
+
+.item__eye,.item__hits,.item__comment{
+margin-right: 5px;}
+button[type="button"]{
+margin-right: 1px;}
+</style>
+	<script th:inline="javascript">
+	var msg = [[${msg}]];
+	if(msg != null)alert("로그인해주세요");
+</script>
+
+	<div class="list">
+		<div class="list__column">
+			<div class="btn-group" role="group"
+				aria-label="Basic outlined example">
+				<a th:href="@{/freeboard}"><button type="button" class="btn btn-outline-primary color">블라블라</button></a>
+				<a th:href="@{/pet}"><button type="button" class="btn btn-outline-primary color">반려동물</button></a>
+				<a th:href="@{/career}"><button type="button" class="btn btn-outline-primary color">이직·커리어</button></a>
+				<a th:href="@{/hobby}"><button type="button" class="btn btn-outline-primary color">취미생활</button></a>
+			</div>
+			<form action="">
+				<div class="box">
+					<div class="container-1">
+						<input  type="search" id="search" placeholder="Search..." />
+					</div>
+				</div>
+				<div>
+					<button type="button" class="btn btn-outline-secondary search">검색</button>
+				</div>
+			</form>
+			<div>
+				<a th:href="@{/board/add}">
+					<button type="button" class="btn btn-primary" >글쓰기</button>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="section">
+		<div class="item" th:each="free:${free}">
+			<div class="item__column">
+				<a th:href="@{/career/{bno}(bno=${free.bno})}"
+					th:text="${free.btitle}" class="item__title"> </a>
+			</div>
+
+			<div class="item__column">
+				<a th:href="@{/career/{bno}(bno=${free.bno})}"
+					th:text="${free.bcontent}"></a>
+			</div>
+			<div class="item__column">
+				<div class="item__column__left">
+					<div class="item__more">
+						<span class="item__eye"><i class="fa-regular fa-eye"></i></span>
+						<span class="item__hits" th:text="${free.bhits}">조회수</span> 
+						<span class="item__comment"><i class="fa-regular fa-comment"></i></span>
+						<span>댓글수</span>
+					</div>
+					<div class="item__regdt"
+						th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">등록날짜</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+
+</th:block>
+</html>
