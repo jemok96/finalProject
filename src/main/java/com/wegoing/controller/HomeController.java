@@ -10,8 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class HomeController {
-	@GetMapping("/main")
+	@GetMapping("/main/test")
 	public String main() {
+		
 		return "home/mainpage";
 	}
 	
