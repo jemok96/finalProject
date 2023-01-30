@@ -66,4 +66,10 @@
 			set bhits = bhits+1
 			where bno= #{bno};
   	</update>
+  	
+  	<select  id="selectTest" parameterType="int" resultType="BoardDTO">
+  		select * from board where cateno = #{bno}
+		order by reg_dt desc
+		limit 1; 
+  	</select>
   </mapper>

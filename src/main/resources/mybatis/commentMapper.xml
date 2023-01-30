@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wegoing.dao.CommentDao">
+	 <select id="commentCount" resultType="int">
+        SELECT COUNT(*)
+        FROM comment
+    </select>
+    
+    <select id="commentList" resultType="CommentDTO">
+        SELECT cmno,cmwriter,cmcontent,reg_dt,up_dt,bno
+        FROM comment
+    </select>
+    
+    
+    <insert id="commentInsert" parameterType="CommentDTO">
+        INSERT INTO
+        comment (cmcontent, cmwriter,bno)
+        VALUES(#{cmcontent},#{cmwriter}, #{bno}) 
+    </insert>
+    
+    <update id="commentUpdate" parameterType="CommentDTO">
+        UPDATE comment
+        SET
+        cmcontent = #{cmcontent}
+        WHERE CNO = #{cmno}
+    </update>
+    
+    <delete id="commentDelete" parameterType="int">
+        DELETE FROM comment WHERE cmno = #{cmno}
+    </delete>
+</mapper>

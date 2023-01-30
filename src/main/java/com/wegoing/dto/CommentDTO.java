@@ -2,9 +2,6 @@ package com.wegoing.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,22 +15,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BoardDTO {
-
+public class CommentDTO {
+	private Integer cmno;
 	private Integer bno;
-	private String email;
-	private Integer cateno;
-	@NotBlank
-	@NotNull
-	private String btitle;
-	@NotBlank
-	@NotNull
-	private String bcontent;
-	private Integer bhits;
+	private String cmwriter;
+	private String cmcontent;
 	private Date reg_dt;
 	private Date up_dt;
-	private String nickname;
-
-	
-	
 }
