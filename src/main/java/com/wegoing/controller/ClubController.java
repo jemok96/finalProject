@@ -2,6 +2,7 @@ package com.wegoing.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,8 @@ public class ClubController {
 		
 	@PostMapping("/club")
 	public String createClub(@RequestParam("clname")String name, @RequestParam("clexplain")String explain, 
-			@ModelAttribute("cdto")ClubDTO cdto,@ModelAttribute("cmdto")ClubMemberDTO cmdto, Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
+			@ModelAttribute("cdto")ClubDTO cdto,@ModelAttribute("cmdto")ClubMemberDTO cmdto, Model model, 
+			@AuthenticationPrincipal PrincipalDetails userDetails, HttpServletRequest request) {
 		// 클럽테이블에 insert
 		log.info("here");	
 		log.info(name);
@@ -63,7 +65,12 @@ public class ClubController {
 		cmdto.setClno(clno);
 		cms.addClubMember(cmdto);
 		
-		return "redirect:/main";
+		// 협업공간생성 모달에서 만들기 버튼 클릭하면 해당 html에 멈물수 있도록 return 
+		if (request.getHeader("Referer") != null) {
+		    return "redirect:" + request.getHeader("Referer");
+		  } else {
+		    return "redirect:/main";
+		  }
 	}
 
 	
