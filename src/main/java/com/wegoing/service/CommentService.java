@@ -19,6 +19,9 @@ public class CommentService {
     public int commentCount(int bno) {
     	return dao.commentCount(bno);
     }
+    public CommentDTO commentOne(int cmno) {
+    	return dao.commentOne(cmno);
+    }
  
     // 댓글 목록
     public List<CommentDTO> commentList(int bno) {

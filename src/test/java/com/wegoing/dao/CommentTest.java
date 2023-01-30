@@ -37,6 +37,15 @@ public class CommentTest {
 
 		assertTrue(commentService.commentInsert(commentDTO) == 1);
 		
+	}
+	@Test
+	void updateTest() {
+		CommentDTO commentDTO = commentService.commentOne(28);
+		log.info("commentDTO={}",commentDTO);
+		commentDTO.setCmcontent("수정adsadsad");
+
+		assertTrue(commentService.commentUpdate(commentDTO) == 1);
 		
 	}
+	
 }

@@ -41,6 +41,8 @@ public class BoardController {
 		this.commentService = commentService;
 	}
 	
+
+
 	@GetMapping("/board")
 	public String boardMain(Model model) {
 		List<BoardDTO> hobby = service.selectCategory(HOBBY);
@@ -317,8 +319,7 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
-//	================================================
-	
+
 	@GetMapping("/career")
 	public String careerBoard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;

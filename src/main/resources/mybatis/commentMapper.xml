@@ -15,6 +15,12 @@
         WHERE bno=#{bno}
     </select>
     
+    <select id="commentOne" resultType="CommentDTO" parameterType="int">
+        SELECT cmno,cmwriter,cmcontent,reg_dt,up_dt,bno
+        FROM comment 
+        WHERE cmno=#{cmno}
+    </select>
+    
     
     <insert id="commentInsert" parameterType="CommentDTO">
         INSERT INTO
@@ -24,8 +30,7 @@
     
     <update id="commentUpdate" parameterType="CommentDTO">
         UPDATE comment
-        SET
-        cmcontent = #{cmcontent}
+        SET cmcontent = #{cmcontent}
         WHERE cmno = #{cmno}
     </update>
     

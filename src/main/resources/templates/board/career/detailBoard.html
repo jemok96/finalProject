@@ -4,9 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
-		crossorigin="anonymous">
-	</script>
+	
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
 	</script>
 	
@@ -113,11 +111,8 @@
 		<div class="content__main">
 			<div class="content__contents" th:text="${free.bcontent}">내용</div>
 		</div>
-	</div>
-	
-
-	<div class="container">
-		<label for="cmcontent">comment</label>
+		<div class="container">
+		<label for="cmcontent"></label>
 		<form name="commentInsertForm">
 			<div class="input-group">
 				<input type="text" class="form-control" name="cmcontent"
@@ -131,15 +126,19 @@
 	<div class="container">
 		<div class="commentList"></div>
 	</div>
+	</div>
+	
+
+	
 
 	<script>
 		var bno = [[${bno}]]; //게시글 번호
 		console.log(bno);
 
-		$('[name=commentInsertBtn]').click(function() { //댓글 등록 버튼 클릭시 
-			var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
-			commentInsert(insertData); //Insert 함수호출(아래)
-			console.log(insertData);
+		$('[name=commentInsertBtn]').click(function() { 
+			var insertData = $('[name=commentInsertForm]').serialize(); 
+			commentInsert(insertData);
+			
 		});
 
 		//댓글 목록 
@@ -180,7 +179,7 @@
 		//댓글 등록
 		function commentInsert(insertData) {
 			$.ajax({
-				url : '/comment/insert?bno='+bno,
+				url : '/comment/insert/'+bno,
 				type : 'post',
 				data : insertData,
 				success : function(data) {
@@ -192,7 +191,7 @@
 			});
 		}
 
-		//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+		//댓글 수정 
 		function commentUpdate(cmno, cmcontent) {
 			var a = '';
 
@@ -209,9 +208,9 @@
 		//댓글 수정
 		function commentUpdateProc(cmno) {
 			var updatecmcontent = $('[name=cmcontent_' + cmno + ']').val();
-
+			console.log(updatecmcontent);
 			$.ajax({
-				url : '/comment/update',
+				url : '/comment/update/'+cmno,
 				type : 'post',
 				data : {
 					'cmcontent' : updatecmcontent,
