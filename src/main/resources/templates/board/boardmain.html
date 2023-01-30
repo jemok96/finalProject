@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+<script
+      src="https://kit.fontawesome.com/8cc4eb714e.js"
+      crossorigin="anonymous"
+    ></script>
+	<style>
+	
+.section1 {
+	grid-area: section1;
+}
+
+.section2 {
+	grid-area: section2;
+}
+
+.section3 {
+	grid-area: section3;
+}
+
+.section4 {
+	grid-area: section4;
+}
+
+.main-contents {
+	display: grid;
+	height: 80vh;
+	width: 80%;
+	gap: 40px;
+	margin-left:70px;
+	grid-template: "section1 section1 section2 section2" 1fr
+		"section1 section1 section2 section2" 1fr
+		"section3 section3 section4 section4" 1fr
+		"section3 section3 section4 section4" 1fr;
+}
+
+.section__column {
+	display: flex;
+	justify-content: center;
+}
+
+.section__column:first-child {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	padding: 0px 0px 15px 0px;
+}
+
+.section__image, .section__title {
+	display: flex;
+	justify-content: flex-start;
+	margin: 20px 20px 0px 20px;
+	width: 100%;
+}
+
+.section__hits, .section__more {
+	display: flex;
+	justify-content: flex-end;
+	margin: 20px 20px 0px 20px;
+	width: 100%;
+}
+
+.section__hitIcon {
+	margin-right: 10px;
+}
+
+#image {
+	margin-right: 20px;
+}
+
+.section__title {
+	font-size: 13px;
+	font-weight: 700;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+i{
+color:black;
+}
+</style>
+	
+
+		<div class="main-contents">
+			<div class="section1">
+				<div class="section__column">
+					<div class="section__image">
+						<span id="image"><i
+							class="fa-solid fa-comment-dots fa-2xl"></i></span> <span>블라블라</span>
+					</div>
+					<div class="section__more">
+						<a th:href="@{/freeboard}"> <span>더보기 ></span></a>
+					</div>
+				</div>
+				<div class="section__column" th:each="free : ${free}">
+				
+					<div class="section__title">
+						<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"><span th:text="${free.btitle}">제목</span></a>
+					</div>
+					<div class="section__hits">
+						<span class="section__hitIcon"><i
+							class="fa-regular fa-eye"></i></span> <span th:text="${free.bhits}">조회수</span>
+					</div>
+				</div>
+			</div>
+			<div class="section2">
+				<div class="section__column">
+					<div class="section__image">
+						<span id="image"><i class="fa-solid fa-paw fa-2xl"></i> </span> <span>반려동물</span>
+					</div>
+					<div class="section__more">
+						<a th:href="@{/pet}"> <span>더보기 ></span></a>
+					</div>
+				</div>
+				<div class="section__column" th:each="pet: ${pet}">
+					<div class="section__title">
+						<a th:href="@{/pet/{bno}(bno=${pet.bno})}"><span th:text="${pet.btitle}">제목</span></a>
+					</div>
+					<div class="section__hits">
+						<span class="section__hitIcon"><i
+							class="fa-regular fa-eye"></i></span> <span th:text="${pet.bhits}">조회수</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="section3">
+				<div class="section__column">
+					<div class="section__image">
+						<span id="image"><i
+							class="fa-solid fa-bag-shopping fa-2xl"></i></span> <span>이직·커리어</span>
+					</div>
+					<div class="section__more">
+						<a th:href="@{/career}"> <span>더보기 ></span></a>
+					</div>
+				</div>
+				<div class="section__column" th:each="career : ${career}">
+					<div class="section__title">
+						<a th:href="@{/caree/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
+					</div>
+					<div class="section__hits">
+						<span class="section__hitIcon"><i
+							class="fa-regular fa-eye"></i></span> <span th:text="${career.bhits}">조회수</span>
+					</div>
+				</div>
+			</div>
+			<div class="section4">
+				<div class="section__column">
+					<div class="section__image">
+						<span id="image"><i class="fa-solid fa-music fa-2xl"></i></span> <span>직장인
+							취미생활</span>
+					</div>
+					<div class="section__more">
+						<a th:href="@{/hobby}"> <span>더보기 ></span></a>
+					</div>
+				</div>
+				<div class="section__column" th:each="hobby: ${hobby}">
+					<div class="section__title">
+						<a th:href="@{/hobby/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
+					</div>
+					<div class="section__hits">
+						<span class="section__hitIcon"><i
+							class="fa-regular fa-eye"></i></span> <span th:text="${hobby.bhits}">조회수</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+</th:block>
+</html>
