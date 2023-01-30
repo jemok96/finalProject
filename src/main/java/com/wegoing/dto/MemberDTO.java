@@ -1,11 +1,13 @@
 package com.wegoing.dto;
 
+
 import com.mysql.cj.jdbc.Blob;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Data
 @NoArgsConstructor
@@ -20,4 +22,5 @@ public class MemberDTO {
 	private Blob image;
 	private String auth;
 	private String join_dt;
+
 }
