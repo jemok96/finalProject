@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.w3.org/1999/xhtml">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <th:block th:fragment="topbarFragment">
 
@@ -90,10 +90,17 @@
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"><img class="img-profile rounded-circle"
+<<<<<<< HEAD
 					src="../img/undraw_profile.svg"><span
 					class="mr-2 d-none d-lg-inline text-gray-600 small"
 					style="margin-left: 10px"></span> <span
 					class="mr-2 d-none d-lg-inline text-gray-600 small"></span></a> <!-- Dropdown - User Information -->
+=======
+					src="../img/undraw_profile.svg">
+					<span class="mr-2 d-none d-lg-inline text-gray-600 small"
+					style="margin-left: 10px" sec:authentication="principal.mdto.name"></span> 
+					<span class="mr-2 d-none d-lg-inline text-gray-600 small">님</span></a> <!-- Dropdown - User Information -->
+>>>>>>> refs/heads/master
 				<div
 					class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 					aria-labelledby="userDropdown">
