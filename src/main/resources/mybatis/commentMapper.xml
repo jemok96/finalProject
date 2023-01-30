@@ -9,9 +9,10 @@
         WHERE bno= #{bno}
     </select>
     
-    <select id="commentList" resultType="CommentDTO">
+    <select id="commentList" resultType="CommentDTO" parameterType="int">
         SELECT cmno,cmwriter,cmcontent,reg_dt,up_dt,bno
-        FROM comment
+        FROM comment 
+        WHERE bno=#{bno}
     </select>
     
     
@@ -25,7 +26,7 @@
         UPDATE comment
         SET
         cmcontent = #{cmcontent}
-        WHERE CNO = #{cmno}
+        WHERE cmno = #{cmno}
     </update>
     
     <delete id="commentDelete" parameterType="int">

@@ -15,7 +15,7 @@ public interface CommentDao {
 	    public int commentCount(int bno);
 	 
 	    // 댓글 목록
-	    public List<CommentDTO> commentList() ;
+	    public List<CommentDTO> commentList(int bno) ;
 	 
 	    // 댓글 작성
 	    public int commentInsert(CommentDTO comment);

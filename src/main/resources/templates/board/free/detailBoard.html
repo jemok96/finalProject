@@ -68,7 +68,7 @@ margin-right: 3px;}
 				<div class="content__more__thc">
 					<i class="fa-regular fa-eye"></i><div class="content__hits" th:text="${free.bhits}">조회수</div>
 					
-					<i class="fa-regular fa-comment"></i><div class="content__comments">댓글수</div>
+					<i class="fa-regular fa-comment"></i><div class="content__comments" th:text="${comCount}">댓글수</div>
 					<div class="content__time"  th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
 				</div>
 

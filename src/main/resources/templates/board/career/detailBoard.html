@@ -5,7 +5,12 @@
 
 <th:block layout:fragment="content">
 	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+	</script>
+	
+	
 	<style>
 .content__wrapper {
 	width: 80%;
@@ -18,19 +23,19 @@
 	flex-direction: column;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	margin-bottom: 20px;
-	
 }
 
 .content__more {
 	display: flex;
-	width:100%;
-	
+	width: 100%;
 }
+
 .content__more__thc {
 	display: flex;
 	width: 50%;
 	justify-content: flex-start;
 }
+
 .content__button {
 	display: flex;
 	justify-content: flex-end;
@@ -44,49 +49,63 @@
 .content__time, .content__hits, .content__comments {
 	margin-right: 13px;
 }
-.content__title{
+
+.content__title {
 	font-weight: 700;
 	font-size: 22px;
 }
+
 .content__main {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: flex-start;
 	height: 200px;
 }
-.fa-eye,.fa-comment{
-margin: 3px 10px 0px 0px;}
-.content__edit{
-margin-right: 3px;}
+
+.fa-eye, .fa-comment {
+	margin: 3px 10px 0px 0px;
+}
+
+.content__edit {
+	margin-right: 3px;
+}
 </style>
-	
+
 	<div class="content__wrapper" th:each="free:${free}">
 		<div class="content__header">
 			<div class="content__title" th:text="${free.btitle}">제목</div>
 			<div class="content__nick" th:text="${free.nickname}">닉네임</div>
 			<div class="content__more">
 				<div class="content__more__thc">
-					<i class="fa-regular fa-eye"></i><div class="content__hits" th:text="${free.bhits}">조회수</div>
-					
-					<i class="fa-regular fa-comment"></i><div class="content__comments">댓글수</div>
-					<div class="content__time"  th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
+					<i class="fa-regular fa-eye"></i>
+					<div class="content__hits" th:text="${free.bhits}">조회수</div>
+
+					<i class="fa-regular fa-comment"></i>
+					<div class="content__comments" th:text="${comCount}">댓글수</div>
+					<div class="content__time"
+						th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
 				</div>
 
 				<div class="content__button">
 					<div class="content__edit">
-						 <a th:href="@{/career/{bno}/edit(bno=${free.bno})}">	
-							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
-							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
-						</a> 
-						
+						<a th:href="@{/career/{bno}/edit(bno=${free.bno})}"> <input
+							value="수정" th:if="${nick}!='YES'" th:type="hidden"
+							class="btn btn-outline-primary"> <input value="수정"
+							th:unless="${nick}!='YES'" th:type="submit"
+							class="btn btn-outline-primary" />
+						</a>
+
 					</div>
-					
-				
+
+
 					<div class="content__delete">
-					<form th:action="@{/career/{bno}/delete(bno=${free.bno})}" method="POST">
-						 <input value="삭제" th:if="${nick}!='YES'" th:type="hidden"  class="btn btn-outline-primary"/>
-						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary" /> 
-					</form>
+						<form th:action="@{/career/{bno}/delete(bno=${free.bno})}"
+							method="POST">
+							<input value="삭제" th:if="${nick}!='YES'" th:type="hidden"
+								class="btn btn-outline-primary" /> <input value="삭제"
+								th:unless="${nick}!='YES'" th:type="submit"
+								class="btn btn-outline-primary" />
+						</form>
 					</div>
 				</div>
 			</div>
@@ -94,11 +113,133 @@ margin-right: 3px;}
 		<div class="content__main">
 			<div class="content__contents" th:text="${free.bcontent}">내용</div>
 		</div>
+	</div>
+	
 
+	<div class="container">
+		<label for="cmcontent">comment</label>
+		<form name="commentInsertForm">
+			<div class="input-group">
+				<input type="text" class="form-control" name="cmcontent"
+					placeholder="내용을 입력하세요."> <span class="input-group-btn">
+					<button class="btn btn-default" type="button"
+						name="commentInsertBtn">등록</button>
+				</span>
+			</div>
+		</form>
+	</div>
+	<div class="container">
+		<div class="commentList"></div>
 	</div>
 
 	<script>
-	
+		var bno = [[${bno}]]; //게시글 번호
+		console.log(bno);
+
+		$('[name=commentInsertBtn]').click(function() { //댓글 등록 버튼 클릭시 
+			var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+			commentInsert(insertData); //Insert 함수호출(아래)
+			console.log(insertData);
+		});
+
+		//댓글 목록 
+		function commentList() {
+			$.ajax({url : '/comment/list',
+					type : 'get',
+						data : {
+							'bno' : bno
+						},
+						success : function(data) {
+							var a = '';
+							$.each(data,function(key, value) {
+												a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+												a += '<div class="commentInfo'+value.cmno+'">'
+														+ '댓글번호 : '
+														+ value.cmno
+														+ ' / 작성자 : '
+														+ value.cmwriter;
+												a += '<a onclick="commentUpdate('
+														+ value.cmno
+														+ ',\''
+														+ value.cmcontent
+														+ '\');"> 수정 </a>';
+												a += '<a onclick="commentDelete('
+														+ value.cmno
+														+ ');"> 삭제 </a> </div>';
+												a += '<div class="commentcmcontent'+value.cmno+'"> <p> 내용 : '
+														+ value.cmcontent
+														+ '</p>';
+												a += '</div></div>';
+											});
+
+							$(".commentList").html(a);
+						}
+					});
+		}
+
+		//댓글 등록
+		function commentInsert(insertData) {
+			$.ajax({
+				url : '/comment/insert?bno='+bno,
+				type : 'post',
+				data : insertData,
+				success : function(data) {
+					if (data == 1) {
+						commentList(); //댓글 작성 후 댓글 목록 reload
+						$('[name=cmcontent]').val('');
+					}
+				}
+			});
+		}
+
+		//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+		function commentUpdate(cmno, cmcontent) {
+			var a = '';
+
+			a += '<div class="input-group">';
+			a += '<input type="text" class="form-control" name="cmcontent_'+cmno+'" value="'+cmcontent+'"/>';
+			a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('
+					+ cmno + ');">수정</button> </span>';
+			a += '</div>';
+
+			$('.commentcmcontent' + cmno).html(a);
+
+		}
+
+		//댓글 수정
+		function commentUpdateProc(cmno) {
+			var updatecmcontent = $('[name=cmcontent_' + cmno + ']').val();
+
+			$.ajax({
+				url : '/comment/update',
+				type : 'post',
+				data : {
+					'cmcontent' : updatecmcontent,
+					'cmno' : cmno
+				},
+				success : function(data) {
+					if (data == 1)
+						commentList(bno); //댓글 수정후 목록 출력 
+				}
+			});
+		}
+
+		//댓글 삭제 
+		function commentDelete(cmno) {
+			$.ajax({
+				url : '/comment/delete/' + cmno,
+				type : 'post',
+				success : function(data) {
+					if (data == 1)
+						commentList(bno); //댓글 삭제후 목록 출력 
+				}
+			});
+		}
+
+		$(document).ready(function() {
+			commentList(); //페이지 로딩시 댓글 목록 출력 
+		});
 	</script>
+
 </th:block>
 </html>

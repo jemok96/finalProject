@@ -24,7 +24,11 @@
 	font-size: 22px;
 	color: black;
 }
-
+.handler__center {
+	margin-top: 7px;
+	display: flex;
+	justify-content: center;
+}
 .item {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -98,11 +102,13 @@ a {
 }
 
 .item__eye,.item__hits,.item__comment{
-margin-right: 5px;}
+	margin-right: 5px;
+	}
 button[type="button"]{
-margin-right: 1px;}
+	margin-right: 1px;
+	}
 </style>
-	<script th:inline="javascript">
+<script th:inline="javascript">
 	var msg = [[${msg}]];
 	if(msg != null)alert("로그인해주세요");
 </script>
@@ -160,6 +166,28 @@ margin-right: 1px;}
 		</div>
 
 
+	</div>
+	<div class="handler__center">
+		<nav aria-label="Page navigation example cetner">
+			<ul class="pagination">
+				<li class="page-item" th:if="${ph.showPrev}"><a
+					class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"
+					th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
+					<a class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
+					th:text="${idx}"></a>
+				</li>
+				<li class="page-item" th:if="${ph.showNext}"><a
+					class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
 	</div>
 
 

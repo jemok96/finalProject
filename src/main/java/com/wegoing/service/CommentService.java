@@ -21,8 +21,8 @@ public class CommentService {
     }
  
     // 댓글 목록
-    public List<CommentDTO> commentList() {
-    	return dao.commentList();
+    public List<CommentDTO> commentList(int bno) {
+    	return dao.commentList(bno);
     }
  
     // 댓글 작성

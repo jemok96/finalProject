@@ -43,9 +43,6 @@ public class BoardController {
 	
 	@GetMapping("/board")
 	public String boardMain(Model model) {
-		/**
-		 * 1번 취미 2번 블라블라  3번 반려동물  4번 커리어
-		 */
 		List<BoardDTO> hobby = service.selectCategory(HOBBY);
 		List<BoardDTO> free = service.selectCategory(FREE);
 		List<BoardDTO> pet = service.selectCategory(PET);
@@ -127,6 +124,8 @@ public class BoardController {
 		else {
 			model.addAttribute("nick","NO");
 		}
+		model.addAttribute("comCount",commentService.commentCount(bno));
+		
 		model.addAttribute("free",free);
 		return "board/free/detailBoard";
 	}
@@ -208,6 +207,7 @@ public class BoardController {
 		else {
 			model.addAttribute("nick","NO");
 		}
+		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
 		return "board/pet/detailBoard";
 	}
@@ -285,6 +285,7 @@ public class BoardController {
 		else {
 			model.addAttribute("nick","NO");
 		}
+		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
 		return "board/hobby/detailBoard";
 	}
@@ -362,7 +363,9 @@ public class BoardController {
 		else {
 			model.addAttribute("nick","NO");
 		}
+		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
+		model.addAttribute("bno",bno);
 		return "board/career/detailBoard";
 	}
 	
