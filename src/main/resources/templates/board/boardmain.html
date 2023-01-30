@@ -1,8 +1,5 @@
-
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"	
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/default}">
 
@@ -82,7 +79,7 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-i{
+.black{
 color:black;
 }
 </style>
@@ -93,7 +90,7 @@ color:black;
 				<div class="section__column">
 					<div class="section__image">
 						<span id="image"><i
-							class="fa-solid fa-comment-dots fa-2xl"></i></span> <span>블라블라</span>
+							class="fa-solid fa-comment-dots fa-2xl black"></i></span> <span>블라블라</span>
 					</div>
 					<div class="section__more">
 						<a th:href="@{/freeboard}"> <span>더보기 ></span></a>
@@ -113,7 +110,7 @@ color:black;
 			<div class="section2">
 				<div class="section__column">
 					<div class="section__image">
-						<span id="image"><i class="fa-solid fa-paw fa-2xl"></i> </span> <span>반려동물</span>
+						<span id="image"><i class="fa-solid fa-paw fa-2xl black"></i> </span> <span>반려동물</span>
 					</div>
 					<div class="section__more">
 						<a th:href="@{/pet}"> <span>더보기 ></span></a>
@@ -134,7 +131,7 @@ color:black;
 				<div class="section__column">
 					<div class="section__image">
 						<span id="image"><i
-							class="fa-solid fa-bag-shopping fa-2xl"></i></span> <span>이직·커리어</span>
+							class="fa-solid fa-bag-shopping fa-2xl black"></i></span> <span>이직·커리어</span>
 					</div>
 					<div class="section__more">
 						<a th:href="@{/career}"> <span>더보기 ></span></a>
@@ -142,7 +139,7 @@ color:black;
 				</div>
 				<div class="section__column" th:each="career : ${career}">
 					<div class="section__title">
-						<a th:href="@{/caree/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
+						<a th:href="@{/career/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -153,7 +150,7 @@ color:black;
 			<div class="section4">
 				<div class="section__column">
 					<div class="section__image">
-						<span id="image"><i class="fa-solid fa-music fa-2xl"></i></span> <span>직장인
+						<span id="image"><i class="fa-solid fa-music fa-2xl black"></i></span> <span>직장인
 							취미생활</span>
 					</div>
 					<div class="section__more">
