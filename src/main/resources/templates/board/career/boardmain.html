@@ -1,5 +1,8 @@
+
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"	
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/default}">
 
@@ -79,11 +82,12 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+i{
+color:black;
+}
 </style>
-
-	<span th:text="${session.nickname}">hi</span>
 	
-		
+
 		<div class="main-contents">
 			<div class="section1">
 				<div class="section__column">
@@ -92,13 +96,13 @@ a {
 							class="fa-solid fa-comment-dots fa-2xl"></i></span> <span>블라블라</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/wegoing/freeboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/freeboard}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="free : ${free}">
 				
 					<div class="section__title">
-						<a th:href="@{/wegoing/freeboard/{bno}(bno=${free.bno})}"><span th:text="${free.btitle}">제목</span></a>
+						<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"><span th:text="${free.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -112,12 +116,12 @@ a {
 						<span id="image"><i class="fa-solid fa-paw fa-2xl"></i> </span> <span>반려동물</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/wegoing/petboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/petboard}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="pet: ${pet}">
 					<div class="section__title">
-						<a th:href="@{/wegoing/petboard/{bno}(bno=${pet.bno})}"><span th:text="${pet.btitle}">제목</span></a>
+						<a th:href="@{/petboard/{bno}(bno=${pet.bno})}"><span th:text="${pet.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -133,12 +137,12 @@ a {
 							class="fa-solid fa-bag-shopping fa-2xl"></i></span> <span>이직·커리어</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/wegoing/careerboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/careerboard}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="career : ${career}">
 					<div class="section__title">
-						<a th:href="@{/wegoing/careeboard/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
+						<a th:href="@{/careeboard/{bno}(bno=${career.bno})}"><span th:text="${career.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
@@ -153,12 +157,12 @@ a {
 							취미생활</span>
 					</div>
 					<div class="section__more">
-						<a th:href="@{/wegoing/hobbyboard}"> <span>더보기 ></span></a>
+						<a th:href="@{/hobbyboard}"> <span>더보기 ></span></a>
 					</div>
 				</div>
 				<div class="section__column" th:each="hobby: ${hobby}">
 					<div class="section__title">
-						<a th:href="@{/wegoing/hobbyboard/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
+						<a th:href="@{/hobbyboard/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i

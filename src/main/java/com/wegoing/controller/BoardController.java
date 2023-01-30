@@ -1,12 +1,10 @@
 package com.wegoing.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,11 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.BoardDTO;
+import com.wegoing.dto.PageHandler;
+import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -28,14 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/wegoing")
 public class BoardController {
 	private final BoardService service;
 	
 	@GetMapping("/board")
-	public String boardMain(Model model, HttpSession session) {
-		session.setAttribute("nickname","제목스");
-		session.setAttribute("email", "rudnf9605@naver.com");
+	public String boardMain(Model model) {
 		/**
 		 * 1번 취미 2번 블라블라  3번 반려동물  4번 커리어
 		 */
@@ -48,54 +44,79 @@ public class BoardController {
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
-		return "board/boardmain";
+		return "board/free/boardmain";
 	}
 	@GetMapping("/board/add")
-	public String addboard(HttpServletRequest request,RedirectAttributes rattr) {
-		HttpSession session = request.getSession(false);
-		if(session == null) {
-			rattr.addAttribute("msg","로그인해주세요");
-			return "redirect:/wegoing/freeboard";
+	public String addboard(@AuthenticationPrincipal PrincipalDetails userDetails,RedirectAttributes rattr,Model model) {
+	
+		if(userDetails == null) {
+			rattr.addFlashAttribute("msg","로그인해주세요");
+			return "redirect:/freeboard";
 		}
-		return "board/addboard";
+		model.addAttribute("board",new BoardDTO());
+		return "board/free/addboard";
 	}
 	@PostMapping("/board/add")
-	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult, HttpServletRequest request) {
+	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails) {
 		if(bindingResult.hasErrors()) {
 			log.info("erros={}",bindingResult);
-			return "board/addboard";
+			return "board/free/addboard";
 		}
-		
-		HttpSession session = request.getSession(false);
-		
-		board.setEmail((String) request.getAttribute("nickname"));
-		board.setEmail((String)request.getAttribute("nickname"));
-		log.info("board = {}",board);
+		board.setEmail(userDetails.getMdto().getEmail());
+		board.setNickname(userDetails.getMdto().getNickname());
 		service.insert(board);
-		return "redirect:/wegoing/board";
+		return "redirect:/board";
 	}
 
+	//pageHandler
 	@GetMapping("/freeboard")
-	public String freeboard(Model model) {
-		List<BoardDTO> free = service.selectboard(2);
+	public String freeboard(Model model,Integer page, Integer pageSize) {
+		if(page == null) page =1;
+        if(pageSize ==null) pageSize = 10;
+        int totalCnt = service.countBoard(2);
+        PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
+        Map map = new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        map.put("bno",2);
+//		List<BoardDTO> free = service.selectboard(2);
+        List<BoardDTO> free = service.selectPage(map);
+		
+		model.addAttribute("ph",pageHandler);
+		model.addAttribute("page",page);
+		model.addAttribute("pageSize",pageSize);
 		model.addAttribute("free",free);
-		return "board/freeboard";
+		
+		log.info("page = {}",page);
+		log.info("pageSize = {}",pageSize);
+		log.info("ph = {}",pageHandler);
+		
+		return "board/free/freeboard";
 	}
 	@GetMapping("/freeboard/{bno}")
-	public String freeboardDetail(@PathVariable int bno,Model model) {
+	public String freeboardDetail(@PathVariable int bno,Model model,@AuthenticationPrincipal PrincipalDetails userDetails) {
+		BoardDTO free =  service.selectOne(bno);
+		String nickname =null;
+		String writer = free.getNickname();
+		service.updateHit(bno);
 		
-		model.addAttribute("free",service.selectOne(bno));
-		
-		log.info("dto={}",service.selectOne(bno));
-		return "board/freeboardDetail";
+		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
+		if(nickname !=null &&nickname.equals(writer)) {
+			model.addAttribute("nick","YES");
+		}
+		else {
+			model.addAttribute("nick","NO");
+		}
+		model.addAttribute("free",free);
+		return "board/free/detailBoard";
 	}
+	
 	@GetMapping("/freeboard/{bno}/edit")
 	public String freeboardEdit(@PathVariable int bno,Model model) {
 		
 		model.addAttribute("free",service.selectOne(bno));
 		
-		log.info("dto={}",service.selectOne(bno));
-		return "board/freeboardEdit";
+		return "board/free/editBoard";
 	}
 	@PostMapping("/freeboard/{bno}/edit")
 	public String freeboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
@@ -104,21 +125,23 @@ public class BoardController {
 		
 		free.setBtitle(btitle);
 		free.setBcontent(content);
-		log.info("free={}",free);
+		
 		service.update(free);
 		
-		return "redirect:/wegoing/freeboard";
+		return "redirect:/freeboard";
 	}
 	@PostMapping("/freeboard/{bno}/delete")
 	public String freeboardDelete(@PathVariable int bno) {
-		log.info("bno={}",bno);
-		return "redirect:/wegoing/board";
+		service.deleteOne(bno);
+		return "redirect:/board";
 		
 	}
 	
 	
-	
-	
+//	@PathVariable int bno 값 검증하기 + selectBoard했을 때 조회된거없으면 errorpage
+	private String pathVariable() {
+		return null;
+	}
 	
 	
 	

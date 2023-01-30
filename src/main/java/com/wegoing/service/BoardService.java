@@ -2,6 +2,7 @@ package com.wegoing.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class BoardService {
 	public List<BoardDTO> selectboard(int no){
 		return dao.selectboard(no);
 	}
+	public List<BoardDTO> selectPage(Map map){
+		return dao.selectPage(map);
+	}
 	public BoardDTO selectOne(int no){
 		return dao.selectOne(no);
 	}
@@ -39,6 +43,9 @@ public class BoardService {
 	}
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
+	}
+	public int updateHit(int bno) {
+		return dao.updateHit(bno);
 	}
 	public int deleteOne(int bno) {
 		return dao.deleteOne(bno);

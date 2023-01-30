@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- * 사용하는 거 안좋음 -->
  <mapper namespace="com.wegoing.dao.BoardDao">
   	<select id="selectCategory" resultType="BoardDTO" parameterType="int">
   		select * from 
@@ -18,6 +19,11 @@
   		where cateno = #{no}
   		limit 8
   	</select>
+  	<select id="selectPage" parameterType="map" resultType="BoardDTO">
+        SELECT * FROM board
+        ORDER BY reg_dt DESC, bno DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
   	<select  id="selectOne" resultType="BoardDTO" parameterType="int">
   		select * from 
   		board
@@ -52,5 +58,11 @@
   		update board
   		set btitle= #{btitle}, bcontent= #{bcontent}, up_dt=#{up_dt}
   		where bno = #{bno}
+  	</update>
+  	
+  	<update id="updateHit" parameterType="int">
+	  		update board
+			set bhits = bhits+1
+			where bno= #{bno};
   	</update>
   </mapper>

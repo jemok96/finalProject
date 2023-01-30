@@ -18,17 +18,19 @@
 	flex-direction: column;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	margin-bottom: 20px;
+	
 }
 
 .content__more {
 	display: flex;
+	width:100%;
+	
 }
-
 .content__more__thc {
 	display: flex;
 	width: 50%;
+	justify-content: flex-start;
 }
-
 .content__button {
 	display: flex;
 	justify-content: flex-end;
@@ -42,42 +44,48 @@
 .content__time, .content__hits, .content__comments {
 	margin-right: 13px;
 }
-
+.content__title{
+	font-weight: 700;
+	font-size: 22px;
+}
 .content__main {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: flex-start;
 	height: 200px;
 }
+.fa-eye,.fa-comment{
+margin: 3px 10px 0px 0px;}
+.content__edit{
+margin-right: 3px;}
 </style>
-
+	
 	<div class="content__wrapper" th:each="free:${free}">
 		<div class="content__header">
 			<div class="content__title" th:text="${free.btitle}">제목</div>
 			<div class="content__nick" th:text="${free.nickname}">닉네임</div>
 			<div class="content__more">
 				<div class="content__more__thc">
-					<div class="content__hits" th:text="${free.bhits}">조회수</div>
-					<div class="content__comments">댓글수</div>
-					<div class="content__time" th:text="${free.reg_dt}">시간</div>
+					<i class="fa-regular fa-eye"></i><div class="content__hits" th:text="${free.bhits}">조회수</div>
+					
+					<i class="fa-regular fa-comment"></i><div class="content__comments">댓글수</div>
+					<div class="content__time"  th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
 				</div>
 
 				<div class="content__button">
 					<div class="content__edit">
-						<a th:href="@{/wegoing/freeboard/{bno}/edit(bno=${free.bno})}">
-							<input value="수정" th:if="${free.nickname} == ${session.nickname}"
-							th:type="hidden" /> <input value="수정"
-							th:unless="${free.nickname} == ${session.nickname}"
-							th:type="submit" class="edit-btn" />
-						</a>
+						 <a th:href="@{/freeboard/{bno}/edit(bno=${free.bno})}">	
+							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
+							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
+						</a> 
+						
 					</div>
+					
+				
 					<div class="content__delete">
-					<form th:action="@{/wegoing/freeboard/{bno}/delete(bno=${free.bno})}" method="POST">
-						<input value="삭제"
-							th:if="${free.nickname} == ${session.nickname}" th:type="hidden" />
-						<input class="delete-btn" value="삭제"
-							th:unless="${free.nickname} == ${session.nickname}"
-							th:type="submit" />
+					<form th:action="@{/freeboard/{bno}/delete(bno=${free.bno})}" method="POST">
+						 <input value="삭제" th:if="${nick}!='YES'" th:type="hidden"  class="btn btn-outline-primary"/>
+						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary" /> 
 					</form>
 					</div>
 				</div>
