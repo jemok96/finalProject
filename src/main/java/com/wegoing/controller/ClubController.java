@@ -37,7 +37,7 @@ public class ClubController {
 		
 	@PostMapping("/club")
 	public String createClub(@RequestParam("clname")String name, @RequestParam("clexplain")String explain, 
-			@ModelAttribute("cdto")ClubDTO cdto, Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
+			@ModelAttribute("cdto")ClubDTO cdto,@ModelAttribute("cmdto")ClubMemberDTO cmdto, Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		// 클럽테이블에 insert
 		log.info("here");	
 		log.info(name);
@@ -57,8 +57,6 @@ public class ClubController {
 		System.out.println("email" +loginEmail);
 		
 		// 클럽멤버 테이블에 insert 
-		// MemberDTO dto = new MemberDTO();
-		ClubMemberDTO cmdto = new ClubMemberDTO();
 		cmdto.setEmail(loginEmail);
 		cmdto.setCrank("host"); 
 		cmdto.setCstatus("y");
