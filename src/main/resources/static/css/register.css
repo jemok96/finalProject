@@ -1,12 +1,6 @@
 @charset "UTF-8";
 
-* {
-	margin: 0px;
-	padding: 0px;
-	/* font-family:  */
-}
-
-#emailCk{
+#emailCk {
 	font-size: small;
 }
 
@@ -15,61 +9,107 @@
 	text-align: center;
 }
 
-.title>h1>span {
-	color: #f96f59;
+@font-face {
+	font-family: 'LINESeedKR-Rg';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Rg.woff2')
+		format('woff2');
+	font-weight: 400;
+	font-style: normal;
 }
 
-table {
-	width: 780px;
-	height: 800px;
-	margin : 10px auto;
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.register-form {
-	width: 800px;
-	height: 900px;
-	margin: 50px auto;
-	padding: 20px;
-	border: solid 1px grey;
-	border-radius: 20px;
-	overflow: auto;
-	box-shadow: 1px 1px 10px grey;
-}
-
-th {
-	width: 200px;
-	height: 100px;
-	display: table-cell;
-	text-align: center;
-	vertical-align: middle;
-	border-right: 2px dotted #eeeeee;
-}
-td {
-	width: 600px;
-}
-
-tr {
-	border-bottom: 2px dotted #eeeeee;
+* {
+	font-family: 'LINESeedKR-Rg';
 }
 
 input {
-	border : none;
-}
-.text {
-	height: 30px;
-	padding: 10px;
-	border-bottom : solid 1px grey;
-	text-align : center;
-}
-.file {
-	margin-left: 50px;
+	border: none;
 }
 
-.btn-box {
+.email_Ok {
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	color: #13c242;
+	display: none;
+}
+
+.email_Already {
+	color: red;
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	display: none;
+}
+
+.nickname_Ok {
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	color: #13c242;
+	display: none;
+}
+
+.nickname_Already {
+	color: red;
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	display: none;
+}
+
+.pw_Ok {
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	color: #13c242;
+	display: none;
+}
+
+.pw_Already {
+	color: red;
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	display: none;
+}
+
+#emailspan {
+	display: none;
+	margin-right: 40px;
+}
+
+.email {
+	background: white;
+}
+
+#hiddenEmail {
+	display: none;
+}
+
+#numOk {
+	display: none;
+}
+
+#memailconfirm {
+	border-bottom: solid 1px grey;
 	text-align: center;
-	height : 50px;
-	border-bottom: none;
+}
+
+.container {
+	width: 650px;
+}
+
+#checknum {
+	font-size: small;
+}
+
+#numOkButton {
+	font-size: small;
+}
+
+.errorEmail {
+	color: red;
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+}
+
+.success {
+	font-size: 12px;
+	margin: 5px 0px 0px 5px;
+	color: #13c242;
 }
