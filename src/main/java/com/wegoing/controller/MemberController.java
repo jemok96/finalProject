@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wegoing.service.EmailService;
 import com.wegoing.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+
 	@PostMapping("/emailCheck")
 	@ResponseBody
 	public int emailCheck(@RequestParam("email")String email) {
@@ -40,12 +42,9 @@ public class MemberController {
 		return cnt;
 	}
 	
-	@GetMapping("/checkNum")
-	@ResponseBody
-	public String checkNum(@RequestParam("email")String email) {
-		log.info("<<<<<<<<<<<<<<<<<<<< email :"+email);
-		log.info("<<<<<<<<<<<<<<<<<<<< 이메일 인증요청이 들어옴!");
-		return null;
-		
-	}
+	
+	
+	
+	
+	
 }
