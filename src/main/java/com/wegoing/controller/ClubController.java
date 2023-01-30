@@ -1,6 +1,12 @@
 package com.wegoing.controller;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wegoing.dao.ClubMemberDAO;
 import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
+import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
 
@@ -19,18 +27,18 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class ClubController {
 	private ClubService cs;
-	
-	String email = "aaa@gmail.com";
+	private ClubMemberService cms; 
 	
 	@Autowired
-	public ClubController(ClubService clubservice ) {
+	public ClubController(ClubService clubservice , ClubMemberService clubmemberservice) {
 		this.cs = clubservice; 
+		this.cms = clubmemberservice;
 	}
-	
-	
+		
 	@PostMapping("/club")
 	public String createClub(@RequestParam("clname")String name, @RequestParam("clexplain")String explain, 
-			@ModelAttribute("cdto")ClubDTO cdto, Model model) {
+			@ModelAttribute("cdto")ClubDTO cdto, Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
+		// 클럽테이블에 insert
 		log.info("here");	
 		log.info(name);
 		log.info(explain);
@@ -38,13 +46,24 @@ public class ClubController {
 		cdto.setClexplain(explain);	
 		cs.addClub(cdto);
 		
-		// 클럽멤버디티오에도 값이 들어간다.
+		// Autoincrement된 clno값 클럽멤버 테이블에 set하기위해 가져오기
+		long clno= cdto.getClno(); 
+		System.out.println(clno);
 		
-		// 1. 
-		// 거기서 리뉴얼 된 값을 가지고 최근 가입 순에 먼저 보임 
-		// 내 협업공간 리스트에도 보임 
+		// 세션에 나에 대한 이메일(pk)가져오기
+		String loginEmail = ""; 
+		log.info(" principal : {} " , userDetails);
+		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
+		System.out.println("email" +loginEmail);
 		
-		// 2.club의 clno값을 가져와서 같이 넘기는 방법이 잇을까/? 
+		// 클럽멤버 테이블에 insert 
+		// MemberDTO dto = new MemberDTO();
+		ClubMemberDTO cmdto = new ClubMemberDTO();
+		cmdto.setEmail(loginEmail);
+		cmdto.setCrank("host"); 
+		cmdto.setCstatus("y");
+		cmdto.setClno(clno);
+		cms.addClubMember(cmdto);
 		
 		return "redirect:/main";
 	}

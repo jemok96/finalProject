@@ -12,11 +12,13 @@ public class ClubDTO {
 	private Long clno;
 	private String clname;
 	private String clexplain;
+	private String cre_dt;
 	
 	@Builder
-	public ClubDTO (long clno, String clname, String clexpalin) {
+	public ClubDTO (long clno, String clname, String clexplain, String cre_dt) {
         this.clno = clno;
         this.clname = clname;
-        this.clexplain =  clexplain; 
+        this.clexplain = clexplain;
+        this.cre_dt = cre_dt;
     }
 }

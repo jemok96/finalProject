@@ -44,8 +44,7 @@
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                </div> 
-                         
+                </div>                        
                 <form th:action="@{/club}" name="frm" method="post" >
 						<div class="modal-body">
 							<div>
@@ -102,20 +101,11 @@
 			<div id="collapsePages" class="collapse"
 				aria-labelledby="headingPages" data-parent="#accordionSidebar">
 				<div class="bg-white py-2 collapse-inner rounded scroll"
-				 style="overflow-X:hidden; width: 100%; height: 200px;" >
+				 style="overflow-X:hidden; width: 100%; height: 200px;">
 					<h6 class="collapse-header">내 협업공간 리스트</h6>
-					<a class="collapse-item" href="login.html">협업공간11111111111111111111</a> <a
-						class="collapse-item" href="register.html">협업공간2</a> <a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a><a
-						class="collapse-item" href="forgot-password.html">협업공간3</a>
+					<div  th:each="myclub : ${myClub}">
+					<a th:href="@{club(clno=${myclub.clno})}" class="collapse-item" th:text="${myclub.clname}"></a>
+					</div>
 				</div>
 			</div></li>
 	</ul>
