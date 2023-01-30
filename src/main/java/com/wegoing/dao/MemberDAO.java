@@ -13,4 +13,5 @@ public interface MemberDAO {
 	MemberDTO findMemberByEmail(String email); // email로 회원정보 조회
 	void insertOne(MemberDTO dto); // 회원가입
 	String findEmailByNameAndTel(Map<String, Object> Data); // 이메일 찾기
+	MemberDTO findNickNameCheck(String nickname);
 }
