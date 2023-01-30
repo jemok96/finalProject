@@ -14,15 +14,15 @@
 			<h6 class="h6 mb-0 text-gray-600">내 협업공간 진행상태</h6>
 		</div>
 		<div style="background: white; height: 380px; padding-top: 10px;" >
-			<div style="margin-left: 6%;">
+			<div style="margin-left:36%;" >
 				<select name="club_name" id="club_name" style="width:40%;">
 					<option value="" style="text-align: center">협업공간 선택</option>
 						<th:block th:each="dto: ${myClub}">
-							<option  th:value="${dto.clname}" th:utext="${dto.clname}">Dog</option>
+							<option  th:value="${dto.clname}" th:utext="${dto.clname}"></option>
 						</th:block>
 				</select>
 			</div>
-			<div id="live-poll-area">
+			<div id="live-poll-area" style="padding:20px; " class="align-items-center">
 				<div class="graph-container">
 					<div class="graph"></div>
 				</div>
