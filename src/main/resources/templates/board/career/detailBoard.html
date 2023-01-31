@@ -4,11 +4,13 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-	
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
 	</script>
-	
-	
+
+
 	<style>
 .content__wrapper {
 	width: 80%;
@@ -111,133 +113,117 @@
 		<div class="content__main">
 			<div class="content__contents" th:text="${free.bcontent}">내용</div>
 		</div>
+		
 		<div class="container">
-		<label for="cmcontent"></label>
-		<form name="commentInsertForm">
-			<div class="input-group">
-				<input type="text" class="form-control" name="cmcontent"
-					placeholder="내용을 입력하세요."> <span class="input-group-btn">
-					<button class="btn btn-default" type="button"
-						name="commentInsertBtn">등록</button>
-				</span>
-			</div>
-		</form>
-	</div>
-	<div class="container">
-		<div class="commentList"></div>
-	</div>
-	</div>
+        
+        <form name="commentInsertForm" >
+            <div class="input-group">
+               <input type="text" class="form-control" id="cmcontent" name="cmcontent" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button onclick="insertComment()" class="btn btn-default" type="button" >등록</button>
+               </span>
+              </div>
+        </form>
+    	</div>
+		
 	
+		
+    <input type="hidden" onclick="getCommentList()" />
 
+
+		<div id="memberListContent">
 	
+	    <!-- Page Marker -->
+	
+		</div>
+
+
+
+	</div>
+
+
 
 	<script>
-		var bno = [[${bno}]]; //게시글 번호
-		console.log(bno);
-
-		$('[name=commentInsertBtn]').click(function() { 
-			var insertData = $('[name=commentInsertForm]').serialize(); 
-			commentInsert(insertData);
-			
-		});
-
-		//댓글 목록 
-		function commentList() {
-			$.ajax({url : '/comment/list',
-					type : 'get',
-						data : {
-							'bno' : bno
-						},
-						success : function(data) {
-							var a = '';
-							$.each(data,function(key, value) {
-												a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-												a += '<div class="commentInfo'+value.cmno+'">'
-														+ '댓글번호 : '
-														+ value.cmno
-														+ ' / 작성자 : '
-														+ value.cmwriter;
-												a += '<a onclick="commentUpdate('
-														+ value.cmno
-														+ ',\''
-														+ value.cmcontent
-														+ '\');"> 수정 </a>';
-												a += '<a onclick="commentDelete('
-														+ value.cmno
-														+ ');"> 삭제 </a> </div>';
-												a += '<div class="commentcmcontent'+value.cmno+'"> <p> 내용 : '
-														+ value.cmcontent
-														+ '</p>';
-												a += '</div></div>';
-											});
-
-							$(".commentList").html(a);
-						}
-					});
-		}
-
-		//댓글 등록
-		function commentInsert(insertData) {
-			$.ajax({
-				url : '/comment/insert/'+bno,
-				type : 'post',
-				data : insertData,
-				success : function(data) {
-					if (data == 1) {
-						commentList(); //댓글 작성 후 댓글 목록 reload
-						$('[name=cmcontent]').val('');
-					}
-				}
-			});
-		}
-
-		//댓글 수정 
-		function commentUpdate(cmno, cmcontent) {
-			var a = '';
-
-			a += '<div class="input-group">';
-			a += '<input type="text" class="form-control" name="cmcontent_'+cmno+'" value="'+cmcontent+'"/>';
-			a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('
-					+ cmno + ');">수정</button> </span>';
-			a += '</div>';
-
-			$('.commentcmcontent' + cmno).html(a);
-
-		}
-
-		//댓글 수정
-		function commentUpdateProc(cmno) {
-			var updatecmcontent = $('[name=cmcontent_' + cmno + ']').val();
-			console.log(updatecmcontent);
-			$.ajax({
-				url : '/comment/update/'+cmno,
-				type : 'post',
-				data : {
-					'cmcontent' : updatecmcontent,
-					'cmno' : cmno
-				},
-				success : function(data) {
-					if (data == 1)
-						commentList(bno); //댓글 수정후 목록 출력 
-				}
-			});
-		}
-
-		//댓글 삭제 
-		function commentDelete(cmno) {
-			$.ajax({
-				url : '/comment/delete/' + cmno,
-				type : 'post',
-				success : function(data) {
-					if (data == 1)
-						commentList(bno); //댓글 삭제후 목록 출력 
-				}
-			});
-		}
-
-		$(document).ready(function() {
-			commentList(); //페이지 로딩시 댓글 목록 출력 
-		});
+	var bno = [[${bno}]];
+	
+	$(document).ready(function getCommentList() {
+        $.ajax({
+            type: "POST",
+            url: "/comment/list/"+bno,
+            data: {'bno':bno}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+                $("#memberListContent").replaceWith(result);
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
+	
+	);
+	// 댓글 목록 가져오기
+	function getCommentList() {
+        $.ajax({
+            type: "POST",
+            url: "/comment/list/"+bno,
+            data: {'bno':bno}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+                $("#memberListContent").replaceWith(result);
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
+	
+	//댓글 추가 후 페이지 reload
+	function insertComment() {
+		var content =$('#cmcontent').val();
+		
+        $.ajax({
+            type: "POST",
+            url: "/comment/insert/"+bno,
+            data: {'cmcontent':content}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+           		console.log(content);
+           		$.ajax(getCommentList());
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
+	
+	function deleteComment() {
+        $.ajax({
+            type: "POST",
+            url: "/comment/delte/"+cmno,
+            data: {'cmcontent':content}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+           		console.log(content);
+           		$.ajax(getCommentList());
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
 	</script>
 
 </th:block>

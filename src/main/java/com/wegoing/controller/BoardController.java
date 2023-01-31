@@ -23,7 +23,6 @@ import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.BoardService;
 import com.wegoing.service.CommentService;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -42,6 +41,7 @@ public class BoardController {
 	}
 	
 
+	
 
 	@GetMapping("/board")
 	public String boardMain(Model model) {
@@ -53,6 +53,7 @@ public class BoardController {
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
+		
 		return "board/boardmain";
 	}
 	@GetMapping("/board/add")
@@ -77,8 +78,7 @@ public class BoardController {
 		return "redirect:/board";
 	}
 
-	
-	
+
 	
 	@GetMapping("/freeboard")
 	public String freeboard(Model model,Integer page, Integer pageSize) {
@@ -86,13 +86,10 @@ public class BoardController {
         if(pageSize ==null) pageSize = 10;
         int totalCnt = service.countBoard(FREE);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map<String, Integer> map = new HashMap();
-        map.put("offset",(page-1)*pageSize);
-        map.put("pageSize",pageSize);
-        map.put("bno",FREE);
+
+		Map<String, Integer> map = pageHandler(page, pageSize,FREE);
 
         List<BoardDTO> free = service.selectPage(map);
-        List<Integer> getBno =new ArrayList<Integer>();
         List<Integer> comCount = new ArrayList<Integer>();
         
         for(int i = 0; i<free.size(); i++) {
@@ -110,17 +107,18 @@ public class BoardController {
 	@GetMapping("/freeboard/{bno}")
 	public String freeboardDetail(@PathVariable Integer bno,Model model,
 			@AuthenticationPrincipal PrincipalDetails userDetails) {
-		
-		BoardDTO free =  service.selectOne(bno);
+
+		BoardDTO free =  service.selectOne(bno); // 게시물 작성자
 		if(free ==null) {
 			return "error-page/500";
 		}
-		String nickname =null;
-		String writer = free.getNickname();
+		// 접속자와 댓글쓴사람 닉네임이 같으면 수정삭제가능
+		String nickname ="";
+		String writer = free.getNickname(); // 게시물 작성자 닉네임
 		service.updateHit(bno);
 		
 		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
-		if(nickname !=null &&nickname.equals(writer)) {
+		if(!nickname.equals("") &&nickname.equals(writer)) { // 작성자와 접속자가 같으면
 			model.addAttribute("nick","YES");
 		}
 		else {
@@ -131,6 +129,7 @@ public class BoardController {
 		model.addAttribute("free",free);
 		return "board/free/detailBoard";
 	}
+
 	
 	@GetMapping("/freeboard/{bno}/edit")
 	public String freeboardEdit(@PathVariable int bno,Model model) {
@@ -169,13 +168,9 @@ public class BoardController {
         if(pageSize ==null) pageSize = 10;
         int totalCnt = service.countBoard(PET);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map<String, Integer> map = new HashMap();
-        map.put("offset",(page-1)*pageSize);
-        map.put("pageSize",pageSize);
-        map.put("bno",PET);
-
+        Map<String, Integer> map = pageHandler(page, pageSize,PET);
+ 
         List<BoardDTO> free = service.selectPage(map);
-        List<Integer> getBno =new ArrayList<Integer>();
         List<Integer> comCount = new ArrayList<Integer>();
         
         for(int i = 0; i<free.size(); i++) {
@@ -224,7 +219,8 @@ public class BoardController {
 		return "board/pet/editBoard";
 	}
 	@PostMapping("/pet/{bno}/edit")
-	public String petboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+	public String petboardEditcheck(@PathVariable int bno,Model model, 
+			@RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
 		BoardDTO free = service.selectOne(bno);
 		model.addAttribute("free",free);
 		
@@ -248,13 +244,10 @@ public class BoardController {
         if(pageSize ==null) pageSize = 10;
         int totalCnt = service.countBoard(HOBBY);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map<String, Integer> map = new HashMap();
-        map.put("offset",(page-1)*pageSize);
-        map.put("pageSize",pageSize);
-        map.put("bno",HOBBY);
+        
+        Map<String, Integer> map = pageHandler(page, pageSize,HOBBY);
 
         List<BoardDTO> free = service.selectPage(map);
-        List<Integer> getBno =new ArrayList<Integer>();
         List<Integer> comCount = new ArrayList<Integer>();
         
         for(int i = 0; i<free.size(); i++) {
@@ -326,13 +319,10 @@ public class BoardController {
         if(pageSize ==null) pageSize = 10;
         int totalCnt = service.countBoard(CAREER);
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map<String, Integer> map = new HashMap();
-        map.put("offset",(page-1)*pageSize);
-        map.put("pageSize",pageSize);
-        map.put("bno",CAREER);
+        
+        Map<String, Integer> map = pageHandler(page, pageSize,CAREER);
 
         List<BoardDTO> free = service.selectPage(map);
-        List<Integer> getBno =new ArrayList<Integer>();
         List<Integer> comCount = new ArrayList<Integer>();
         
         for(int i = 0; i<free.size(); i++) {
@@ -353,12 +343,12 @@ public class BoardController {
 		if(free ==null) {
 			return "error-page/500";
 		}
-		String nickname =null;
+		String nickname ="";
 		String writer = free.getNickname();
 		service.updateHit(bno);
 		
-		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
-		if(nickname !=null &&nickname.equals(writer)) {
+		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();//접속자 닉네임
+		if(!nickname.equals("") &&nickname.equals(writer)) {
 			model.addAttribute("nick","YES");
 		}
 		else {
@@ -367,6 +357,7 @@ public class BoardController {
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
 		model.addAttribute("bno",bno);
+		model.addAttribute("nickname",nickname);
 		return "board/career/detailBoard";
 	}
 	
@@ -395,5 +386,13 @@ public class BoardController {
 	public String careerboardDelete(@PathVariable int bno) {
 		service.deleteOne(bno);
 		return "redirect:/board";
+	}
+	
+	private Map<String,Integer> pageHandler(Integer page, Integer pageSize,Integer cate){
+        Map<String, Integer> map = new HashMap();
+        map.put("offset",(page-1)*pageSize);
+        map.put("pageSize",pageSize);
+        map.put("bno",cate);
+        return map;
 	}
 }
