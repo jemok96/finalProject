@@ -50,4 +50,7 @@ public class BoardService {
 	public int deleteOne(int bno) {
 		return dao.deleteOne(bno);
 	}
+	public BoardDTO selectTest(int bno) {
+		return dao.selectTest(bno);
+	}
 }

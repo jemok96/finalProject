@@ -29,6 +29,7 @@ class BoardTest {
 	
 	@Test
 	void insertTest() {
+		
 		BoardDTO dto = BoardDTO.builder().email("aaa@gmail.com").cateno(4).bcontent("test").btitle("test").nickname("da").build();
 		assertTrue(boardService.insert(dto) == 1);
 		

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<style>
+.wrapper{
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+</style>
+<div id="memberListContent">
+
+    <div class="wrapper" th:each="comment :${comments}">
+      <div>작성자: <span th:text="${comment.cmwriter}">nickname</span></div>
+      <div>내용: <span th:text="${comment.cmcontent}">왕 너무 좋아요~~</span></div>
+      <div>작성일자: <span th:text="${comment.reg_dt}">오늘</span></div>
+      <div th:if="${comment.cmwriter == nickname}">
+      		
+      		<input  th:type="submit" th:value="삭제" 
+      		class="btn btn-outline-primary" onclick="deleteComment()"/>
+      		<input id="cmno" th:type="hidden" th:value="${comment.cmno}"/>
+      		
+      </div>
+    </div>
+	
+    <!-- Page Marker -->
+
+
+</div>
+<script>
+function deleteComment() {
+	var cmno = $('#cmno').val();
+    $.ajax({
+        type: "POST",
+        url: "/comment/delete/"+cmno,
+        dataType: "text"
+    })
+        .done(function (result) {
+       		console.log(cmno);
+       		$.ajax(getCommentList());
+        })
+        .fail(function(jqXHR) {
+            console.log(jqXHR);
+        })
+        .always(function() {
+            console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+        })
+}
+</script>
+</html>
