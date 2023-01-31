@@ -24,5 +24,6 @@ public interface BoardDao {
 	 int countBoard(int cateno);
 	 int update(BoardDTO dto);
 	 int updateHit(int bno);
+	 BoardDTO selectTest(int bno);
 	 
 }
