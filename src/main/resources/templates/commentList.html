@@ -11,7 +11,7 @@
     <div class="wrapper" th:each="comment :${comments}">
       <div>작성자: <span th:text="${comment.cmwriter}">nickname</span></div>
       <div>내용: <span th:text="${comment.cmcontent}">왕 너무 좋아요~~</span></div>
-      <div>작성일자: <span th:text="${comment.reg_dt}">오늘</span></div>
+      <div>작성일자: <span th:text="${#dates.format(comment.reg_dt,'MM-dd HH:mm')}">오늘</span></div>
       <div th:if="${comment.cmwriter == nickname}">
       		
       		<input  th:type="submit" th:value="삭제" 

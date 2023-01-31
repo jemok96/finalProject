@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- * 사용하는 거 안좋음 -->
+
  <mapper namespace="com.wegoing.dao.BoardDao">
   	<select id="selectCategory" resultType="BoardDTO" parameterType="int">
   		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
