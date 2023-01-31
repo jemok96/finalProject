@@ -1,11 +1,8 @@
 package com.wegoing.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -145,7 +142,7 @@ public class BoardController {
 	
 	
 	
-//	================================================
+
 	
 	@GetMapping("/pet")
 	public String petboard(Model model,Integer page, Integer pageSize) {

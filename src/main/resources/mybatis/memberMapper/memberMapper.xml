@@ -5,13 +5,13 @@
   
 <mapper namespace="com.wegoing.dao.MemberDAO">
     <select id="findMemberByEmail" parameterType="String" resultType="com.wegoing.dto.MemberDTO">
-        select *
+        select email, name, nickname, pw, tel, image, auth, join_dt
         from member
         where email = #{email}
     </select>
     <insert id="insertOne" parameterType="com.wegoing.dto.MemberDTO">
         insert into member
-        values (#{email}, #{name}, #{nickname}, #{pw}, #{tel}, null, #{auth}, sysdate())
+        values (#{email}, #{name}, #{nickname}, #{pw}, #{tel}, null, 'ROLE_USER', sysdate())
     </insert>
     <select id="findEmailByNameAndTel" parameterType="com.wegoing.dto.MemberDTO" resultType="String">
         select email
@@ -19,4 +19,10 @@
         where name = #{name}
         and tel = #{tel}
     </select>
+    
+    <select id="findNickNameCheck" parameterType="String" resultType="MemberDTO">
+ 		SELECT email, name, nickname, pw, tel, image, auth, join_dt
+		FROM member
+		WHERE nickname = #{nickname};
+ 	</select>
 </mapper>
