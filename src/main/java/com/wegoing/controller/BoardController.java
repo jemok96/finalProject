@@ -384,6 +384,7 @@ public class BoardController {
 	}
 	@PostMapping("/career/{bno}/delete")
 	public String careerboardDelete(@PathVariable int bno) {
+		commentService.commentDeleteBno(bno);
 		service.deleteOne(bno);
 		return "redirect:/board";
 	}

@@ -37,4 +37,8 @@
     <delete id="commentDelete" parameterType="int">
         DELETE FROM comment WHERE cmno = #{cmno}
     </delete>
+    <delete id="commentDeleteBno" parameterType="int">
+    	delete from comment
+		where bno = #{bno};
+    </delete>
 </mapper>

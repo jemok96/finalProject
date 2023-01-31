@@ -27,6 +27,7 @@ public interface CommentDao {
 	 
 	    // 댓글 삭제
 	    public int commentDelete(int cno);
-	 
+	    // 게시판 관련 댓글 전부 삭제
+	    public int commentDeleteBno(int bno);
 	
 }
