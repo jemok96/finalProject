@@ -10,9 +10,53 @@
 		<div class="d-sm-flex align-items-center justify-content-between mb-5">
 			<h2 class="h4 mb-0 text-gray-800">WEGOING에 오신것을 환영합니다!</h2>
 		</div>
-		
-		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-3">
+			<h6 class="h6 mb-0 text-gray-600">내 협업공간 진행상태</h6>
+		</div>
+		<div style="background: white; height: 380px; padding-top: 10px;" >
+			<div style="margin-left:36%;" >
+				<select name="club_name" id="club_name" style="width:40%;">
+					<option value="" style="text-align: center">협업공간 선택</option>
+						<th:block th:each="dto: ${myClub}">
+							<option  th:value="${dto.clname}" th:utext="${dto.clname}"></option>
+						</th:block>
+				</select>
+			</div>
+			<div id="live-poll-area" style="padding:20px; " class="align-items-center">
+				<div class="graph-container">
+					<div class="graph"></div>
+				</div>
+				<div class="answer-list"></div>
+			</div>
+		</div>
+		<!-- Page Heading -->
+		<div class="d-sm-flex align-items-center justify-content-between mb-3" style="margin-top: 50px;">
+			<h6 class="h6 mb-0 text-gray-600">최근가입순</h6>
+		</div>
+		<!-- Content Row -->
+		<div class="row" >
+			<th:block th:each="dto, dtoStat: ${myClub}">
+			<div class="col-xl-3 col-md-6 mb-4"  th:if="${dtoStat.index < 4}"  >
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div
+									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1">
+									<a th:href="@{club(clno=${dto.clno})}" style="text-decoration-line: none; " th:text="${dto.clname}"> </a>
+								</div>
+								<div class="text-xs font font-weight-bold text-gray-800" th:text="${dto.clexplain}"></div>
+							</div>
+							<div class="col-auto">
+								</i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</th:block>			
+		</div> 
+		<div class="d-sm-flex align-items-center justify-content-between mb-3" style="margin-top: 10px;">
 			<h6 class="h6 mb-0 text-gray-600">최근접속순</h6>
 		</div>
 		<!-- Content Row -->
@@ -106,59 +150,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- Page Heading -->
-		<div class="d-sm-flex align-items-center justify-content-between mb-3">
-			<h6 class="h6 mb-0 text-gray-600">최근가입순</h6>
-		</div>
-		<!-- Content Row -->
-		<div class="row">
-			<div class="col-xl-3 col-md-6 mb-4"  th:each="dto: ${myClub}" >
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div
-									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1">
-									<a th:href="@{club(clno=${dto.clno})}" style="text-decoration-line: none; " th:text="${dto.clname}"> </a>
-								</div>
-							</div>
-							<div class="col-auto">
-								</i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>			
-		</div> 
-		<div class="d-sm-flex align-items-center justify-content-between mb-3">
-			<h6 class="h6 mb-0 text-gray-600">내 협업공간 진행상태</h6>
-		</div>
-		<div style="background: white; height: 380px;"
-			class="d-sm-flex align-items-center justify-content-between mb-5">
-			<div style="margin-left: 6%;">
-				<select name="pets" id="pet-select" style="">
-					<option value="">-----------------협업공간 선택-----------------</option>
-					<option value="dog">Dog</option>
-					<option value="cat">Cat</option>
-					<option value="hamster">Hamster</option>
-					<option value="parrot">Parrot</option>
-					<option value="spider">Spider</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-					<option value="goldfish">Goldfish</option>
-				</select>
-			</div>
-			<div id="live-poll-area">
-				<div class="graph-container">
-					<div class="graph"></div>
-				</div>
-				<div class="answer-list"></div>
-			</div>
-		</div>
+
+		
 	</div>
 </th:block>
 </html>

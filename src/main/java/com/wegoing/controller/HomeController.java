@@ -32,16 +32,21 @@ public class HomeController {
 	@GetMapping("/main")
 	public String main(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
 		model.addAttribute("user", userDetails.getMdto());
+		// 여기서부터 
 		String loginEmail =""; 
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
 		List<ClubDTO> myClub= cms.selectAll(loginEmail);
-		model.addAttribute("myClub", myClub);
+		model.addAttribute("myClub", myClub); // 여기까지는 보여지는 협업툴 사이트 보여지는 html로 이동할때마다 필요함 - 사이드바 내협업리스트 관련 
 		System.out.println("main돌아옴");
 		return "home/mainpage";
 	}
 	
 	@GetMapping("/partner")
-	public String partnerForm() {
+	public String partnerForm(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
+		String loginEmail =""; 
+		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
+		List<ClubDTO> myClub= cms.selectAll(loginEmail);
+		model.addAttribute("myClub", myClub);
 		return "partner/partnerForm";
 	}
 	
