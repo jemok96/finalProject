@@ -104,7 +104,7 @@
 				 style="overflow-X:hidden; width: 100%; height: 200px;">
 					<h6 class="collapse-header">내 협업공간 리스트</h6>
 					<div  th:each="myclub : ${myClub}">
-					<a th:href="@{club(clno=${myclub.clno})}" class="collapse-item" th:text="${myclub.clname}" ></a>
+					<a th:href="@{/club/{clno}(clno=${myclub.clno})}" class="collapse-item" th:text="${myclub.clname}" ></a>
 					</div>
 				</div>
 			</div></li>
