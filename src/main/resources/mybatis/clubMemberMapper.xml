@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wegoing.dao.ClubMemberDAO">
+	<insert id="insetClubMember"
+		parameterType="com.wegoing.dto.ClubMemberDTO">
+		INSERT INTO clubmember
+		values(null, #{cstatus}, #{crank},
+		#{clno}, #{email}, default)
+	</insert>
+	<select id="getAll" parameterType="String" resultType="com.wegoing.dto.ClubDTO" >
+		select clno, clname, clexplain
+		from club
+		where clno in ( select clno
+						from clubmember
+						where email = #{email})
+		order by clno desc
+	</select>
+</mapper>
