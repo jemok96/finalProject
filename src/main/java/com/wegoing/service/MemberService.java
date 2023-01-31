@@ -48,4 +48,8 @@ public class MemberService {
 		dao.insertOne(dto);
 	}
 	
+	public String findEmail(MemberDTO dto) {
+		return dao.findEmailByNameAndTel(dto);
+	}
+	
 }
