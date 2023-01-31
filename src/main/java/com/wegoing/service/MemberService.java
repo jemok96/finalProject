@@ -52,4 +52,8 @@ public class MemberService {
 		return dao.findEmailByNameAndTel(dto);
 	}
 	
+	public void updatePw(MemberDTO dto) {
+		dao.updatePw(dto);
+	}
+	
 }
