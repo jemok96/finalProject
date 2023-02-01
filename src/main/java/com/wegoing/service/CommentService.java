@@ -42,6 +42,10 @@ public class CommentService {
     public int commentDelete(int cno) {
     	return dao.commentDelete(cno);
     }
+    // 게시판 관련 댓글 전부 삭제
+    public int commentDeleteBno(int bno) {
+    	return dao.commentDeleteBno(bno);
+    }
  
 	
 }

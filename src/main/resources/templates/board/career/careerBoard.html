@@ -98,13 +98,27 @@ a {
 	border: 1px solid rgba(0,0,0,0.4);
 	height: 37px;
 }
-
+.item__title{
+width : 400px;       text-overflow: ellipsis;  
+  white-space: nowrap;    
+  overflow : hidden;    
+  display : block;  
+}
+.item__contents {
+  width : 400px;     
+  height:100px;
+  text-overflow: ellipsis;  
+  white-space: wrap;    
+  overflow : hidden;    
+  display : block;   
+}
 .item__eye,.item__hits,.item__comment{
 	margin-right: 5px;
 	}
 button[type="button"]{
 	margin-right: 1px;
 	}
+
 </style>
 <script th:inline="javascript">
 	var msg = [[${msg}]];
@@ -141,12 +155,12 @@ button[type="button"]{
 		<div class="item" th:each="free,idx:${free}">
 			<div class="item__column">
 				<a th:href="@{/career/{bno}(bno=${free.bno})}"
-					th:text="${free.btitle}" class="item__title"> </a>
+					th:text="${free.btitle}" class="item__title">제목</a>
 			</div>
 
 			<div class="item__column">
 				<a th:href="@{/career/{bno}(bno=${free.bno})}"
-					th:text="${free.bcontent}"></a>
+					th:text="${free.bcontent}" class="item__contents">내용</a>
 			</div>
 			<div class="item__column">
 				<div class="item__column__left">
