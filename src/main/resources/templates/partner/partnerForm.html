@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/default}">
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	
 <th:block layout:fragment="content">
+<script th:src="@{/js/partner.js}"></script>
 	<!-- Begin Page Content -->
 	<!-- 나중에 반복문 쓸 것도 있음 -->
 	<div class="container-fluid">
@@ -17,17 +21,23 @@
 										<h1 class="h4 text-gray-900 mb-4">직접 입력 파트너 추가</h1>
 									</div>
 									<div>
-										<form class="user" method="get">
+										<form th:action="@{partner/partnerForm}" class="user" method="post" name="frm1">
 											<div class="form-group">
 												<div style="padding-bottom: 10px;">
 													<input type="text" class="form-control form-control-user"
-														id="exampleInputEmail" placeholder="추가할 파트너의 이메일을 입력하십시오.">
+														id="searchPartner" name="partnerEmail" placeholder="추가할 파트너의 이메일을 입력하십시오.">
 												</div>
 												<div>
-													<input type="submit"
-														class="btn btn-primary btn-user btn-block" value="추가" />
+													<input type="button"
+														class="btn btn-info btn-user btn-block" value="검사" onclick="isExists();"/>
 												</div>
-											</div>
+												<div id="idCk" style="font-size: 8px; padding-top: 10px; margin-left: 10px;"></div>
+												<hr>
+												<div>
+													<input type="button"
+														class="btn btn-primary btn-user btn-block" value="추가" onclick="partnerIsnert();"/>
+												</div>
+											</div>											
 										</form>
 									</div>
 								</div>
@@ -116,7 +126,7 @@
 										</div>
 									</div>
 									<div>
-										<span style="margin-left: 10px;">*추천 파트너는 나를 파트너로 추가한 회원입니다.</span>
+										<span style="margin-left: 10px; font-size: 8px;">*추천 파트너는 나를 파트너로 추가한 회원입니다.</span>
 									</div>
 								</div>
 							</div>
