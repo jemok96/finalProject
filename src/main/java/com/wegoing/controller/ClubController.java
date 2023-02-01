@@ -72,6 +72,7 @@ public class ClubController {
 		    return "redirect:/main";
 		  }
 	}
+	
 
 	
 }

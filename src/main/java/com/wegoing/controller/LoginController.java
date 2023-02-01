@@ -27,10 +27,6 @@ public class LoginController {
 		return "home/register";
 	}
 	
-	@GetMapping("/testregister")
-	public String registerTest() {
-		return "home/testregister";
-	}
 	
 	
 	@PostMapping("/register") // insert
