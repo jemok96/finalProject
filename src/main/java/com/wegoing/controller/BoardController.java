@@ -1,6 +1,7 @@
 package com.wegoing.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class BoardController {
 		model.addAttribute("board",new BoardDTO());
 		return "board/addboard";
 	}
+
 	@PostMapping("/board/add")
 	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails) {
 		if(bindingResult.hasErrors()) {
@@ -78,7 +80,7 @@ public class BoardController {
 		return "redirect:/board";
 	}
 
-
+	
 	
 	@GetMapping("/freeboard")
 	public String freeboard(Model model,Integer page, Integer pageSize) {
@@ -137,6 +139,7 @@ public class BoardController {
 		if(free ==null) {
 			return "error-page/500";
 		}
+		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
 		return "board/free/editBoard";
 	}
@@ -215,6 +218,7 @@ public class BoardController {
 		if(free ==null) {
 			return "error-page/500";
 		}
+		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
 		return "board/pet/editBoard";
 	}
@@ -291,6 +295,7 @@ public class BoardController {
 		if(free ==null) {
 			return "error-page/500";
 		}
+		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
 		return "board/hobby/editBoard";
 	}
@@ -367,17 +372,21 @@ public class BoardController {
 		if(free ==null) {
 			return "error-page/500";
 		}
+		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
 		return "board/career/editBoard";
 	}
 	@PostMapping("/career/{bno}/edit")
-	public String careerboardEditcheck(@PathVariable int bno,Model model, @RequestParam("btitle")String btitle, @RequestParam("bcontent")String content) {
+	public String careerboardEditcheck(@ModelAttribute("board")BoardDTO board,
+			@PathVariable int bno,Model model) {
+		Date date = new Date();
 		BoardDTO free = service.selectOne(bno);
 		model.addAttribute("free",free);
 		
-		free.setBtitle(btitle);
-		free.setBcontent(content);
-		
+		free.setBtitle(board.getBtitle());
+		free.setBcontent(board.getBcontent());
+		free.setBno(board.getBno());
+		free.setUp_dt(date);
 		service.update(free);
 		
 		return "redirect:/career";
@@ -388,6 +397,9 @@ public class BoardController {
 		service.deleteOne(bno);
 		return "redirect:/board";
 	}
+	
+	
+	
 	
 	private Map<String,Integer> pageHandler(Integer page, Integer pageSize,Integer cate){
         Map<String, Integer> map = new HashMap();

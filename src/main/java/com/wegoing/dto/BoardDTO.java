@@ -17,11 +17,14 @@ public class BoardDTO {
 
 	private Integer bno;
 	private String email;
+	
 	@NotNull(message="게시판을 선택해주세요")
 	private Integer cateno;
+	
 	@NotBlank(message="제목을 입력하세요")
 	@Size(max=30,message="최대30자 입니다")
 	private String btitle;
+	
 	@NotBlank(message="내용을 입력하세요")
 	private String bcontent;
 	private Integer bhits;
