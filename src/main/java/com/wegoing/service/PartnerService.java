@@ -1,5 +1,7 @@
 package com.wegoing.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,15 @@ public class PartnerService {
 
 	public void updatePstatus(PartnerDTO pto) {
 		pao.modifyPstatus(pto);
+	}
+
+	public List<PartnerDTO> selectRecPartner(String loginEmail, String pstatus) {
+		List<PartnerDTO> pto = pao.getRecPartner(loginEmail, pstatus);
+		return pto;
+	}
+
+	public void erasePartner(String loginEmail, String partnerEmail) {
+		pao.deleteMyPartner(loginEmail, partnerEmail);
+		
 	}
 }

@@ -25,4 +25,11 @@
 		FROM member
 		WHERE nickname = #{nickname};
  	</select>
+ 	<select id="selectMyPartners" parameterType="String" resultType="MemberDTO" >
+		select email, name, nickname, pw, tel, image, auth, join_dt
+		from member
+		where email in ( select pemail
+							from partner
+							where email = #{email} )
+	</select>
 </mapper>

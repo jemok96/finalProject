@@ -1,5 +1,6 @@
 package com.wegoing.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -14,4 +15,5 @@ public interface MemberDAO {
 	void insertOne(MemberDTO dto); // 회원가입
 	String findEmailByNameAndTel(Map<String, Object> Data); // 이메일 찾기
 	MemberDTO findNickNameCheck(String nickname);
+	List<MemberDTO> selectMyPartners(String email); // 내파트너 조회하기, 이미지도 불러와야해서 MemberDAO이용
 }

@@ -2,24 +2,35 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.wegoing.dao.PartnerDAO">
- 	<select id="existsPartner" parameterType="String" resultType="int"> 
- 		select count(*)
- 		from partner
- 		where pemail = #{pemail} and email = #{email}
- 	</select>
- 	<select id="enrollMe" parameterType="String" resultType="int"> 
- 		select count(*)
- 		from partner
- 		where pemail = #{email} and email = #{pemail}
- 	</select>
- 	<update id="modifyPstatus" parameterType="PartnerDTO">
- 		update partner
- 		set pstatus = #{pstatus}
- 		where pemail = #{email} and email = #{pemail} 
- 	</update>
- 	<insert id="insertOne" parameterType="PartnerDTO">
- 		insert into partner
- 		values(null, #{pemail}, default, #{pstatus}, #{email})
- 	</insert>
- </mapper>
+<mapper namespace="com.wegoing.dao.PartnerDAO">
+	<select id="existsPartner" parameterType="String"
+		resultType="int">
+		select count(*)
+		from partner
+		where pemail = #{pemail} and email = #{email}
+	</select>
+	<select id="enrollMe" parameterType="String" resultType="int">
+		select count(*)
+		from partner
+		where pemail = #{email} and email = #{pemail}
+	</select>
+	<select id="getRecPartner" parameterType="String"
+		resultType="PartnerDTO">
+		select pno, pemail, padd_dt, pstatus, email
+		from partner
+		where pemail = #{email} and pstatus = #{pstatus}
+	</select>
+	<update id="modifyPstatus" parameterType="PartnerDTO">
+		update partner
+		set pstatus = #{pstatus}
+		where pemail = #{email} and email = #{pemail}
+	</update>
+	<insert id="insertOne" parameterType="PartnerDTO">
+		insert into partner
+		values(null, #{pemail}, default, #{pstatus}, #{email})
+	</insert>
+	<delete id="deleteMyPartner" parameterType="String">
+		delete from partner
+		where email = #{email} and pemail = #{pemail}
+	</delete>
+</mapper>

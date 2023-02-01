@@ -1,15 +1,22 @@
 package com.wegoing.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wegoing.dto.ClubDTO;
+import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PartnerDTO;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.MemberService;
 import com.wegoing.service.PartnerService;
 
@@ -19,14 +26,31 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class PartnerController {
 	
+	private ClubMemberService cms;
 	private MemberService ms;
 	private PartnerService ps; 
 	String loginEmail="";
 	int result = 0; 
 	
-	public PartnerController(MemberService ms, PartnerService ps) {
+	public PartnerController(MemberService ms, PartnerService ps, ClubMemberService cmservice) {
 		this.ms = ms;
 		this.ps = ps; 
+		this.cms = cmservice; 
+	}
+	
+	@GetMapping("/partner")
+	public String partnerForm(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
+
+		// 여기도 동일한 코드가 필요
+		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
+		List<ClubDTO> myClub= cms.selectAll(loginEmail);
+		model.addAttribute("myClub", myClub);
+		String pstatus = "n"; 
+		List<PartnerDTO> pto =  ps.selectRecPartner(loginEmail, pstatus);
+		model.addAttribute("recPartner", pto);
+		List<MemberDTO> mto = ms.getMyPartners(loginEmail);
+		model.addAttribute("myPartner", mto);
+		return "partner/partnerForm";
 	}
 	
 	@PostMapping("partner/partnerCK")
@@ -78,6 +102,17 @@ public class PartnerController {
 			ps.enrollPartner(pto);
 		}
 
+		return "redirect:/partner";
+	}
+	
+	@PostMapping("partner/deletePartner")
+	@ResponseBody
+	public String deletePartner(@RequestParam("deleteEmail")String partnerEmail,@AuthenticationPrincipal PrincipalDetails userDetails) {
+		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
+		log.info(loginEmail);
+		log.info(partnerEmail);
+		ps.erasePartner(loginEmail, partnerEmail);
+		
 		return "redirect:/partner";
 	}
 

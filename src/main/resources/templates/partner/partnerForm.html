@@ -10,7 +10,7 @@
 	<!-- Begin Page Content -->
 	<!-- 나중에 반복문 쓸 것도 있음 -->
 	<div class="container-fluid">
-		<div class="row justify-content-center">
+		<div  class="d-sm-flex align-items-center justify-content-between mb-5" style="margin-left: 13%;">
 			<div class="col-xl-10 col-lg-12 col-md-9">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
@@ -18,7 +18,7 @@
 							<div class="col-lg-6">
 								<div class="p-5">
 									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">직접 입력 파트너 추가</h1>
+										<h1 class="h4 text-gray-900 mb-4">파트너 추가</h1>
 									</div>
 									<div>
 										<form th:action="@{partner/partnerForm}" class="user" method="post" name="frm1">
@@ -29,105 +29,75 @@
 												</div>
 												<div>
 													<input type="button"
-														class="btn btn-info btn-user btn-block" value="검사" onclick="isExists();"/>
+														class="btn btn-info btn-user btn-block" value="추가" onclick="partnerInsert();"/>
 												</div>
-												<div id="idCk" style="font-size: 8px; padding-top: 10px; margin-left: 10px;"></div>
+												<div id="idCk" style="font-size: 8px; padding-top: 10px; margin-left: 10px; height: 10px;"></div>
 												<hr>
-												<div>
-													<input type="button"
-														class="btn btn-primary btn-user btn-block" value="추가" onclick="partnerIsnert();"/>
-												</div>
 											</div>											
 										</form>
+									</div>
+									<div class="text-center">
+										<h1 class="h4 text-gray-900 mb-4">추천 파트너</h1>
+									</div>
+									<div style="overflow-X: hidden; height: 150px; border: lightgray 0.5px solid;">
+										<div th:each="pto: ${recPartner}">
+											<a class="dropdown-item d-flex align-items-center" href="#">
+												<div>
+													<div class="text-truncate" id="recEmail" th:text="${pto.email}" onclick="moveText();"></div>
+												</div>
+											</a>
+										</div>
+									</div>
+									<div>
+										<span style="margin-left: 10px; font-size: 8px;">*추천 파트너는 나를 파트너로 추가한 회원입니다.</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="p-5">
 									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">추천 파트너</h1>
+										<h1 class="h4 text-gray-900 mb-4">내 파트너</h1>
 									</div>
-									<div style="overflow-X: hidden; height: 300px; border: lightgray 0.5px solid;">
-										<div data-toggle="modal" data-target="#addRecPartner">
-											<a class="dropdown-item d-flex align-items-center" href="#">
+									<div style="overflow-X: hidden; height: 350px; border: lightgray 0.5px solid;">
+										<div data-toggle="modal" data-target="#deletePartner" th:each="mto: ${myPartner}">
+											<a class="dropdown-item d-flex align-items-center" href="#" 
+											th:partnerEmail="${mto.email}"
+											th:onclick="deleteCk(this.getAttribute('partnerEmail'))">
 												<div class="dropdown-list-image mr-3">
 													<img class="rounded-circle"
 														src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
 														alt="...">
 												</div>
 												<div>
-													<div class="text-truncate">이하나</div>
-													<div class="text-truncate text-gray-600">이메일</div>
-												</div>
-											</a> <a class="dropdown-item d-flex align-items-center" href="#">
-												<div class="dropdown-list-image mr-3">
-													<img class="rounded-circle"
-														src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-														alt="...">
-												</div>
-												<div>
-													<div class="text-truncate">이하나</div>
-													<div class="text-truncate text-gray-600">이메일</div>
-												</div>
-											</a> <a class="dropdown-item d-flex align-items-center" href="#">
-												<div class="dropdown-list-image mr-3">
-													<img class="rounded-circle"
-														src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-														alt="...">
-												</div>
-												<div>
-													<div class="text-truncate">이하나</div>
-													<div class="text-truncate text-gray-600">이메일</div>
-												</div>
-											</a> <a class="dropdown-item d-flex align-items-center" href="#">
-												<div class="dropdown-list-image mr-3">
-													<img class="rounded-circle"
-														src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-														alt="...">
-												</div>
-												<div>
-													<div class="text-truncate">이하나</div>
-													<div class="text-truncate text-gray-600">이메일</div>
-												</div>
-											</a><a class="dropdown-item d-flex align-items-center" href="#">
-												<div class="dropdown-list-image mr-3">
-													<img class="rounded-circle"
-														src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-														alt="...">
-												</div>
-												<div>
-													<div class="text-truncate">이하나</div>
-													<div class="text-truncate text-gray-600">이메일</div>
+													<div id="myPartner" class="text-truncate"  th:text="${mto.email}"></div>
 												</div>
 											</a>
 										</div>
 									</div>
-									<div class="modal fade" id="addRecPartner" tabindex="-1"
+									<div class="modal fade" id="deletePartner" tabindex="-1"
 										role="dialog" aria-labelledby="exampleModalLabel"
 										aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
 													<h5 class="modal-title" id="exampleModalLabel">해당 파트너를
-														내 파트너로 추가하시겠습니까?</h5>
+														내 파트너에서 삭제하시겠습니까?</h5>
 													<button class="close" type="button" data-dismiss="modal"
 														aria-label="Close">
 														<span aria-hidden="true">×</span>
 													</button>
 												</div>
-												<div class="modal-body">추가 버튼을 누르시면 이하나 님은 내 파트너에
-													추가됩니다.</div>
+												<form action="">
+												<div class="modal-body" id="deletePartnerCk"></div>
+												</form>
 												<div class="modal-footer">
 													<button class="btn btn-secondary" type="button"
 														data-dismiss="modal">취소</button>
-													<a class="btn btn-primary" href="login.html">추가</a>
+													<button class="btn btn-primary" onclick="deletePartner();">삭제</button>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div>
-										<span style="margin-left: 10px; font-size: 8px;">*추천 파트너는 나를 파트너로 추가한 회원입니다.</span>
-									</div>
+									</div>					
 								</div>
 							</div>
 						</div>
