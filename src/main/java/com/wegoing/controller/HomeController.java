@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	private ClubMemberService cms; 
+	String loginEmail =""; 
 	
 	@Autowired
 	public HomeController(ClubMemberService cmservice) {
@@ -37,13 +38,10 @@ public class HomeController {
 	@GetMapping("/main")
 	public String main(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
 		model.addAttribute("user", userDetails.getMdto());
-		String loginEmail =""; 
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
 		List<ClubDTO> myClub= cms.selectAll(loginEmail);
 		model.addAttribute("myClub", myClub); // 여기까지
-
-		System.out.println("main돌아옴");
+		log.info("main돌아옴");
 		return "home/mainpage";
 	}
-	
 }
