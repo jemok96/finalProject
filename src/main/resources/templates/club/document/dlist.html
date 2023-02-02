@@ -20,7 +20,7 @@
 				<tr th:each=" dto : ${list}">
 					<td th:text="${dto.dwriter}"></td>
 					<th scope="row">
-						<a th:href="@{/document/dtail(dno=${dto.dno})}">[[${dto.dname}]]</a>
+						<a th:href="@{/document/dtail(dno=${dto.dno},clno=${clno})}">[[${dto.dname}]]</a>
 					</th>
 					<td th:text="${dto.reg_dt}"></td>
 				</tr>

@@ -24,5 +24,11 @@
  		FROM document
  		where dno = #{dno}
  	</select>
+ 	
+ 	<update id="updateOne" parameterType="DocumentDTO">
+ 		UPDATE document
+ 		SET dcontent = #{dcontent}, dstatus = #{dstatus}
+ 		WHERE dno = #{dno}
+ 	</update>
   
   </mapper>

@@ -16,4 +16,5 @@ public interface DocumentDAO {
 	public List<DocumentDTO> pagingSelect(StartEnd se);
 	public int getTotal(int clno);
 	public DocumentDTO selectOne(int dno);
+	public void updateOne(DocumentDTO dto);
 }

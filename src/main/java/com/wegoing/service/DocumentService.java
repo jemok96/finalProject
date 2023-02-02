@@ -33,6 +33,11 @@ public class DocumentService {
 	public DocumentDTO getOne(int dno) {
 		return dao.selectOne(dno);
 	}
+
+	public void modify(DocumentDTO dto) {
+		dao.updateOne(dto);
+		
+	}
 	
 	
 	
