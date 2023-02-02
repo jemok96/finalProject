@@ -4,8 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
-		crossorigin="anonymous"></script>
+
 	<style>
 .content__wrapper {
 	width: 80%;
@@ -52,7 +51,7 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: flex-start;
-	height: 200px;
+	height: 500px;
 }
 .fa-eye,.fa-comment{
 margin: 3px 10px 0px 0px;}
@@ -68,7 +67,7 @@ margin-right: 3px;}
 				<div class="content__more__thc">
 					<i class="fa-regular fa-eye"></i><div class="content__hits" th:text="${free.bhits}">조회수</div>
 					
-					<i class="fa-regular fa-comment"></i><div class="content__comments">댓글수</div>
+					<i class="fa-regular fa-comment"></i><div class="content__comments" th:text="${comCount}">댓글수</div>
 					<div class="content__time"  th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
 				</div>
 

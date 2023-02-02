@@ -4,60 +4,92 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
-		crossorigin="anonymous">
-		
-	</script>
+
 	<style>
-form {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+.main__content{
+display: flex;
+justify-content: center;
 }
-
-.form__column {
-	display: flex;
-	flex-direction: row-reverse;
-}
-
 .field-error {
 	font-size: 20px;
-	border-color: #dc3545;
 	color: #dc3545;
+	border-color: #dc3545;
 }
-.btn {
-display: flex;
+
+.form__select, .form__btn, .form__category{
+	display: flex;
 }
-input[type="submit"]{
-margin-right: 2px;}
+.form__category{
+	height: 50px;
+}
+.form__btn{
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+.form__select{
+	width:100%;
+	justify-content: flex-start;
+}
+select{
+	width: 90%;
+}
+.btn-add{
+	margin-right: 2px;
+}
+.form__input{
+width: 100%;}
+select, .form__input, textarea{
+border: 1px solid rgba(0,0,0,0.2);
+margin-bottom: 10px;
+}
 </style>
-	<div class="main__content" >
-		<form th:action method="POST" th:object="${board}">
-			<div class="form__column">
+	<div class="main__content">
+      <form th:action method="POST" th:object="${board}">
+        <div class="form__category">
+          <div class="form__select">
+            <select name="cateno" >
+              <option value="" selected disabled hidden>
+                게시판을 선택해 주세요
+              </option>
+              <option value="1">취미</option>
+              <option value="2">블라블라</option>
+              <option value="3">반려동물</option>
+              <option value="4">이직 커리어</option>
+            </select>
+          </div>
+          
+          <div class="form__btn">
+            <input type="submit" value="저장" class="btn btn-outline-primary btn-add" />
+            <input  type="reset" value="리셋" class="btn btn-outline-primary btn-reset" />
+          </div>
+        </div>
+		<div class="field-error" th:errors="*{cateno}"></div>
+        <div class="form__title">
+          <div>
+            <div>
+              <input class="form__input"
+                type="text"
+                name="btitle"
+                th:errorclass="field-error"
+                placeholder="제목을 입력해 주세요"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="field-error" th:errors="*{btitle}"></div>
 
-				<select class="form__select" name="cateno" >
-					<option value=1>취미</option>
-					<option value=2>블라블라</option>
-					<option value=3>반려동물</option>
-					<option value=4>이직 커리어</option>
-				</select>
-				<div class="form__title">
-					<input type="text" name="btitle"  th:errorclass="field-error" placeholder="제목을 입력해 주세요"/>
-				</div>
-			</div>
-
-			<div>
-				<textarea name="bcontent" cols="80" rows="30" th:errorclass="field-error" placeholder="내용을 입력해 주세요"></textarea>
-			</div>
-
-			<div class="btn">
-			<input type="submit" value="저장" class="btn btn-outline-primary"/>
-			<input type="reset" value="리셋" class="btn btn-outline-primary"/>
-			</div>
-		
-		</form>
-	</div>
+        <div>
+          <textarea
+            name="bcontent"
+            cols="60"
+            rows="20"
+            th:errorclass="field-error"
+            placeholder="내용을 입력해 주세요"
+          ></textarea>
+        </div>
+        <div class="field-error" th:errors="*{bcontent}"></div>
+      </form>
+    </div>
 
 
 

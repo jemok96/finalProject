@@ -42,10 +42,12 @@
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div
-									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1">
-									<a th:href="@{/document/list(clno=${dto.clno})}" style="text-decoration-line: none; " th:text="${dto.clname}"> </a>
+
+									class="h5 mb-0 font-weight-bold text-primary mb-1" style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;">
+									<a th:href="@{/document/list{clno}(clno=${dto.clno})}" style="text-decoration-line: none;" th:text="${dto.clname}"> </a>
+
 								</div>
-								<div class="text-xs font font-weight-bold text-gray-800" th:text="${dto.clexplain}"></div>
+								<div  style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;"  class="text-xs font font-weight-bold text-gray-800"  th:text="${dto.clexplain}"></div>
 							</div>
 							<div class="col-auto">
 								</i>
@@ -68,11 +70,11 @@
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div
-									class="h5 mb-0 font-weight-bold text-primary text-uppercase mb-1">
+									class="h5 mb-0 font-weight-bold text-primary mb-1" style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;">
 									<a href="#" style="text-decoration-line: none;"> 앱 리뉴얼 >
 										Q&A 테스트</a>
 								</div>
-								<div class="text-xs font font-weight-bold text-gray-800">마감일은
+								<div style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;" class="text-xs font font-weight-bold text-gray-800">마감일은
 									2023년 9월까지입니다.</div>
 							</div>
 							<div class="col-auto">
@@ -82,7 +84,6 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- Earnings (Monthly) Card Example -->
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-left-success shadow h-100 py-2">
@@ -90,7 +91,7 @@
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div
-									class="text-xs font-weight-bold text-success text-uppercase mb-1">
+									class="text-xs font-weight-bold text-success mb-1">
 									Earnings (Annual)</div>
 								<div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
 							</div>
@@ -130,7 +131,6 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- Pending Requests Card Example -->
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-left-warning shadow h-100 py-2">
@@ -150,8 +150,6 @@
 				</div>
 			</div>
 		</div>
-
-		
 	</div>
 </th:block>
 </html>

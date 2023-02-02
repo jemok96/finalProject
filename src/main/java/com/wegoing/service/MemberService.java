@@ -1,5 +1,7 @@
 package com.wegoing.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,19 @@ public class MemberService {
 		dto.setPw(enPw);
 		
 		dao.insertOne(dto);
+	}
+
+	public List<MemberDTO> getMyPartners(String loginEmail) {
+		List<MemberDTO> dto = dao.selectMyPartners(loginEmail);
+		return dto;
+	}
+	
+	public String findEmail(MemberDTO dto) {
+		return dao.findEmailByNameAndTel(dto);
+	}
+	
+	public void updatePw(MemberDTO dto) {
+		dao.updatePw(dto);
 	}
 	
 }

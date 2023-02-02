@@ -15,16 +15,15 @@ function createClub() {
 	}
 	document.frm.submit(); 
 }
-function checkLength() {
+function checkLength(e) {
+	console.log(e);
 	checkEnter();
 	var content = $('#clexplain').val();
     $('#counter').html("("+content.length+" / 최대 100자)");    //글자수 실시간 카운팅
 
     if (content.length > 100){
-        $(this).val(content.substring(0, 100));
+        $(e).val(content.substring(0, 100));
         $('#counter').html("(100 / 최대 100자)");
-        alert("최대 100자까지 입력 가능합니다.");
-        return false;  
     }
 }
 

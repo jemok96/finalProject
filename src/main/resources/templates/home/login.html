@@ -15,105 +15,39 @@
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script type="text/javascript">
-$(function () {
-    $("input:submit").on("click", function () {
-        if ($("#email").val() == ""){
-            $("#warnId").html("이메일을 입력해주세요.");
-            $("#email").focus();
-            $("#wrongInfo").hide();  
-            return false;
-        }
-        if ($("#pw").val() == ""){
-            $("#warnPw").html("비밀번호를 입력해주세요.");
-            $("#pw").focus();
-            $("#wrongInfo").hide();
-            return false;
-        }
-        form.submit();
-    });
-});
-</script>
-<style>
-.loginForm {
-    width: 500px;
-    height: 470px;
-    border: 1px solid #eeeeee;
-    border-radius: 20px;
-    box-shadow: 1px 1px 5px gray;
-    padding: 20px 40px;
-    margin: 20px auto;
-}
-.form-control {
-   /*  width: 200px;
-    height: 30px;
-    border: 1px solid grey;
-    border-radius: 10px; */
-    padding: 5px 10px;
-}
-a {
-	text-decoration: none;
-	color: black;
-	font-size: 12px;
-}
-span {
-    font-size: 12px;
-    color: gray;
-}
-p {
-    color: red;
-    font-size: 12px;
-    margin: 5px 0px 0px 5px;
-}
-h3 {
-    margin: 20px 0px;
-    font-weight: bold;
-}
-label {
-    margin-bottom: 5px;
-}
-#loginbtn {
-    width: 417px;
-    margin: 5px 0px;
-}
-.info {
-    text-align: right;
-    margin-top: 20px;
-}
-#naverbtn {
-    width: 417px;
-}
-</style>
+<link rel="stylesheet" href="../css/login.css" />
+<script type="text/javascript" src="../js/login.js"></script>
 </head>
 <body>
+<div class="container">
 	<div class="loginForm">
-	   <h3>로그인</h3>
+	   <h2>로그인</h2>
 		<form th:action="@{/login}" method="post">
 			<div id="inputEmail">
-                <div><label th:for="username">이메일</label></div>
-		        <input type="text" name="username" id="email" class="form-control" placeholder="email@example.com" />
-		        <p id="warnId">&nbsp;</p>
+                <label th:for="username">이메일</label>
+		        <input type="text" name="username" id="email" class="form-control" placeholder="abc@example.com" />
 		    </div>
 			<div id="inputPw">
-				<div><label th:for="password">비밀번호</label></div>
-				<input type="password" name="password" id="pw" class="form-control" placeholder="비밀번호를 입력하세요." />
-				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}" />
-			    <p id="warnPw">&nbsp;</p>
+				<label th:for="password">비밀번호</label>
+				<input type="password" name="password" id="pw" class="form-control" />
+				<!-- <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}" /> -->
 			</div>
 			<div>
-			<p th:if="${param.error}" id="wrongInfo">아이디나 비밀번호가 올바르지 않습니다.</p>
+				<p th:if="${param.error}" class="errorMsg2">아이디나 비밀번호가 올바르지 않습니다.</p>
+				<p th:unless="${param.error}" class="errorMsg">&nbsp;</p>
 			</div>
 			<div>
-				<input type="submit" class="btn btn-outline-primary" id="loginbtn" value="로그인"/>			
-			    <a th:href="@{oauth2/authorization/naver}"><input type="button" class="btn btn-light" id="naverbtn" value="NAVER" /></a>
+				<input type="submit" id="loginBtn" value="로그인"/>	
+			    <a th:href="@{oauth2/authorization/naver}"><img src="../img/naver_btn.png" alt="" id="naverBtn"/></a>
 			</div>
 		</form>
 		<div class="info">
-			<span>회원이 아니신가요? <a th:href="@{/}">회원가입</a></span> 
+			<span>회원이 아니신가요? <a th:href="@{/register}">회원가입하기</a></span> 
 			<br />
 			<a th:href="@{/findEmail}">이메일 찾기 |</a> 
 			<a th:href="@{/resetPw}"> 비밀번호 재설정</a>
 		</div>
 	</div>
+</div>
 </body>
 </html>

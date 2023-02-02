@@ -12,17 +12,28 @@
     <insert id="insertOne" parameterType="com.wegoing.dto.MemberDTO">
         insert into member
         values (#{email}, #{name}, #{nickname}, #{pw}, #{tel}, null, 'ROLE_USER', sysdate())
-    </insert>
-    <select id="findEmailByNameAndTel" parameterType="com.wegoing.dto.MemberDTO" resultType="String">
-        select email
-        from member
-        where name = #{name}
-        and tel = #{tel}
-    </select>
-    
+    </insert>    
     <select id="findNickNameCheck" parameterType="String" resultType="MemberDTO">
  		SELECT email, name, nickname, pw, tel, image, auth, join_dt
 		FROM member
 		WHERE nickname = #{nickname};
  	</select>
+ 	<select id="findEmailByNameAndTel" parameterType="com.wegoing.dto.MemberDTO" resultType="String">
+        select email
+        from member
+        where name = #{name}
+        and tel = #{tel}
+    </select>
+    <update id="updatePw" parameterType="com.wegoing.dto.MemberDTO">
+        update member
+        set pw = #{pw}
+        where email = #{email}
+    </update>
+ 	<select id="selectMyPartners" parameterType="String" resultType="MemberDTO" >
+		select email, name, nickname, pw, tel, image, auth, join_dt
+		from member
+		where email in ( select pemail
+							from partner
+							where email = #{email} )
+	</select>
 </mapper>

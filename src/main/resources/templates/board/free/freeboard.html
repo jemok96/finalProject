@@ -4,9 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
-		crossorigin="anonymous">
-	</script>
+
 	<style>
 .section {
 	display: grid;
@@ -86,11 +84,13 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-.handler__center{
-	margin-top:7px;
+
+.handler__center {
+	margin-top: 7px;
 	display: flex;
 	justify-content: center;
 }
+
 .color {
 	border-color: gray;
 	color: gray;
@@ -106,7 +106,20 @@ a {
 .item__eye, .item__hits, .item__comment {
 	margin-right: 5px;
 }
-
+.item__title{
+width : 400px;       text-overflow: ellipsis;  
+  white-space: nowrap;    
+  overflow : hidden;    
+  display : block;  
+}
+.item__contents {
+  width : 400px;     
+  height:100px;
+  text-overflow: ellipsis;  
+  white-space: wrap;    
+  overflow : hidden;    
+  display : block;   
+}
 button[type="button"] {
 	margin-right: 1px;
 }
@@ -147,15 +160,15 @@ button[type="button"] {
 		</div>
 	</div>
 	<div class="section">
-		<div class="item" th:each="free:${free}">
+		<div class="item" th:each="free,idx:${free}">
 			<div class="item__column">
 				<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"
-					th:text="${free.btitle}" class="item__title"> </a>
+					th:text="${free.btitle}" class="item__title">제목</a>
 			</div>
 
 			<div class="item__column">
 				<a th:href="@{/freeboard/{bno}(bno=${free.bno})}"
-					th:text="${free.bcontent}"></a>
+					th:text="${free.bcontent}" class="item__contents">내용</a>
 			</div>
 			<div class="item__column">
 				<div class="item__column__left">
@@ -163,7 +176,7 @@ button[type="button"] {
 						<span class="item__eye"><i class="fa-regular fa-eye"></i></span> <span
 							class="item__hits" th:text="${free.bhits}">조회수</span> <span
 							class="item__comment"><i class="fa-regular fa-comment"></i></span>
-						<span>댓글수</span>
+						<span th:text="${comCount[idx.index]}">댓글수</span>
 					</div>
 					<div class="item__regdt"
 						th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">등록날짜</div>
@@ -175,24 +188,27 @@ button[type="button"] {
 
 	</div>
 	<div class="handler__center">
-	<nav aria-label="Page navigation example cetner">
-		<ul class="pagination">
-			<li class="page-item" th:if="${ph.showPrev}"><a class="page-link" 
-			th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
-				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-			</a></li>
-			<li class="page-item" th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
-				<a class="page-link"
-				th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
-				th:text="${idx}"></a>
-			</li>
-			<li class="page-item" th:if="${ph.showNext}"><a class="page-link" 
-			th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
-				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-			</a></li>
-		</ul>
-	</nav>
-</div>
+		<nav aria-label="Page navigation example cetner">
+			<ul class="pagination">
+				<li class="page-item" th:if="${ph.showPrev}"><a
+					class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"
+					th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
+					<a class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
+					th:text="${idx}"></a>
+				</li>
+				<li class="page-item" th:if="${ph.showNext}"><a
+					class="page-link"
+					th:href="@{/freeboard?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
 
 </th:block>
 </html>

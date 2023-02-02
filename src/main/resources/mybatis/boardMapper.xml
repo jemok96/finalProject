@@ -3,12 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- * 사용하는 거 안좋음 -->
+
  <mapper namespace="com.wegoing.dao.BoardDao">
   	<select id="selectCategory" resultType="BoardDTO" parameterType="int">
   		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
   		board
   		where cateno = #{no}
+  		order by bhits desc
   		limit 5
   	</select>
   	
@@ -66,4 +67,10 @@
 			set bhits = bhits+1
 			where bno= #{bno};
   	</update>
+  	
+  	<select  id="selectTest" parameterType="int" resultType="BoardDTO">
+  		select * from board where cateno = #{bno}
+		order by reg_dt desc
+		limit 1; 
+  	</select>
   </mapper>
