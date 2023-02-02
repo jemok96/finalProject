@@ -26,6 +26,7 @@ import com.wegoing.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Controller
 @Slf4j
 public class BoardController {
@@ -54,7 +55,9 @@ public class BoardController {
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
-		
+		for(Category cateno : Category.values()) {
+			System.out.println(cateno.cateno());
+		}
 		return "board/boardmain";
 	}
 	@GetMapping("/board/add")
