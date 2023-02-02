@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ClubController {
 	private ClubService cs;
 	private ClubMemberService cms; 
+	String loginEmail = ""; 
 	
 	@Autowired
 	public ClubController(ClubService clubservice , ClubMemberService clubmemberservice) {
@@ -39,25 +40,18 @@ public class ClubController {
 		
 	@PostMapping("/club")
 	public String createClub(@RequestParam("clname")String name, @RequestParam("clexplain")String explain, 
-			@ModelAttribute("cdto")ClubDTO cdto,@ModelAttribute("cmdto")ClubMemberDTO cmdto, Model model, 
+			@ModelAttribute("cdto")ClubDTO cdto,@ModelAttribute("cmdto")ClubMemberDTO cmdto,  
 			@AuthenticationPrincipal PrincipalDetails userDetails, HttpServletRequest request) {
 		// 클럽테이블에 insert
-		log.info("here");	
-		log.info(name);
-		log.info(explain);
 		cdto.setClname(name);
 		cdto.setClexplain(explain);	
 		cs.addClub(cdto);
 		
 		// Autoincrement된 clno값 클럽멤버 테이블에 set하기위해 가져오기
 		long clno= cdto.getClno(); 
-		System.out.println(clno);
 		
 		// 세션에 나에 대한 이메일(pk)가져오기
-		String loginEmail = ""; 
-		log.info(" principal : {} " , userDetails);
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
-		System.out.println("email" +loginEmail);
 		
 		// 클럽멤버 테이블에 insert 
 		cmdto.setEmail(loginEmail);
@@ -102,6 +96,5 @@ public class ClubController {
 		
 		return "redirect:/club/{clno}";
 	}
-
 	
 }

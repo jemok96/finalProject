@@ -9,6 +9,7 @@
   		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
   		board
   		where cateno = #{no}
+  		order by bhits desc
   		limit 5
   	</select>
   	
