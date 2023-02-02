@@ -10,6 +10,13 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+@font-face {
+    font-family: 'LINESeedKR-Rg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Rg.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 :root { 
     --blue: #4e73df; 
     --indigo: #6610f2; 
@@ -37,7 +44,7 @@
     --breakpoint-md: 768px; 
     --breakpoint-lg: 992px; 
     --breakpoint-xl: 1200px;
-    --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    --font-family-sans-serif: "LINESeedKR-Rg", "Nunito", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji"; 
@@ -46,7 +53,7 @@
 }
 
 *, ::after, ::before {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 html {
@@ -4076,13 +4083,14 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     display: block
 }
 
-.navbar { /*사용*/
+.navbar2 { /*사용*/
     position: relative;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: space-between;
-    padding: .5rem 1rem
+    justify-content: space-between; */
+    padding: .5rem 1rem;
+    font-family: 'LINESeedKR-Rg';
 }
 
 .navbar .container, .navbar .container-fluid, .navbar .container-lg,
@@ -9784,7 +9792,7 @@ a:focus {
 }
 
 .topbar { /*사용*/
-    height: 10rem
+    height: 8.5rem
 }
 
 .topbar #sidebarToggleTop {
@@ -9809,11 +9817,11 @@ a:focus {
     height: auto
 }
 
-.topbar .topbar-divider {
+.topbar .topbar-divider { /*사용*/
     width: 0;
     border-right: 1px solid #e3e6f0;
     height: calc(4.375rem - 2rem);
-    margin: auto 1rem
+    margin: 0.5rem 1rem;
 }
 
 .topbar .nav-item .nav-link { /*사용*/
@@ -10909,4 +10917,75 @@ body.sidebar-toggled footer.sticky-footer {
 
 *::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 0 10px;
+} */
+
+.club-info {
+	width: 30rem;
+    margin-left: 2rem;
+    margin-top: 0.8rem;
+    font-family: 'LINESeedKR-Rg';	
+}
+
+.navbar-club-name {
+	font-size: 22px;
+	color: #454545;
+	font-weight: bold;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.club-setting-img {
+	width: 1rem;
+	position: relative;
+	top: -0.2rem;
+	margin-left: 0.5rem;
+	cursor: pointer;
+}
+
+.navbar-club-explain {
+	margin-left: 0.5rem;
+	font-size: 13px;
+	color: #858796;
+}
+
+.top-contents {
+	height: 5.5rem;
+	display: flex;
+}
+
+.category {
+    display: flex;
+    justify-content: space-around;
+    font-family: 'LINESeedKR-Rg';
+}
+.category-line {
+    margin-top: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+.category-items {
+	text-align: center;
+	display: block;
+    width: 25%;
+}
+
+.category-items > a {
+	color: black;
+	font-size: 15px;
+}
+/* .category-items:hover{
+	background-color: pink; 
+} */
+/*  
+.category-items:visited {
+  text-decoration: none;
+}
+ 
+.category-items:hover {
+  text-decoration: underline;
+}
+ 
+.category-items:active {
+  text-decoration: underline;
 } */

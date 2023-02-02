@@ -1,8 +1,8 @@
-function createClub2() {
-    console.log("클럽 생성");
-    var name = $("#clname").val().trim(); // 스페이스바만 있는것 방지 
-    var length = $("#clname").val().length; 
-    var explain = $("#clexplain").val();
+function updateClub() {
+    console.log("협업공간 정보 수정");
+    var name = $("#editClname").val().trim(); // 스페이스바만 있는것 방지 
+    var length = $("#editClname").val().length; 
+    var explain = $("#editClexplain").val();
     console.log(name);
     console.log(explain);
     console.log("length " +length);
@@ -13,28 +13,30 @@ function createClub2() {
         alert("협업공간 25자까지 입력 가능합니다.");
         return false; 
     }
-    document.frm.submit(); 
+    $("#editForm").submit(); 
 }
-function checkLength2() {
+function checkLength() {
     checkEnter();
-    var content = $('#clexplain').val();
-    $('#counter').html("("+content.length+" / 최대 100자)");    //글자수 실시간 카운팅
+    var content = $('#editClexplain').val();
+    console.log(content);
+    $('#editCounter').html("("+content.length+" / 최대 100자)");
 
     if (content.length > 100){
         $(this).val(content.substring(0, 100));
-        $('#counter').html("(100 / 최대 100자)");
+        $('#editCounter').html("(100 / 최대 100자)");
         alert("최대 100자까지 입력 가능합니다.");
         return false;  
     }
 }
 
 function checkEnter() { 
-     var rows = $('#clexplain').val().split('\n').length;
+     var rows = $('#editClexplain').val().split('\n').length;
             var maxRows = 1; 
             if( rows > maxRows){
                 alert('엔터는 불가합니다');
-                modifiedText = $('#clexplain').val().split("\n").slice(0, maxRows);
-                $('#clexplain').val(modifiedText.join("\n"));
+                modifiedText = $('#editClexplain').val().split("\n").slice(0, maxRows);
+                $('#editClexplain').val(modifiedText.join("\n"));
                 return false; 
             }     
 }
+
