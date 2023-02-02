@@ -22,5 +22,13 @@ public class ClubService {
 		clubDao.createClub(cdto);
 	}
 	
+	public ClubDTO getOne(int clno) {
+		return clubDao.readOne(clno);
+	}
+	
+	public void modifyOne(ClubDTO cdto) {
+		clubDao.updateOne(cdto);
+	}
+	
 
 }
