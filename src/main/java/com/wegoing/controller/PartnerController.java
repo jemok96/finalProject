@@ -107,12 +107,15 @@ public class PartnerController {
 	
 	@PostMapping("partner/deletePartner")
 	@ResponseBody
-	public String deletePartner(@RequestParam("deleteEmail")String partnerEmail,@AuthenticationPrincipal PrincipalDetails userDetails) {
+	public String deletePartner(@RequestParam("deleteEmail")String partnerEmail,@AuthenticationPrincipal PrincipalDetails userDetails, @ModelAttribute("pto")PartnerDTO pto) {
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
 		log.info(loginEmail);
 		log.info(partnerEmail);
 		ps.erasePartner(loginEmail, partnerEmail);
-		
+		pto.setEmail(loginEmail);
+		pto.setPemail(partnerEmail);
+		pto.setPstatus("n");
+		ps.updatePstatus(pto);
 		return "redirect:/partner";
 	}
 
