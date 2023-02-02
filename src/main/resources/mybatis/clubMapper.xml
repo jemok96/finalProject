@@ -8,4 +8,14 @@
 		INSERT INTO club
 		values(null, #{clname}, #{clexplain}, default )
 	</insert>
+	<select id="readOne" parameterType="int" resultType="com.wegoing.dto.ClubDTO">
+	    SELECT clno, clname, clexplain, cre_dt
+	    FROM club
+	    WHERE clno = #{clno}
+	</select>
+	<update id="updateOne" parameterType="com.wegoing.dto.ClubDTO">
+	   UPDATE club
+	   SET clname = #{clname}, clexplain = #{clexplain}
+	   WHERE clno = #{clno}
+	</update>
  </mapper>
