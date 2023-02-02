@@ -3,10 +3,14 @@ $(function () {
     let passwordOk = false;
     $("#sendBtn").on("click", function () {
         console.log("메일 전송 버튼 클릭");
-        const email = $("#email").val();
+        let email = $("#email").val();
+        let regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
         if(email == ""){
             $("#errorEmail").addClass("fail")
                             .html("이메일을 입력해주세요.");
+        }else if(!regEmail.test(email)) {
+             $("#errorEmail").addClass("fail")
+                             .html("올바른 형식이 아닙니다.");
         }else {
             $("#errorEmail").html("&nbsp;");
             $("#authBtn").removeAttr("disabled");
