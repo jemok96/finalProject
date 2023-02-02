@@ -26,45 +26,49 @@ import com.wegoing.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
+enum Message{
+	MSG("로그인 해주세요"),YES("YES"),NO("NO"),NICK("nick");
 
+	private final String message;
+	Message(String message) {
+		this.message = message;
+	}
+	public String message() {
+		return message;
+	}
+	
+}
 @Controller
 @Slf4j
 public class BoardController {
 	private final BoardService service;
 	private final CommentService commentService;
-	private static final Integer HOBBY =1;
-	private static final Integer FREE =2;
-	private static final Integer PET =3;
-	private static final Integer CAREER =4;
-	
+
 	public BoardController(BoardService service,CommentService commentService) {
 		this.service = service;
 		this.commentService = commentService;
 	}
-	
 
 	
 
 	@GetMapping("/board")
 	public String boardMain(Model model) {
-		List<BoardDTO> hobby = service.selectCategory(HOBBY);
-		List<BoardDTO> free = service.selectCategory(FREE);
-		List<BoardDTO> pet = service.selectCategory(PET);
-		List<BoardDTO> career = service.selectCategory(CAREER);
+		List<BoardDTO> hobby = service.selectCategory(Category.hobby.cateno());
+		List<BoardDTO> free = service.selectCategory(Category.free.cateno());
+		List<BoardDTO> pet = service.selectCategory(Category.pet.cateno());
+		List<BoardDTO> career = service.selectCategory(Category.career.cateno());
 		model.addAttribute("hobby",hobby);
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
-		for(Category cateno : Category.values()) {
-			System.out.println(cateno.cateno());
-		}
+
 		return "board/boardmain";
 	}
 	@GetMapping("/board/add")
 	public String addboard(@AuthenticationPrincipal PrincipalDetails userDetails,RedirectAttributes rattr,Model model) {
 	
 		if(userDetails == null) {
-			rattr.addFlashAttribute("msg","로그인해주세요");
+			rattr.addFlashAttribute("msg",Message.MSG.message());
 			return "redirect:/freeboard";
 		}
 		model.addAttribute("board",new BoardDTO());
@@ -89,10 +93,10 @@ public class BoardController {
 	public String freeboard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(FREE);
+        int totalCnt = service.countBoard(Category.free.cateno());
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
 
-		Map<String, Integer> map = pageHandler(page, pageSize,FREE);
+		Map<String, Integer> map = pageHandler(page, pageSize,Category.free.cateno());
 
         List<BoardDTO> free = service.selectPage(map);
         List<Integer> comCount = new ArrayList<Integer>();
@@ -124,10 +128,10 @@ public class BoardController {
 		
 		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
 		if(!nickname.equals("") &&nickname.equals(writer)) { // 작성자와 접속자가 같으면
-			model.addAttribute("nick","YES");
+			model.addAttribute(Message.NICK.message(),Message.YES.message());
 		}
 		else {
-			model.addAttribute("nick","NO");
+			model.addAttribute(Message.NICK.message(),Message.NO.message());
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		
@@ -172,9 +176,9 @@ public class BoardController {
 	public String petboard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(PET);
+        int totalCnt = service.countBoard(Category.pet.cateno());
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
-        Map<String, Integer> map = pageHandler(page, pageSize,PET);
+        Map<String, Integer> map = pageHandler(page, pageSize,Category.pet.cateno());
  
         List<BoardDTO> free = service.selectPage(map);
         List<Integer> comCount = new ArrayList<Integer>();
@@ -205,10 +209,10 @@ public class BoardController {
 		
 		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
 		if(nickname !=null &&nickname.equals(writer)) {
-			model.addAttribute("nick","YES");
+			model.addAttribute(Message.NICK.message(),Message.YES.message());
 		}
 		else {
-			model.addAttribute("nick","NO");
+			model.addAttribute(Message.NICK.message(),Message.NO.message());
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
@@ -249,10 +253,10 @@ public class BoardController {
 	public String hobbyBoard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(HOBBY);
+        int totalCnt = service.countBoard(Category.hobby.cateno());
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
         
-        Map<String, Integer> map = pageHandler(page, pageSize,HOBBY);
+        Map<String, Integer> map = pageHandler(page, pageSize,Category.hobby.cateno());
 
         List<BoardDTO> free = service.selectPage(map);
         List<Integer> comCount = new ArrayList<Integer>();
@@ -282,10 +286,10 @@ public class BoardController {
 		
 		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();
 		if(nickname !=null &&nickname.equals(writer)) {
-			model.addAttribute("nick","YES");
+			model.addAttribute(Message.NICK.message(),Message.YES.message());
 		}
 		else {
-			model.addAttribute("nick","NO");
+			model.addAttribute(Message.NICK.message(),Message.NO.message());
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
@@ -325,10 +329,11 @@ public class BoardController {
 	public String careerBoard(Model model,Integer page, Integer pageSize) {
 		if(page == null) page =1;
         if(pageSize ==null) pageSize = 10;
-        int totalCnt = service.countBoard(CAREER);
+        
+        int totalCnt = service.countBoard(Category.career.cateno());
         PageHandler pageHandler = new PageHandler(totalCnt, page, pageSize);
         
-        Map<String, Integer> map = pageHandler(page, pageSize,CAREER);
+        Map<String, Integer> map = pageHandler(page, pageSize,Category.career.cateno());
 
         List<BoardDTO> free = service.selectPage(map);
         List<Integer> comCount = new ArrayList<Integer>();
@@ -357,10 +362,10 @@ public class BoardController {
 		
 		if(userDetails !=null) nickname = userDetails.getMdto().getNickname();//접속자 닉네임
 		if(!nickname.equals("") &&nickname.equals(writer)) {
-			model.addAttribute("nick","YES");
+			model.addAttribute(Message.NICK.message(),Message.YES.message());
 		}
 		else {
-			model.addAttribute("nick","NO");
+			model.addAttribute(Message.NICK.message(),Message.NO.message());
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
@@ -379,6 +384,7 @@ public class BoardController {
 		model.addAttribute("free",service.selectOne(bno));
 		return "board/career/editBoard";
 	}
+	
 	@PostMapping("/career/{bno}/edit")
 	public String careerboardEditcheck(@ModelAttribute("board")BoardDTO board,
 			@PathVariable int bno,Model model) {
