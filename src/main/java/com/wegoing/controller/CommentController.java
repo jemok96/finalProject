@@ -37,25 +37,21 @@ public class CommentController {
    @PostMapping("/insert/{bno}")
    public String insertComment(Model model,@RequestParam String cmcontent,
 		   @AuthenticationPrincipal PrincipalDetails userDetails,@PathVariable Integer bno) {
-	   log.info("{}",cmcontent);
+	 
 	   String writer = userDetails.getMdto().getNickname();
 	   CommentDTO com = new CommentDTO();
 	   com.setCmcontent(cmcontent);
 	   com.setCmwriter(writer);
 	   com.setBno(bno);
 	   int result = commentService.commentInsert(com);
-	   log.info("result ={}",result);
+	   
        return "commentList";
    
    }
    @PostMapping("/delete/{cmno}")
    public String insertComment(Model model,
 		   @AuthenticationPrincipal PrincipalDetails userDetails,@PathVariable Integer cmno) {
-	   log.info("{}",cmno);
-	   CommentDTO com = new CommentDTO();
-
 	   int result = commentService.commentDelete(cmno);
-	   log.info("result ={}",result);
        return "commentList";
    
    }

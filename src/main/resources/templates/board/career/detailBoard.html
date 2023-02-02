@@ -150,6 +150,7 @@ border : 1px solid rgba(0,0,0,0.2)}
 	<script>
 	var bno = [[${bno}]];
 	
+	//댓글 목록
 	$(document).ready(function getCommentList() {
         $.ajax({
             type: "POST",
@@ -169,7 +170,7 @@ border : 1px solid rgba(0,0,0,0.2)}
     }
 	
 	);
-	// 댓글 목록 가져오기
+
 	function getCommentList() {
         $.ajax({
             type: "POST",
@@ -187,7 +188,6 @@ border : 1px solid rgba(0,0,0,0.2)}
                 console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
             })
     }
-	
 	//댓글 추가 후 페이지 reload
 	function insertComment() {
 		var content =$('#cmcontent').val();
@@ -210,24 +210,6 @@ border : 1px solid rgba(0,0,0,0.2)}
             })
     }
 	
-	function deleteComment() {
-        $.ajax({
-            type: "POST",
-            url: "/comment/delte/"+cmno,
-            data: {'cmcontent':content}, 
-            dataType: "text"
-        })
-            .done(function (result) {
-           		console.log(content);
-           		$.ajax(getCommentList());
-            })
-            .fail(function(jqXHR) {
-                console.log(jqXHR);
-            })
-            .always(function() {
-                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
-            })
-    }
 	</script>
 
 </th:block>

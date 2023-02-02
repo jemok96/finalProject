@@ -1,5 +1,6 @@
 package com.wegoing.dao;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
@@ -22,11 +23,11 @@ class BoardTest {
 	@Autowired
 	BoardService boardService;
 	
-	@BeforeEach
-	void deleteAll() {
-		boardService.deleteAll();
-	}
-	
+//	@BeforeEach
+//	void deleteAll() {
+//		boardService.deleteAll();
+//	}
+//	
 	@Test
 	void insertTest() {
 		
@@ -58,7 +59,7 @@ class BoardTest {
 		
 	}
 	@Test
-    public void test(){
+    void PageHandlertest(){
         PageHandler ph = new PageHandler(255,11);
         log.info("11/10*10+1 = {}" , 11/10*10+1);
         ph.print();
@@ -66,5 +67,20 @@ class BoardTest {
        assertTrue(ph.getBeginPage() ==11);
        assertTrue(ph.getEndPage() ==20);
     }
+//	@Test
+//	void boardInsertLengthTest() {
+//		BoardDTO dto =
+//			BoardDTO.builder().email("aaa@gmail.com").
+//			cateno(2).bcontent("test").btitle("하나둘셋넷다섯여섯일곱여덟아홉열하나둘셋넷다섯여섯일곱여덟아홉열하나둘셋넷다섯여섯일곱여덟아홉열")
+//			.nickname("da").build();
+//		//제목 30자 넘으면 insert X
+//		assertFalse(boardService.insert(dto) == 1);
+//		BoardDTO dto2 =
+//				BoardDTO.builder().email("aaa@gmail.com").
+//				cateno(2).bcontent("test").btitle("여섯일곱여덟아홉열")
+//				.nickname("da").build();
+//		//30자 이하면 insert O
+//		assertTrue(boardService.insert(dto2)==1);
+//	}
 
 }
