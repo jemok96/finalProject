@@ -4,7 +4,10 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
+	</script>
 	<style>
 .content__wrapper {
 	width: 80%;
@@ -52,6 +55,7 @@
 	display: flex;
 	align-items: flex-start;
 	height: 500px;
+	margin-bottom: 20px;
 }
 .fa-eye,.fa-comment{
 margin: 3px 10px 0px 0px;}
@@ -93,10 +97,90 @@ margin-right: 3px;}
 		<div class="content__main">
 			<div class="content__contents" th:text="${free.bcontent}">내용</div>
 		</div>
+		
+		<div class="container">
+        
+        <form name="commentInsertForm" >
+            <div class="input-group">
+               <input type="text" class="form-control" id="cmcontent" name="cmcontent" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button onclick="insertComment()" class="btn btn-default" type="button" >등록</button>
+               </span>
+              </div>
+        </form>
+    	</div>
+		<input type="hidden" onclick="getCommentList()" />
+
+
+		<div id="memberListContent">
+	
+	    <!-- Page Marker -->
+	
+		</div>
 
 	</div>
 
 	<script>
+	var bno = [[${bno}]];
+	
+	$(document).ready(function getCommentList() {
+        $.ajax({
+            type: "POST",
+            url: "/comment/list/"+bno,
+            data: {'bno':bno}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+                $("#memberListContent").replaceWith(result);
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
+	
+	);
+	
+	function getCommentList() {
+        $.ajax({
+            type: "POST",
+            url: "/comment/list/"+bno,
+            data: {'bno':bno}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+                $("#memberListContent").replaceWith(result);
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
+	//댓글 추가 후 페이지 reload
+	function insertComment() {
+		var content =$('#cmcontent').val();
+		
+        $.ajax({
+            type: "POST",
+            url: "/comment/insert/"+bno,
+            data: {'cmcontent':content}, 
+            dataType: "text"
+        })
+            .done(function (result) {
+           		console.log(content);
+           		$.ajax(getCommentList());
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+            .always(function() {
+                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
+            })
+    }
 	
 	</script>
 </th:block>
