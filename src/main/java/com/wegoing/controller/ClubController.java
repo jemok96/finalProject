@@ -76,7 +76,7 @@ public class ClubController {
 		log.info("cdto >>>>> " + cdto);
 		model.addAttribute("club", cdto);
 		
-		return "club/clubMain";
+		return "club/clubtest";
 	}
 	
 	@PostMapping("/club/{clno}/edit")
