@@ -42,8 +42,10 @@
 						<div class="row no-gutters align-items-center">
 							<div class="col mr-2">
 								<div
+
 									class="h5 mb-0 font-weight-bold text-primary mb-1" style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;">
-									<a th:href="@{/club/{clno}(clno=${dto.clno})}" style="text-decoration-line: none;" th:text="${dto.clname}"> </a>
+									<a th:href="@{/document/list{clno}(clno=${dto.clno})}" style="text-decoration-line: none;" th:text="${dto.clname}"> </a>
+
 								</div>
 								<div  style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;"  class="text-xs font font-weight-bold text-gray-800"  th:text="${dto.clexplain}"></div>
 							</div>

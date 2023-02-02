@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.paging{
+	width: 300px;
+	margin: auto;
+	}
+	
+/* ddtail.css */
+#headbutton{
+	position: absolute;
+	right: 100px;
+	top: 100px;
+	
+}

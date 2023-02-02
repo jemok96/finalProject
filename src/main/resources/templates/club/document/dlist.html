@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+
+<th:block layout:fragment="content">
+
+	<h3>[[${clno}]]</h3>
+	<div class="container">
+		<h3>협업 문서 공간</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">작성자</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성 일자</th>
+				</tr>
+			</thead>
+			<tbody class="table-group-divider">
+				<tr th:each=" dto : ${list}">
+					<td th:text="${dto.dwriter}"></td>
+					<th scope="row">
+						<a th:href="@{/document/dtail(dno=${dto.dno},clno=${clno})}">[[${dto.dname}]]</a>
+					</th>
+					<td th:text="${dto.reg_dt}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="paging">
+		<nav aria-label="Page navigation example">
+			<ul class="pagination" th:with="start=${map['startPage']}, end=${map['endPage']}">
+				<li class="page-item" th:if="${map['isPre']}">
+					<a class="page-link" th:href="@{list(cp=${map['currentPage']-5}),clno=${clno}}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				<li class="page-item" th:each="i : ${#numbers.sequence(start, end)}">
+					<a class="page-link" th:href="@{list(cp=${i},clno=${clno})}" th:text="${i}"></a>
+				</li>
+				<li class="page-item" th:if="${map['isNext']}">
+					<a class="page-link" th:href="@{list(cp=${map['currentPage']+5}),clno=${clno}}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		</div>
+	</div>
+
+</th:block>

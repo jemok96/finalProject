@@ -67,7 +67,7 @@ public class ClubController {
 		    return "redirect:/main";
 		  }
 	}
-	
+
 	@GetMapping("/club/{clno}")
 	public String clubMain(@PathVariable int clno, Model model) {
 		// 협업공간 이름, 설명, 멤버
