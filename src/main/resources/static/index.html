@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>wegoing</title>
+<style type="text/css">
+	body {
+		margin: 0px;
+		display: block;
+	}	
+	.constructer {
+		position: relative;
+	}
+	.content {
+		position: absolute;
+		top: 60%;
+	}
+	.btn {
+		width: 250px;
+		height: 90px;
+	}
+	#backgroundimg {
+		width: 100%;
+		height: 100%;
+	}
+</style>
 </head>
 <body>
-	index test
+<div class="constructer" style="position: relaitve;">
+	<img id="backgroundimg" src="/img/index.png" alt="index">
+	<div class="content" style="left: 32%;">
+		<a href="/login"><img class="btn" src="/img/loginbtn.png" alt="loginbtn"></a>
+	</div>
+	<div class="content" style="left: 53%;">
+		<a href="/register"><img class="btn" src="/img/registerbtn.png" alt="registerbtn"></a>
+	</div>
+</div>
 </body>
 </html>
