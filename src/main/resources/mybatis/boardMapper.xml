@@ -68,9 +68,41 @@
 			where bno= #{bno};
   	</update>
   	
-  	<select  id="selectTest" parameterType="int" resultType="BoardDTO">
+   	<select  id="selectTest" parameterType="int" resultType="BoardDTO">
   		select * from board where cateno = #{bno}
 		order by reg_dt desc
 		limit 1; 
-  	</select>
+  	</select> 
+  	
+   <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND btitle LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="W"'>
+                AND nickname LIKE concat('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (btitle   LIKE concat('%', #{keyword}, '%')
+                OR  bcontent LIKE concat('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDTO">
+        SELECT bno, btitle, bcontent, nickname,bhits, reg_dt,up_dt,cateno,email
+        FROM  board
+        WHERE true
+       <include refid="searchCondition"/>
+        AND cateno = 3
+        ORDER BY reg_dt DESC, bno DESC
+        LIMIT #{offset},#{pageSize}
+    </select>
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        SELECT COUNT(*)
+        FROM  board
+        WHERE true
+        <include refid="searchCondition"/>
+        
+    </select> 
   </mapper>

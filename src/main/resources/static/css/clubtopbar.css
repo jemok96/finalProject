@@ -4085,10 +4085,10 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 .navbar2 { /*사용*/
     position: relative;
-    /* display: flex;
+    display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: space-between; */
+    justify-content: space-between;
     padding: .5rem 1rem;
     font-family: 'LINESeedKR-Rg';
 }
@@ -7737,8 +7737,11 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover
     margin-right: 1.5rem !important
 }
 
-.mb-4, .my-4 {
+.mb-4 .my-4 { /* 수정 */
     margin-bottom: 1.5rem !important
+}
+.mb-4-2 { /* 수정 */
+	margin-bottom: -0.1rem !important
 }
 
 .ml-4, .mx-4 {
@@ -9792,7 +9795,7 @@ a:focus {
 }
 
 .topbar { /*사용*/
-    height: 8.5rem
+    height: 4.375rem;
 }
 
 .topbar #sidebarToggleTop {
@@ -10950,33 +10953,51 @@ a:hover {
 	color: #858796;
 }
 
-.top-contents {
-	height: 5.5rem;
-	display: flex;
+.category-nav {
+	height: 4rem;	
+    background: white;
+    margin-bottom: 1.5rem;
 }
-
 .category {
+	height: 50%;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    margin: 0 15rem;
+    position: relative;
+    top: 1.5rem;
     font-family: 'LINESeedKR-Rg';
 }
 .category-line {
-    margin-top: 0.5rem;
+    margin-top: 0rem;
     margin-bottom: 0.3rem;
+    position: relative;
+    top: 1.6rem;
+    width: 95%;
+    
 }
 .category-items {
 	text-align: center;
 	display: block;
     width: 25%;
+    height: 2.5rem;
+    padding-top: 0.5rem;
+    /* margin-bottom: -0.6rem; */
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 
 .category-items > a {
-	color: black;
+	color: #858796;
 	font-size: 15px;
+	word-spacing: 1px;
 }
-/* .category-items:hover{
-	background-color: pink; 
-} */
+
+.category-items > a:hover {
+	color: #375ece;
+	font-weight: bold;
+	font-size: 15.5px;
+}
 /*  
 .category-items:visited {
   text-decoration: none;

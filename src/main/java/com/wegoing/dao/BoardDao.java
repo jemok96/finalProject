@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.wegoing.dto.BoardDTO;
-import com.wegoing.dto.MemberDTO;
+import com.wegoing.dto.SearchCondition;
 
 
 @Repository
@@ -25,5 +25,6 @@ public interface BoardDao {
 	 int update(BoardDTO dto);
 	 int updateHit(int bno);
 	 BoardDTO selectTest(int bno);
-	 
+	 List<BoardDTO> searchSelectPage(SearchCondition sc);
+	 int searchResultCnt(SearchCondition sc);
 }

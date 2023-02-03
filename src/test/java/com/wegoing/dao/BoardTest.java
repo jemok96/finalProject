@@ -1,16 +1,16 @@
 package com.wegoing.dao;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.PageHandler;
+import com.wegoing.dto.SearchCondition;
 import com.wegoing.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,20 +67,33 @@ class BoardTest {
        assertTrue(ph.getBeginPage() ==11);
        assertTrue(ph.getEndPage() ==20);
     }
-//	@Test
-//	void boardInsertLengthTest() {
-//		BoardDTO dto =
-//			BoardDTO.builder().email("aaa@gmail.com").
-//			cateno(2).bcontent("test").btitle("하나둘셋넷다섯여섯일곱여덟아홉열하나둘셋넷다섯여섯일곱여덟아홉열하나둘셋넷다섯여섯일곱여덟아홉열")
-//			.nickname("da").build();
-//		//제목 30자 넘으면 insert X
-//		assertFalse(boardService.insert(dto) == 1);
-//		BoardDTO dto2 =
-//				BoardDTO.builder().email("aaa@gmail.com").
-//				cateno(2).bcontent("test").btitle("여섯일곱여덟아홉열")
-//				.nickname("da").build();
-//		//30자 이하면 insert O
-//		assertTrue(boardService.insert(dto2)==1);
-//	}
 
+	@Test
+	void serachSelectPageTest() {
+		boardService.deleteCategory(3);
+		for(int i=1; i<=20; i++) {
+			BoardDTO boardDTO = BoardDTO.builder().btitle("title"+i).bcontent("asdsa").cateno(3).email("aaa@gmail.com")
+					.nickname("JM").build();
+			boardService.insert(boardDTO);
+		}
+		SearchCondition sc = new SearchCondition(1,10,"T","title2",3);
+		System.out.println(sc.getOffset()+""+sc.getPage());
+		List<BoardDTO> list = boardService.searchSelectPage(sc);
+		System.out.println("list = "+list);
+		assertTrue(list.size() ==2 );
+	}
+	@Test
+	void serachResultCntTest() {
+		boardService.deleteCategory(3);
+		for(int i=1; i<=20; i++) {
+			BoardDTO boardDTO = BoardDTO.builder().btitle("title"+i).bcontent("asdsa").cateno(3).email("aaa@gmail.com")
+					.nickname("JM").build();
+			boardService.insert(boardDTO);
+		}
+		SearchCondition sc = new SearchCondition(1,10,"T","title2",3);
+		
+		int result = boardService.searchResultCnt(sc);
+		
+		assertTrue(result ==2 );
+	}
 }
