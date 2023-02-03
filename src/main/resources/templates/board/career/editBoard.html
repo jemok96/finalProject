@@ -4,7 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-
+<script src="https://kit.fontawesome.com/8cc4eb714e.js" crossorigin="anonymous"></script>
 	<style>
 .content__wrapper {
 	width: 80%;
@@ -72,7 +72,7 @@
 }
 </style>
 
-	<form th:action method="POST" >
+	<form th:action method="POST"  th:object="${board}">
 		<div class="content__wrapper" th:each="free:${free}">
 			<div class="content__header">
 				<div>
@@ -80,6 +80,7 @@
 						class="contet__title" />
 				</div>
 				
+				<div class="field-error" th:errors="*{btitle}"></div>
 				<div class="content__nick" th:text="${free.nickname}">닉네임</div>
 				<div class="content__more">
 					<div class="content__more__thc">

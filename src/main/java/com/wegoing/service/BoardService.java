@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.BoardDao;
 import com.wegoing.dto.BoardDTO;
+import com.wegoing.dto.SearchCondition;
 
 import lombok.AllArgsConstructor;
 
@@ -53,4 +54,10 @@ public class BoardService {
 	public BoardDTO selectTest(int bno) {
 		return dao.selectTest(bno);
 	}
+	public List<BoardDTO> searchSelectPage(SearchCondition sc){
+		return dao.searchSelectPage(sc);
+	}
+	public  int searchResultCnt(SearchCondition sc) {
+		 return dao.searchResultCnt(sc);
+	 }
 }
