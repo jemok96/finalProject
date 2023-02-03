@@ -18,4 +18,5 @@ public interface DocumentDAO {
 	public DocumentDTO selectOne(int dno);
 	public void updateOne(DocumentDTO dto);
 	public void deleteOne(int dno);
+	public void insertOne(DocumentDTO dto);
 }
