@@ -1,4 +1,4 @@
-package com.wegoing.controller;
+package com.wegoing.enumpackage;
 
 
 

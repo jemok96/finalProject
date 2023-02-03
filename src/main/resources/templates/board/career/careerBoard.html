@@ -122,6 +122,8 @@ button[type="button"]{
 </style>
 <script th:inline="javascript">
 	var msg = [[${msg}]];
+	var suc = [[${success}]];
+	if(suc !=null) alert(suc);
 	if(msg != null)alert("로그인해주세요");
 </script>
 

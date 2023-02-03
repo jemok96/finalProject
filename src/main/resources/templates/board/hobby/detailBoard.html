@@ -87,9 +87,9 @@ margin-right: 3px;}
 					
 				
 					<div class="content__delete">
-					<form th:action="@{/hobby/{bno}/delete(bno=${free.bno})}" method="POST">
+					<form th:action id="form">
 						 <input value="삭제" th:if="${nick}!='YES'" th:type="hidden"  class="btn btn-outline-primary"/>
-						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary" /> 
+						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary btn-delete" /> 
 					</form>
 					</div>
 				</div>
@@ -147,7 +147,13 @@ margin-right: 3px;}
     }
 	
 	);
-
+	$('.btn-delete').on('click',function(){
+		if(!confirm("정말로 삭제하시겠습니까?"))return
+		let form = $('#form');
+		form.attr("action", "/career/"+bno+"/delete")
+		form.attr("method","post");
+		form.submit();
+	})
 	function getCommentList() {
         $.ajax({
             type: "POST",
