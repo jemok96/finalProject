@@ -105,8 +105,10 @@ public class DocumentController {
 
 	
 	@GetMapping("/{clno}/document/write")
-	public String writeForm(@PathVariable("clno")int clno) {
+	public String writeForm(@PathVariable("clno")int clno, Model model) {
 //		service.write(clno);
+		ClubDTO cdto = clubService.getOne(clno);
+		model.addAttribute("club", cdto);
 		
 		return "club/document/writeForm";
 	}
