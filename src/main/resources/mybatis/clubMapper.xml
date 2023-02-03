@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.wegoing.dao.ClubDAO">
+ 	<insert id="createClub" parameterType="ClubDTO"  useGeneratedKeys="true"
+        keyProperty="clno" keyColumn="clno">
+		INSERT INTO club
+		values(null, #{clname}, #{clexplain}, default )
+	</insert>
+	<select id="readOne" parameterType="int" resultType="com.wegoing.dto.ClubDTO">
+	    SELECT clno, clname, clexplain, cre_dt
+	    FROM club
+	    WHERE clno = #{clno}
+	</select>
+	<update id="updateOne" parameterType="com.wegoing.dto.ClubDTO">
+	   UPDATE club
+	   SET clname = #{clname}, clexplain = #{clexplain}
+	   WHERE clno = #{clno}
+	</update>
+ </mapper>

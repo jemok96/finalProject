@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.w3.org/1999/xhtml">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <th:block th:fragment="topbarFragment">
 
@@ -90,10 +90,10 @@
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"><img class="img-profile rounded-circle"
-					src="../img/undraw_profile.svg"><span
-					class="mr-2 d-none d-lg-inline text-gray-600 small"
-					style="margin-left: 10px">이바다</span> <span
-					class="mr-2 d-none d-lg-inline text-gray-600 small">님</span></a> <!-- Dropdown - User Information -->
+					src="../img/undraw_profile.svg">
+					<span class="mr-2 d-none d-lg-inline text-gray-600 small"
+					style="margin-left: 10px" sec:authentication="principal.mdto.name"></span> 
+					<span class="mr-2 d-none d-lg-inline text-gray-600 small">님</span></a> <!-- Dropdown - User Information -->
 				<div
 					class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 					aria-labelledby="userDropdown">
@@ -109,38 +109,14 @@
 						로그아웃
 					</a>
 				</div></li>
-			<div class="topbar-divider d-none d-sm-block"
-				style="margin-left: 3px; margin-right: 3px;"></div>
+			<div class="topbar-divider d-none d-sm-block" style="margin-left: 3px; margin-right: 3px;"></div>
 			<!-- Nav Item - Messages -->
 			<li class="nav-item dropdown no-arrow mx-1"><a
-				class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
-				role="button" data-toggle="dropdown" aria-haspopup="true"
+				class="nav-link dropdown-toggle" href="partner" id="messagesDropdown"
+				aria-haspopup="true"
 				aria-expanded="false"> <span
 					class="mr-2 d-none d-lg-inline text-gray-600 small">파트너</span> <!-- Counter - Messages -->
-			</a> <!-- Dropdown - Messages -->
-				<div
-					class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-					aria-labelledby="messagesDropdown">
-					<h6 class="dropdown-header"
-						style="border-bottom: gray solid 1px; text-align: center;">내
-						파트너</h6>
-					<a class="dropdown-item text-center small text-gray-500"
-						href="partner">파트너 추가</a>
-					<div style="overflow-X: hidden; height: 570px;">
-						<div data-toggle="modal" data-target="#deletePartner">
-							<a class="dropdown-item d-flex align-items-center" href="#">
-								<div class="dropdown-list-image mr-3">
-									<img class="rounded-circle"
-										src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-								</div>
-								<div>
-									<div class="text-truncate">이하나</div>
-									<div class="text-truncate text-gray-600">이메일</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div></li>
+			</a></li>
 		</ul>
 	</nav>
 	<!-- End of Topbar -->

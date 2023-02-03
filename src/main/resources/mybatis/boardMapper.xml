@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+ <mapper namespace="com.wegoing.dao.BoardDao">
+  	<select id="selectCategory" resultType="BoardDTO" parameterType="int">
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
+  		board
+  		where cateno = #{no}
+  		order by bhits desc
+  		limit 5
+  	</select>
+  	
+  
+  	<select id="selectboard" resultType="BoardDTO" parameterType="int">
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
+  		board
+  		where cateno = #{no}
+  		limit 8
+  	</select>
+  	<select id="selectPage" parameterType="map" resultType="BoardDTO">
+        SELECT bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname FROM board
+        WHERE cateno= #{bno}
+        ORDER BY reg_dt DESC, bno DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+  	<select  id="selectOne" resultType="BoardDTO" parameterType="int">
+  		select bno,btitle,bcontent,bhits,reg_dt,up_dt,cateno,email,nickname from 
+  		board
+  		where bno = #{no}
+  	</select>
+  	<insert id="insert"  parameterType="BoardDTO" >
+  		INSERT INTO board
+  		(email,cateno,btitle,bcontent,nickname)
+  		VALUES
+  		(#{email}, #{cateno}, #{btitle}, #{bcontent}, #{nickname})
+  	</insert>
+  	
+  	<delete id="deleteCategory" parameterType="int">
+  		delete from board
+  		where cateno = #{cateno}
+  	</delete>
+  	
+  	<delete id="deleteOne" parameterType="int">
+  		delete from board
+  		where bno = #{bno}
+  	</delete>
+  	<delete id="deleteAll">
+  		delete from board
+  	</delete>
+  	
+  	<select  id="countBoard" resultType="int" parameterType="int">
+  		select count(*) from board
+  		where cateno = #{cateno}
+  	</select>
+  	
+  	<update id="update" parameterType="BoardDTO">
+  		update board
+  		set btitle= #{btitle}, bcontent= #{bcontent}, up_dt=#{up_dt}
+  		where bno = #{bno}
+  	</update>
+  	
+  	<update id="updateHit" parameterType="int">
+	  		update board
+			set bhits = bhits+1
+			where bno= #{bno};
+  	</update>
+  	
+  	<select  id="selectTest" parameterType="int" resultType="BoardDTO">
+  		select * from board where cateno = #{bno}
+		order by reg_dt desc
+		limit 1; 
+  	</select>
+  </mapper>

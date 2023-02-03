@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+
+	<style>
+.content__wrapper {
+	width: 80%;
+	height: 80%;
+	margin-left: 70px;
+}
+
+.content__header {
+	display: flex;
+	flex-direction: column;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	margin-bottom: 20px;
+	
+}
+
+.content__more {
+	display: flex;
+	width:100%;
+	
+}
+.content__more__thc {
+	display: flex;
+	width: 50%;
+	justify-content: flex-start;
+}
+.content__button {
+	display: flex;
+	justify-content: flex-end;
+	width: 50%;
+}
+
+.content__title, .content__nick, .content__more {
+	margin-bottom: 13px;
+}
+
+.content__time, .content__hits, .content__comments {
+	margin-right: 13px;
+}
+.content__title{
+	font-weight: 700;
+	font-size: 22px;
+}
+.content__main {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: flex-start;
+	height: 500px;
+}
+.fa-eye,.fa-comment{
+margin: 3px 10px 0px 0px;}
+.content__edit{
+margin-right: 3px;}
+</style>
+	
+	<div class="content__wrapper" th:each="free:${free}">
+		<div class="content__header">
+			<div class="content__title" th:text="${free.btitle}">제목</div>
+			<div class="content__nick" th:text="${free.nickname}">닉네임</div>
+			<div class="content__more">
+				<div class="content__more__thc">
+					<i class="fa-regular fa-eye"></i><div class="content__hits" th:text="${free.bhits}">조회수</div>
+					
+					<i class="fa-regular fa-comment"></i><div class="content__comments" th:text="${comCount}">댓글수</div>
+					<div class="content__time"  th:text="${#dates.format(free.reg_dt,'MM-dd HH:mm')}">시간</div>
+				</div>
+
+				<div class="content__button">
+					<div class="content__edit">
+						 <a th:href="@{/freeboard/{bno}/edit(bno=${free.bno})}">	
+							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
+							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
+						</a> 
+						
+					</div>
+					
+				
+					<div class="content__delete">
+					<form th:action="@{/freeboard/{bno}/delete(bno=${free.bno})}" method="POST">
+						 <input value="삭제" th:if="${nick}!='YES'" th:type="hidden"  class="btn btn-outline-primary"/>
+						<input value="삭제" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary" /> 
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="content__main">
+			<div class="content__contents" th:text="${free.bcontent}">내용</div>
+		</div>
+
+	</div>
+
+	<script>
+	
+	</script>
+</th:block>
+</html>

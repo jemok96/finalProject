@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+
+<th:block layout:fragment="content">
+
+
+	<div class="container">
+		
+		<div class="mb-3 row">
+			<div >
+			  <button class="btn btn-secondary btn-sm" type="button" th:text="${dto.dstatus}" data-bs-toggle="dropdown" aria-expanded="false">
+			  </button>
+			  <span id = "headbutton">
+                
+                <a th:href="@{modify(dno=${dto.dno})}"><button type="button" class="btn btn-warning">수정</button></a>
+                <a th:href="@{list(clno=${clno})}"><button type="button" class="btn btn-outline-secondary">목록</button></a>
+			  </span>
+			</div>
+		    <label for="staticEmail" class="col-sm-2 col-form-label">작성자</label>
+		    <div class="col-sm-10">
+		      <input type="text" readonly class="form-control-plaintext" id="dwriter" name="dwriter" th:value="${dto.dwriter}">
+		    </div>
+	  	</div>
+		<div class="mb-3 row">
+		    <label for="staticEmail" class="col-sm-2 col-form-label">제목</label>
+		    <div class="col-sm-10">
+		      <input type="text" readonly class="form-control-plaintext" id="dwriter" name="dwriter" th:value="${dto.dname}">
+		    </div>
+	  	</div>
+	  	
+		
+		<div class="mb-3">
+		  <label for="exampleFormControlTextarea1" class="form-label"></label>
+		  <textarea class="form-control-plaintext" id="exampleFormControlTextarea1" rows="3" th:text="${dto.dcontent}"></textarea>
+		</div>
+
+	</div>
+</th:block>
