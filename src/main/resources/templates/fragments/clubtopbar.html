@@ -9,7 +9,7 @@
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4-2 static-top shadow2">
         <!-- Sidebar Toggle (Topbar) -->
         <div class="club-info">
-            <a class="club-main" th:href="@{./document}">
+            <a class="club-main" th:href="@{./list}">
             <span class="navbar-club-name" th:text="${club.clname}"></span></a>
             <span class="club-setting-btn" data-toggle="modal" data-target="#club-setting">
             <img src="/img/setting_btn.png" alt="설정버튼이미지" class="club-setting-img"/></span>
@@ -190,7 +190,7 @@
     <div class="category-nav shadow">
 	    <div><hr class="category-line"/></div>
 	    <div class="category">
-	       <div class="category-items"><a th:href="@{/document/list(clno=${club.clno})}">문 서</a></div>
+	       <div class="category-items"><a th:href="@{./list}">문 서</a></div>
 	       <div class="category-items"><a href="#">칸 반</a></div>
 	       <div class="category-items"><a href="#">캘 린 더</a></div>
 	       <div class="category-items"><a href="#">보 관 함</a></div>
