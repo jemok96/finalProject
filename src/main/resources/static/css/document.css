@@ -1,9 +1,14 @@
 @charset "UTF-8";
 
+/* list.css */
 .paging{
 	width: 300px;
 	margin: auto;
 	}
+#writeButton{
+	margin-left: 900px;
+}
+	
 	
 /* ddtail.css */
 #headbutton{
@@ -12,3 +17,13 @@
 	top: 100px;
 	
 }
+#dtailTable{
+	border-collapse:collapse;
+	width: 300px;
+	
+}
+#dtailTable td, #dtailTable th{
+	border:none;
+	width: 100px;
+}
+

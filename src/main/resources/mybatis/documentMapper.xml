@@ -27,8 +27,13 @@
  	
  	<update id="updateOne" parameterType="DocumentDTO">
  		UPDATE document
- 		SET dcontent = #{dcontent}, dstatus = #{dstatus}
+ 		SET dcontent = #{dcontent}, dstatus = #{dstatus}, dname = #{dname}
  		WHERE dno = #{dno}
  	</update>
+ 	
+ 	<delete id="deleteOne" parameterType="int">
+ 		DELETE FROM document
+ 		WHERE dno = #{dno}
+ 	</delete>
   
   </mapper>

@@ -5,12 +5,27 @@
 
 <th:block layout:fragment="content">
 
-	<h3>[[${clno}]]</h3>
+	
 	<div class="container">
-		<h3>협업 문서 공간</h3>
-		<table class="table">
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<span class="m-0 font-weight-bold text-info">문서</span>
+				<!-- <s class="m-0 font-weight-bold text-primary">문서</h6> -->
+				<a th:href="@{write}" id="writeButton" class="btn btn-info btn-icon-split">
+                    <!-- <span class="icon text-gray-600">
+                        <i class="fas fa-arrow-right"></i>
+                    </span> -->
+                    <span  class="text">작성</span>
+                </a>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+		<!-- <span sec:authentication="name"></span>	
+			
+			<p th:text="${(#authentication)}"></p> -->
+		<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 			<thead>
-				<tr>
+				<tr role="row">
 					<th scope="col">작성자</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성 일자</th>
@@ -20,31 +35,55 @@
 				<tr th:each=" dto : ${list}">
 					<td th:text="${dto.dwriter}"></td>
 					<th scope="row">
-						<a th:href="@{/document/dtail(dno=${dto.dno},clno=${clno})}">[[${dto.dname}]]</a>
+						<a th:href="@{dtail(dno=${dto.dno})}">[[${dto.dname}]]</a>
 					</th>
 					<td th:text="${dto.reg_dt}"></td>
 				</tr>
 			</tbody>
 		</table>
+		
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 		<div class="paging">
 		<nav aria-label="Page navigation example">
 			<ul class="pagination" th:with="start=${map['startPage']}, end=${map['endPage']}">
 				<li class="page-item" th:if="${map['isPre']}">
-					<a class="page-link" th:href="@{list(cp=${map['currentPage']-5}),clno=${clno}}" aria-label="Previous">
+					<a class="page-link" th:href="@{list(cp=${map['currentPage']-5})}" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
 				<li class="page-item" th:each="i : ${#numbers.sequence(start, end)}">
-					<a class="page-link" th:href="@{list(cp=${i},clno=${clno})}" th:text="${i}"></a>
+					<a class="page-link" th:href="@{list(cp=${i})}" th:text="${i}"></a>
 				</li>
 				<li class="page-item" th:if="${map['isNext']}">
-					<a class="page-link" th:href="@{list(cp=${map['currentPage']+5}),clno=${clno}}" aria-label="Next">
+					<a class="page-link" th:href="@{list(cp=${map['currentPage']+5})}" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>
 			</ul>
 		</nav>
 		</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	
+	
 
 </th:block>

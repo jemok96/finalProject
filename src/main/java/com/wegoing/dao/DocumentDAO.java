@@ -17,4 +17,5 @@ public interface DocumentDAO {
 	public int getTotal(int clno);
 	public DocumentDTO selectOne(int dno);
 	public void updateOne(DocumentDTO dto);
+	public void deleteOne(int dno);
 }

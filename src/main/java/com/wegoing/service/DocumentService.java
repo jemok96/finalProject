@@ -39,6 +39,10 @@ public class DocumentService {
 		
 	}
 	
+	public void remove(int dno) {
+		dao.deleteOne(dno);
+	}
+	
 	
 	
 	
