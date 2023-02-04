@@ -96,9 +96,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5rem
 }
 
-p {
+p { /* 수정 */
     margin-top: 0;
-    margin-bottom: 1rem
+    /* margin-bottom: 1rem */
 }
 
 abbr[data-original-title], abbr[title] {
@@ -10990,7 +10990,7 @@ a:hover {
 .category-items > a {
 	color: #858796;
 	font-size: 15px;
-	word-spacing: 1px;
+	word-spacing: 0.5px;
 }
 
 .category-items > a:hover {

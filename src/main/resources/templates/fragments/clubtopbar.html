@@ -13,7 +13,7 @@
             <span class="navbar-club-name" th:text="${club.clname}"></span></a>
             <span class="club-setting-btn" data-toggle="modal" data-target="#club-setting">
             <img src="/img/setting_btn.png" alt="설정버튼이미지" class="club-setting-img"/></span>
-            <p class="navbar-club-explain" th:text="${club.clexplain}"></p>
+            <div class="navbar-club-explain" th:text="${club.clexplain}"></div>
             
             <!-- 협업공간 관리 모달창 -->
             <div class="modal fade" id="club-setting" tabindex="-1" role="dialog" 
@@ -23,7 +23,7 @@
                         <div class="modal-header">
                             <div><h5 class="modal-title  text-gray-900 " id="exampleModalLabel">협업공간 관리</h5></div> 
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span></button>
+                                <span aria-hidden="true" onclick="">×</span></button>
                         </div>                        
                     <form th:action="@{/club/{clno}/edit(clno=${club.clno})}" id="editForm" method="post" >
                         <div class="modal-body">
@@ -157,7 +157,7 @@
             <!-- Nav Item - Messages -->
             <li class="nav-item no-arrow mx-1">
             <a
-                class="nav-link" th:href="@{./member}" id="messagesDropdown"
+                class="nav-link" th:href="@{../member}" id="messagesDropdown"
                 role="button" aria-haspopup="true"
                 aria-expanded="false"> <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small">멤버</span> <!-- Counter - Messages -->
