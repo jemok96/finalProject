@@ -17,4 +17,9 @@
 						where email = #{email})
 		order by clno desc
 	</select>
+	<select id="getAllMembers" parameterType="int" resultType="ClubMemberDTO">
+	    select cno, cstatus, crank, clno, email, join_dt
+	    from clubmember
+	    where clno = #{clno}
+	</select>
 </mapper>
