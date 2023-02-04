@@ -1,6 +1,7 @@
 package com.wegoing.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.wegoing.dao.ClubMemberDAO;
 import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
+import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
+import com.wegoing.service.MemberService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,12 +33,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ClubController {
 	private ClubService cs;
 	private ClubMemberService cms; 
+	private MemberService ms; 	
 	String loginEmail = ""; 
 	
 	@Autowired
-	public ClubController(ClubService clubservice , ClubMemberService clubmemberservice) {
+	public ClubController(ClubService clubservice , ClubMemberService clubmemberservice, MemberService memberservice) {
 		this.cs = clubservice; 
 		this.cms = clubmemberservice;
+		this.ms = memberservice;
 	}
 		
 	@PostMapping("/club")
@@ -67,21 +72,11 @@ public class ClubController {
 		    return "redirect:/main";
 		  }
 	}
-
-	@GetMapping("/club/{clno}")
-	public String clubMain(@PathVariable int clno, Model model) {
-		// 협업공간 이름, 설명, 멤버
-		// 협업공간 생성자(host)와 사용자(user.mail)이 동일하면 설정 버튼 출력
-		ClubDTO cdto = cs.getOne(clno);
-		log.info("cdto >>>>> " + cdto);
-		model.addAttribute("club", cdto);
-		
-		return "club/clubtest";
-	}
 	
 	@PostMapping("/club/{clno}/edit")
 	public String editClub(@PathVariable int clno, @RequestParam("editClname")String editClname,
-							@RequestParam("editClexplain")String editClexplain, Model model) {
+							@RequestParam("editClexplain")String editClexplain, 
+							HttpServletRequest request, Model model) {
 		log.info("clno >>>>>" + clno);
 		ClubDTO cdto = cs.getOne(clno);
 		model.addAttribute("club", cdto);
@@ -94,7 +89,30 @@ public class ClubController {
 		
 		cs.modifyOne(cdto);
 		
-		return "redirect:/club/{clno}";
+		if (request.getHeader("Referer") != null) {
+		    return "redirect:" + request.getHeader("Referer");
+		  } else {
+		    return "redirect:/main";
+		  }
+	}
+	
+	@GetMapping("/club/{clno}/member")
+	public String clubMember(@PathVariable int clno, Model model,
+							@AuthenticationPrincipal PrincipalDetails userDetails) {
+		ClubDTO cdto = cs.getOne(clno);
+		String loginEmail = userDetails.getMdto().getEmail();
+		log.info("Email >>>>> " + loginEmail);
+		
+		// 파트너 리스트 
+		List<MemberDTO> mdto = ms.getMyPartners(loginEmail);
+		// 멤버 리스트
+		List<ClubMemberDTO> cmdto = cms.selectMembers(clno);
+		
+		model.addAttribute("club", cdto);
+		model.addAttribute("partnerList", mdto);		
+		model.addAttribute("MemberList", cmdto);		
+		
+		return "club/clubMember";
 	}
 	
 }

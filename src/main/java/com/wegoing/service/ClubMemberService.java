@@ -26,4 +26,8 @@ public class ClubMemberService {
 	public List<ClubDTO> selectAll(String email){		
 		return cmDao.getAll(email);
 	}
+	
+	public List<ClubMemberDTO> selectMembers(int clno){
+		return cmDao.getAllMembers(clno);
+	}
 }
