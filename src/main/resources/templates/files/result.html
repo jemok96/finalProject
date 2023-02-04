@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>upload 목록</h1>
+	<ul th:each="file : ${files}">
+		<li>
+		<span th:text="${file.fname}"></span>
+		<a href="#" th:href="${'/download?uuid='+file.uuid+'&fname='+
+		file.fname}">[download]</a>
+		</li>
+	</ul>
+		
+		<ul th:each="file : ${file}">
+		<li>
+		<span th:text="${file.fname}"></span>
+		<a href="#" th:href="${'/download?uuid='+file.uuid+'&fname='+
+		file.fname}">[download]</a>
+		</li>
+	</ul>
+</body>
+</html>

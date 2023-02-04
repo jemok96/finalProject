@@ -1,0 +1,97 @@
+package com.wegoing.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.tomcat.util.file.ConfigurationSource.Resource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.wegoing.dto.FileDTO;
+import com.wegoing.service.FileService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+public class FileController   {
+	private final FileService fileService;
+	String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+	public FileController(FileService fileService) {
+		this.fileService =fileService;
+	}
+	
+	@Value("${spring.servlet.multipart.location}")
+	private String filePath;
+	
+	@GetMapping("/file")
+	public String file(Model model) {
+		model.addAttribute("file",fileService.getFileList(1));
+		System.out.println(projectPath);
+		return "files/files";
+		
+	}
+
+	@PostMapping("/upload")
+	public String upload(@RequestParam MultipartFile[] uploadfile, Model model
+			) throws IllegalStateException, IOException {
+		System.out.println("filePath = "+filePath);
+		List<FileDTO> list = new ArrayList();
+		
+		for (MultipartFile file : uploadfile) {
+			System.out.println("file = "+file);
+			if (!file.isEmpty()) {
+				FileDTO dto = FileDTO.builder().fname(file.getOriginalFilename()).clno(1)
+						.uuid(UUID.randomUUID().toString()).fpath(""). build();
+				
+				list.add(dto);
+				fileService.uploadFile(dto);
+				File newFileName = new File(projectPath,dto.getUuid() + "_" + dto.getFname());
+				file.transferTo(newFileName);
+				
+			}
+		}
+		model.addAttribute("file",fileService.getFileList(1));
+		
+
+		return "redirect:file";
+
+	}
+	@GetMapping("/download")
+	public ResponseEntity<Resource> download(@ModelAttribute FileDTO dto)throws
+	IOException{
+		
+		Path path = Paths.get(projectPath+"/"+dto.getUuid()+"_"+dto.getFname());
+		String contentType = Files.probeContentType(path);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentDisposition(ContentDisposition.builder("attachment").filename(dto.getFname(),StandardCharsets.UTF_8).build());
+		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+		InputStreamResource resource = new InputStreamResource(Files.newInputStream(path));
+		
+		return new ResponseEntity(resource,headers,HttpStatus.OK);
+		
+	}
+	
+	
+}

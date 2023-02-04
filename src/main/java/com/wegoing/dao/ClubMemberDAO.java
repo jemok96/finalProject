@@ -14,4 +14,5 @@ public interface ClubMemberDAO {
 	void insetClubMember(ClubMemberDTO dto);
 
 	List<ClubDTO> getAll(String email);
+	List<ClubMemberDTO> getAllMembers(int clno);
 }

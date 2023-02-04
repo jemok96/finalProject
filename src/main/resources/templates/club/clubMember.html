@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/layout/club}">
+
+<th:block layout:fragment="content">
+
+<!--    <h1 th:text="${club.clname}"></h1>
+     <p th:text="${partnerList}"></p>
+    <div th:each="partner : ${partnerList}">
+        <p th:text="${partner.name}"></p>
+        <p th:text="${partner.email}"></p>        
+    </div> -->
+    
+    <div class="clubmember-container">
+        <div class="title">
+            <p class="title-text">협업공간 멤버관리</p>
+            <p class="info-text">등록되어 있는 파트너만 멤버로 초대할 수 있습니다.</p>
+        </div>
+        <div class="list-box">
+            <div class="partner">
+	            <div th:each="partner : ${partnerList}">
+	                <div class="partner-list-items">
+	                    <div class="partner-info">
+	                        <p class="partner-name" th:text="${partner.name}"></p>
+	                        <p class="partner-email" th:text="${partner.email}"></p>
+	                    </div>
+	                    <button type="button" class="btn btn-primary add-btn">추가</button>  
+	                </div>
+	            </div>
+            </div>
+            <div class="clubmember">
+            </div>
+        </div>
+    </div>
+    
+</th:block>
