@@ -64,6 +64,11 @@ justify-content: center;
 }
 </style>
 
+<script th:inline="javascript">
+	var msg =[[${success}]];
+	if(msg !=null) alert(msg);
+	
+</script>
 	<div class="container">
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">

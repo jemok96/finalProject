@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.DocumentDTO;
 import com.wegoing.dto.FileDTO;
+import com.wegoing.enumpackage.Message;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.DocumentService;
 import com.wegoing.service.FileService;
@@ -85,8 +86,8 @@ public class FileController   {
 			}
 		}
 		
-		ratt.addFlashAttribute("msg","성공적으로 등록");
-		model.addAttribute("file",fileService.getFileList(1));
+		ratt.addFlashAttribute(Message.WRITE_OK.message(), Message.WRITE.message());
+		model.addAttribute("file",fileService.getFileList(clno));
 		
 
 		return "redirect:file";
