@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.MemberDAO;
-import com.wegoing.dto.ClubMemberInfo;
 import com.wegoing.dto.MemberDTO;
 
 @Service
