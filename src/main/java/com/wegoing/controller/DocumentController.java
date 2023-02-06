@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.ClubDTO;
+import com.wegoing.dto.ClubMemberDTO;
 import com.wegoing.dto.DocumentDTO;
+import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.DocumentService;
 import com.wegoing.util.PageUtil;
@@ -32,11 +36,14 @@ public class DocumentController {
 	
 	@Autowired
 	ClubService clubService;
+	
+	@Autowired
+	ClubMemberService clubmemberservice;
 
 	// 협업 공간 디테일?
 	@GetMapping("/{clno}/document/list")
 	public String clubDocumentlist(@PathVariable("clno") int clno, Model model,
-			@RequestParam(name = "cp", defaultValue = "1") int currentPage) {
+			@RequestParam(name = "cp", defaultValue = "1") int currentPage,@AuthenticationPrincipal PrincipalDetails userDetails) {
 
 		int totalNumber = service.getTotal(clno);
 
@@ -46,12 +53,16 @@ public class DocumentController {
 		log.info(">>>>>>>>>>>>>>>>>>list");
 		// 한페이지당 7개씩 보이는 메서드
 		List<DocumentDTO> list = service.getAll(clno, startNo);
+		
+		List<ClubMemberDTO> cmlist = clubmemberservice.selectMembers(clno);
 
 		model.addAttribute("list", list);
 		model.addAttribute("map", map);
-		
+//		model.addAttribute("myClub", clubu)
 		ClubDTO cdto = clubService.getOne(clno);
 		model.addAttribute("club", cdto);
+		model.addAttribute("cmlist", cmlist);
+		
 
 		return "club/document/dlist";
 	}
