@@ -190,8 +190,8 @@
     <div class="category-nav shadow">
 	    <div><hr class="category-line"/></div>
 	    <div class="category">
-	       <div class="category-items"><a th:href="@{./list}">문 서</a></div>
-	       <div class="category-items"><a th:href="@{../kanban}">칸 반</a></div>
+	       <div class="category-items"><a th:href="@{/club/{clno}/document/list(clno = ${club.clno})}">문 서</a></div>
+	       <div class="category-items"><a th:href="@{/club/{clno}/kanban(clno = ${club.clno})}">칸 반</a></div>
 	       <div class="category-items"><a href="#">캘 린 더</a></div>
 	       <div class="category-items"><a href="#">보 관 함</a></div>
 	       <div class="nav-underline"></div>
