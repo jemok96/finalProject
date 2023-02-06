@@ -49,9 +49,11 @@ public class DocumentService {
 		dao.insertOne(dto);
 		
 	}
-	
-	
-	
+
+	public void modify(String dstatus, int dno) {
+		dao.updateDstatus(dstatus, dno);
+		
+	}
 	
 	
 }

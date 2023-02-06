@@ -41,5 +41,20 @@
  		INSERT INTO document(dname,dcontent,dstatus,dwriter,reg_dt,up_dt,clno)
  		VALUES (#{dname},#{dcontent},#{dstatus},#{dwriter}, sysdate(), sysdate(),#{clno})
  	</insert>
-  
+  	
+  	<select id="selectAllList" parameterType="int" resultType="DocumentDTO">
+  		SELECT dno, dname, dcontent, dstatus, dwriter, reg_dt, up_dt, clno
+  		FROM document
+		WHERE clno = #{clno}
+  	</select>
+  	<select id="selectDstatusList" parameterType="map" resultType="DocumentDTO">
+  		SELECT dno, dname, dcontent, dstatus, dwriter, reg_dt, up_dt, clno
+  		FROM document
+		WHERE clno = #{clno} and dstatus = #{dstatus} 
+  	</select>
+  	<update id="updateDstatus" parameterType="map">
+  		update document
+  		set dstatus = #{dstatus}
+  		where dno = #{dno}
+  	</update>
   </mapper>
