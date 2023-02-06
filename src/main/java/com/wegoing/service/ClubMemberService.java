@@ -30,4 +30,12 @@ public class ClubMemberService {
 	public List<ClubMemberDTO> selectMembers(int clno){
 		return cmDao.getAllMembers(clno);
 	}
+
+	public ClubMemberDTO selectMemberByClnoAndEmail(ClubMemberDTO cmdto) {
+		return cmDao.getOneByClnoAndEmail(cmdto);
+	}
+	
+	public List<String> getEmailByClno(int clno){
+		return cmDao.selectEmailByClno(clno);
+	}
 }
