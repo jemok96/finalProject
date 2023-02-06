@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.BoardDao;
@@ -27,7 +28,6 @@ public class BoardService {
 	}
 	
 	@Cacheable(value = "board")
-	@CachePut(value="board")
 	public List<BoardDTO> selectCategory(int no){
 //		접속 후 한번 찍히고 다음부터 안찍힘
 		List<BoardDTO> dto = dao.selectCategory(no);
@@ -60,7 +60,7 @@ public class BoardService {
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
 	}
-
+	@CacheEvict(value="board")
 	public int updateHit(int bno) {
 		return dao.updateHit(bno);
 	}
