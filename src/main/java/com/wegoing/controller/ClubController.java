@@ -1,26 +1,18 @@
 package com.wegoing.controller;
 
-import java.security.Principal;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.wegoing.dao.ClubMemberDAO;
 import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
-import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
@@ -95,24 +87,4 @@ public class ClubController {
 		    return "redirect:/main";
 		  }
 	}
-	
-	@GetMapping("/club/{clno}/member")
-	public String clubMember(@PathVariable int clno, Model model,
-							@AuthenticationPrincipal PrincipalDetails userDetails) {
-		ClubDTO cdto = cs.getOne(clno);
-		String loginEmail = userDetails.getMdto().getEmail();
-		log.info("Email >>>>> " + loginEmail);
-		
-		// 파트너 리스트 
-		List<MemberDTO> mdto = ms.getMyPartners(loginEmail);
-		// 멤버 리스트
-		List<ClubMemberDTO> cmdto = cms.selectMembers(clno);
-		
-		model.addAttribute("club", cdto);
-		model.addAttribute("partnerList", mdto);		
-		model.addAttribute("MemberList", cmdto);		
-		
-		return "club/clubMember";
-	}
-	
 }
