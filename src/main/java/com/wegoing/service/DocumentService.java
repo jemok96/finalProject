@@ -43,17 +43,13 @@ public class DocumentService {
 		dao.deleteOne(dno);
 	}
 
-
-	public void write(DocumentDTO dto,int clno) {
-		dto.setClno(clno);
+	public void write(DocumentDTO dto) {
 		dao.insertOne(dto);
 		
 	}
-
-	public void modify(String dstatus, int dno) {
-		dao.updateDstatus(dstatus, dno);
-		
-	}
+	
+	
+	
 	
 	
 }

@@ -22,4 +22,9 @@
 	    from clubmember
 	    where clno = #{clno}
 	</select>
+    <select id="selectEmailByClno" parameterType="int" resultType="String">
+        select Email
+        from clubmember
+        where clno = #{clno}
+    </select>
 </mapper>

@@ -19,7 +19,6 @@ import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.MemberService;
 import com.wegoing.service.PartnerService;
-import com.wegoing.util.ClubUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +40,7 @@ public class PartnerController {
 	
 	@GetMapping("/partner")
 	public String partnerForm(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
-		
+
 		// 여기도 동일한 코드가 필요
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
 		List<ClubDTO> myClub= cms.selectAll(loginEmail);
@@ -51,7 +50,6 @@ public class PartnerController {
 		model.addAttribute("recPartner", pto);
 		List<MemberDTO> mto = ms.getMyPartners(loginEmail);
 		model.addAttribute("myPartner", mto);
-		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "partner/partnerForm";
 	}
 	

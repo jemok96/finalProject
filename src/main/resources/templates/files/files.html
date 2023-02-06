@@ -1,0 +1,23 @@
+<!DOCTYPE xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>파일</title>
+</head>
+<body>
+	<h1>파일</h1>
+	<form method="post" action="/upload" enctype="multipart/form-data">
+		<input type="file" name="uploadfile" multiple="multiple" /> <input
+			type="submit" />
+	</form>
+	
+
+	<ul th:each="file : ${file}">
+		<li><span th:text="${file.fname}"></span> <a href="#"
+			th:href="${'/download?uuid='+file.uuid+'&fname='+
+		file.fname}">[download]</a>
+		</li>
+	</ul>
+	<img src="si.png" alt="" />
+</body>
+</html>

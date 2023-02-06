@@ -4,14 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wegoing.dao.FileDao">
 	<select id="getFileList" resultType="FileDTO" parameterType="int">
-		select fno,uuid,fname,fpath,reg_dt,clno,description
+		select fno,uuid,fname,fpath,reg_dt,clno
 		from file
 		where clno= #{clno}
 	</select>
 	
 	<insert id="uploadFile" parameterType="FileDTO">
-		insert into file(fname,uuid,fpath,clno,description) 
-		values(#{fname}, #{uuid},#{fpath}, #{clno},#{description} )
+		insert into file(fname,uuid,fpath,clno) 
+		values(#{fname}, #{uuid},#{fpath}, #{clno} )
 	</insert>
 	
 	<delete id="deleteFile" parameterType="int">
