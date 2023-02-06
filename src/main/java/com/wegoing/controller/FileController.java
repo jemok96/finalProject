@@ -19,6 +19,7 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +35,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.DocumentDTO;
 import com.wegoing.dto.FileDTO;
+import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.Message;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.DocumentService;
 import com.wegoing.service.FileService;
+import com.wegoing.util.ClubUtil;
 import com.wegoing.util.PageUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,12 +62,12 @@ public class FileController   {
 
 
 	@GetMapping("/club/{clno}/file")
-	public String clubDocumentlist(@PathVariable("clno") int clno,Model model) {
+	public String clubDocumentlist(@PathVariable("clno") int clno,Model model, @AuthenticationPrincipal PrincipalDetails userDetatil ) {
 		model.addAttribute("file",fileService.getFileList(clno));
 
 		ClubDTO cdto = clubService.getOne(clno);
 		model.addAttribute("club", cdto);
-
+		model.addAttribute("myClub",ClubUtil.getClub(userDetatil));
 		return "club/files";
 	}
 
@@ -85,8 +89,8 @@ public class FileController   {
 			}
 		}
 		
-		ratt.addFlashAttribute("msg","성공적으로 등록");
-		model.addAttribute("file",fileService.getFileList(1));
+		ratt.addFlashAttribute(Message.WRITE_OK.message(), Message.WRITE.message());
+		model.addAttribute("file",fileService.getFileList(clno));
 		
 
 		return "redirect:file";

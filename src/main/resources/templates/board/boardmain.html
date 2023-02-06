@@ -87,7 +87,10 @@ a {
 color:black;
 }
 </style>
-
+	<script th:inline="javascript">
+		var msg=[[${success}]];
+		if(msg != null) alert(msg);
+	</script>
 		<div class="main-contents">
 			<div class="section1">
 				<div class="section__column">

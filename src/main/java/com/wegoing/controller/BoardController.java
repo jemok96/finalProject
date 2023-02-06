@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,14 +70,18 @@ public class BoardController {
 	}
 
 	@PostMapping("/board/add")
-	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails) {
+	public String insertBoard(@Validated @ModelAttribute("board")BoardDTO board,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails
+			,RedirectAttributes ratt) {
 		if(bindingResult.hasErrors()) {
 			log.info("erros={}",bindingResult);
 			return "board/addboard";
 		}
+		
 		board.setEmail(userDetails.getMdto().getEmail());
 		board.setNickname(userDetails.getMdto().getNickname());
 		service.insert(board);
+		ratt.addFlashAttribute(Message.WRITE_OK.message(),Message.WRITE.message());
+	
 		return "redirect:/board";
 	}
 
@@ -145,7 +151,7 @@ public class BoardController {
 	public String freeboardDelete(@PathVariable int bno,RedirectAttributes ratt) {
 		commentService.commentDeleteBno(bno);
 		service.deleteOne(bno);
-		ratt.addFlashAttribute("success","삭제 되었습니다");
+		ratt.addFlashAttribute(Message.DEL_OK.message(),Message.DELETE.message());
 		return "redirect:/freeboard";
 	}
 	
@@ -213,7 +219,8 @@ public class BoardController {
 	public String petboardDelete(@PathVariable int bno,RedirectAttributes ratt) {
 		commentService.commentDeleteBno(bno);
 		service.deleteOne(bno);
-		ratt.addFlashAttribute("success","삭제 되었습니다");
+		ratt.addFlashAttribute(Message.DEL_OK.message(),Message.DELETE.message());
+		
 		return "redirect:/pet";
 	}
 //	================================================
@@ -277,7 +284,7 @@ public class BoardController {
 	public String hobbyboardDelete(@PathVariable int bno, RedirectAttributes ratt) {
 		commentService.commentDeleteBno(bno);
 		service.deleteOne(bno);
-		ratt.addFlashAttribute("success","삭제 되었습니다");
+		ratt.addFlashAttribute(Message.DEL_OK.message(),Message.DELETE.message());
 		return "redirect:/hobby";
 	}
 	
@@ -353,7 +360,7 @@ public class BoardController {
 	public String careerboardDelete(@PathVariable int bno, RedirectAttributes ratt) {
 		commentService.commentDeleteBno(bno);
 		service.deleteOne(bno);
-		ratt.addFlashAttribute("success","삭제 되었습니다");
+		ratt.addFlashAttribute(Message.DEL_OK.message(),Message.DELETE.message());
 		return "redirect:/career";
 	}
 	
