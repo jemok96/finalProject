@@ -20,17 +20,38 @@
         </div>
         <div class="list-box">
             <div class="partner">
-	            <div th:each="partner : ${partnerList}">
-	                <div class="partner-list-items">
-	                    <div class="partner-info">
-	                        <p class="partner-name" th:text="${partner.name}"></p>
-	                        <p class="partner-email" th:text="${partner.email}"></p>
-	                    </div>
-	                    <button type="button" class="btn btn-primary add-btn">추가</button>  
-	                </div>
-	            </div>
-            </div>
+				<form th:action="@{/}" method="post">
+					<div th:each="partner : ${partnerList}">
+						<div class="partner-list-items">
+							<div class="partner-info">
+								<input type="hidden" th:value="${club.clno}" class="clno" name="clno" /> 
+								<input type="hidden" th:value="${partner.email}" class="email" name="email" />
+								<p class="partner-name" th:text="${partner.name}"></p>
+								<p class="partner-email" th:text="${partner.email}"></p>
+							</div>
+							<button type="button" th:if="${!#lists.contains(emailList, partner.email)}" 
+							th:attrappend="id=${partnerStat.index}" class="btn btn-primary add-btn">초대</button>	
+							<p th:unless="${!#lists.contains(emailList, partner.email)}" class="request">초대 완료</p>							
+								<!-- <p th:text="${#lists.contains(emailList, partner.email)}"></p> -->
+							<!-- <p th:unless="${!memberList.contains(partner.email)}" class="hello">&nbsp;</p>   -->
+						</div>
+					</div>
+				</form>
+			</div>
+			<span class="add">>></span>
             <div class="clubmember">
+                <div th:each="clubmember : ${memberList}">
+                    <div class="clubmember-list-items">
+                        <div class="clubmember-info">
+                            <p class="clubmember-name" th:text="${clubmember.name}"></p>
+                            <p class="clubmember-email" th:text="${clubmember.email}"></p>
+                        </div>
+                        <div>                            
+                            <p class="clubhost" th:if="${clubmember.cldto.crank == 'host'}">관리자</p>
+                            <p class="waitAccept" th:if="${clubmember.cldto.cstatus == 'n'}">대기</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
