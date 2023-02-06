@@ -39,7 +39,7 @@
  	
  	<insert id="insertOne" parameterType="DocumentDTO">
  		INSERT INTO document(dname,dcontent,dstatus,dwriter,reg_dt,up_dt,clno)
- 		VALUES (#{dname},#{dcontent},#{status},#{dwriter}, sysdate(), sysdate(),#{clno})
+ 		VALUES (#{dname},#{dcontent},#{dstatus},#{dwriter}, sysdate(), sysdate(),#{clno})
  	</insert>
   
   </mapper>

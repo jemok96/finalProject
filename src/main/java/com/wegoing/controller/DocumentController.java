@@ -104,13 +104,12 @@ public class DocumentController {
 	}
 
 	
-	@GetMapping("/{clno}/document/write")
-	public String writeForm(@PathVariable("clno")int clno, Model model) {
-//		service.write(clno);
-		ClubDTO cdto = clubService.getOne(clno);
-		model.addAttribute("club", cdto);
+
+	@PostMapping("/{clno}/document/write")
+	public String writeForm(@PathVariable("clno")int clno,@ModelAttribute("dto")DocumentDTO dto) {
+		service.write(dto,clno);
 		
-		return "club/document/writeForm";
+		return "redirect:/club/" + clno + "/document/list";
 	}
 	 
 
