@@ -23,6 +23,7 @@ import com.wegoing.dto.PageHandler;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.BoardService;
 import com.wegoing.service.CommentService;
+import com.wegoing.util.ClubUtil;
 import com.wegoing.enumpackage.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +42,7 @@ public class BoardController {
 	
 
 	@GetMapping("/board")
-	public String boardMain(Model model) {
+	public String boardMain(Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		List<BoardDTO> hobby = service.selectCategory(Category.hobby.cateno());
 		List<BoardDTO> free = service.selectCategory(Category.free.cateno());
 		List<BoardDTO> pet = service.selectCategory(Category.pet.cateno());
@@ -50,7 +51,7 @@ public class BoardController {
 		model.addAttribute("free",free);
 		model.addAttribute("pet",pet);
 		model.addAttribute("career",career);
-
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/boardmain";
 	}
 
@@ -62,6 +63,7 @@ public class BoardController {
 			return "redirect:/freeboard";
 		}
 		model.addAttribute("board",new BoardDTO());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/addboard";
 	}
 
@@ -81,9 +83,10 @@ public class BoardController {
 	
 	@GetMapping("/freeboard")
 	public String freeboard(Model model,@RequestParam(defaultValue = "1")
-	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize) {
+	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize, @AuthenticationPrincipal PrincipalDetails userDetails) {
 
 		PageHandlerModel(model, page,pageSize,Category.free.cateno());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/free/freeboard";
 	}
 	
@@ -110,18 +113,20 @@ public class BoardController {
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		
 		model.addAttribute("free",free);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/free/detailBoard";
 	}
 
 	
 	@GetMapping("/freeboard/{bno}/edit")
-	public String freeboardEdit(@PathVariable int bno,Model model) {
+	public String freeboardEdit(@PathVariable int bno,Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		BoardDTO free = service.selectOne(bno);
 		if(free ==null) {
 			return "error-page/500";
 		}
 		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/free/editBoard";
 	}
 	@PostMapping("/freeboard/{bno}/edit")
@@ -150,8 +155,9 @@ public class BoardController {
 	
 	@GetMapping("/pet")
 	public String petboard(Model model,@RequestParam(defaultValue = "1")
-	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize) {
+	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		PageHandlerModel(model, page,pageSize,Category.pet.cateno());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/pet/petBoard";
 	}
 	@GetMapping("/pet/{bno}")
@@ -175,17 +181,19 @@ public class BoardController {
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/pet/detailBoard";
 	}
 	
 	@GetMapping("/pet/{bno}/edit")
-	public String petboardEdit(@PathVariable int bno,Model model) {
+	public String petboardEdit(@PathVariable int bno,Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		BoardDTO free = service.selectOne(bno);
 		if(free ==null) {
 			return "error-page/500";
 		}
 		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/pet/editBoard";
 	}
 	@PostMapping("/pet/{bno}/edit")
@@ -212,8 +220,9 @@ public class BoardController {
 	
 	@GetMapping("/hobby")
 	public String hobbyBoard(Model model,@RequestParam(defaultValue = "1")
-	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize) {
+	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize,@AuthenticationPrincipal PrincipalDetails userDetails) {
 		PageHandlerModel(model, page,pageSize,Category.hobby.cateno());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/hobby/hobbyBoard";
 	}
 	@GetMapping("/hobby/{bno}")
@@ -237,17 +246,19 @@ public class BoardController {
 		}
 		model.addAttribute("comCount",commentService.commentCount(bno));
 		model.addAttribute("free",free);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/hobby/detailBoard";
 	}
 	
 	@GetMapping("/hobby/{bno}/edit")
-	public String hobbyboardEdit(@PathVariable int bno,Model model) {
+	public String hobbyboardEdit(@PathVariable int bno,Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		BoardDTO free = service.selectOne(bno);
 		if(free ==null) {
 			return "error-page/500";
 		}
 		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/hobby/editBoard";
 	}
 	@PostMapping("/hobby/{bno}/edit")
@@ -273,8 +284,9 @@ public class BoardController {
 
 	@GetMapping("/career")
 	public String careerBoard(Model model,@RequestParam(defaultValue = "1")
-	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize) {
+	Integer page, @RequestParam(defaultValue = "10")  Integer pageSize, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		PageHandlerModel(model, page,pageSize,Category.career.cateno());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/career/careerBoard";
 	}
 	
@@ -301,17 +313,19 @@ public class BoardController {
 		model.addAttribute("free",free);
 		model.addAttribute("bno",bno);
 		model.addAttribute("nickname",nickname);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/career/detailBoard";
 	}
 	
 	@GetMapping("/career/{bno}/edit")
-	public String careerboardEdit(@PathVariable int bno,Model model) {
+	public String careerboardEdit(@PathVariable int bno,Model model, @AuthenticationPrincipal PrincipalDetails userDetails) {
 		BoardDTO free = service.selectOne(bno);
 		if(free ==null) {
 			return "error-page/500";
 		}
 		model.addAttribute("board",new BoardDTO());
 		model.addAttribute("free",service.selectOne(bno));
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
 		return "board/career/editBoard";
 	}
 	

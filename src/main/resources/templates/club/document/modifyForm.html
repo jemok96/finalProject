@@ -13,7 +13,7 @@
 		<form action="modify" method="post">
 		
 		<input type="hidden" id="hidestatus" name="dstatus" th:value="${dto.dstatus}" />
-		<input type="hidden" name="clno" th:value="${dto.clno}" />
+
 		
 		<div class="table-responsive">
         	<table class="table table-bordered" id="dtailTable">
@@ -38,21 +38,7 @@
         	</table>
 	  	</div>
 		
-		<!-- <div class="mb-3">
-			 <div class="dropdown">
-			  <button class="btn btn-secondary btn-sm dropdown-toggle" id="statusbutton" type="button" th:text="${dto.dstatus}" data-bs-toggle="dropdown" aria-expanded="false">
-			  </button>
-			  <ul class="dropdown-menu">
-			    <li><button class="dropdown-item" type="button">일시중지</button></li>
-			    <li><button class="dropdown-item" type="button">진행중</button></li>
-			   	<li><button class="dropdown-item" type="button">완료</button></li>
-			  </ul>
-			  
-			</div> 
-		  <input type="hidden" name="dno" th:value="${dto.dno}" />
-		  <label for="exampleFormControlInput1" class="form-label">작성자</label>
-		  <input type="text" readonly  class="form-control-plaintext" id="exampleFormControlInput1" th:value="${dto.dwriter}" >
-		</div> -->
+		
 		<input type="hidden" name="dno" th:value="${dto.dno}" />
 		<div class="card shadow mb-4">
            <div class="card-header py-3">
