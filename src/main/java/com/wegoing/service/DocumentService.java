@@ -39,6 +39,16 @@ public class DocumentService {
 		
 	}
 	
+	public void remove(int dno) {
+		dao.deleteOne(dno);
+	}
+
+	public void write(DocumentDTO dto,int clno) {
+		dto.setClno(clno);
+		dao.insertOne(dto);
+		
+	}
+	
 	
 	
 	

@@ -30,5 +30,16 @@
  		SET dcontent = #{dcontent}, dstatus = #{dstatus}
  		WHERE dno = #{dno}
  	</update>
+ 	
+ 	<delete id="deleteOne" parameterType="int">
+ 		DELETE FROM document
+ 		WHERE dno = #{dno}
+ 	</delete>
+ 	
+ 	
+ 	<insert id="insertOne" parameterType="DocumentDTO">
+ 		INSERT INTO document(dname,dcontent,dstatus,dwriter,reg_dt,up_dt,clno)
+ 		VALUES (#{dname},#{dcontent},#{dstatus},#{dwriter}, sysdate(), sysdate(),#{clno})
+ 	</insert>
   
   </mapper>

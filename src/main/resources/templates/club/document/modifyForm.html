@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/layout/default}">
+	layout:decorate="~{/layout/club}">
 
 
 <th:block layout:fragment="content">
+
+
+	 
 
 
 	<div class="container">
 		<form action="modify" method="post">
 		
 		<input type="hidden" id="hidestatus" name="dstatus" th:value="${dto.dstatus}" />
-		<input type="hidden" name="clno" th:value="${dto.clno}" />
-		<div class="mb-3">
-			<div class="dropdown">
-			  <button class="btn btn-secondary btn-sm dropdown-toggle" id="statusbutton" type="button" th:text="${dto.dstatus}" data-bs-toggle="dropdown" aria-expanded="false">
-			  </button>
-			  <ul class="dropdown-menu">
-			    <li><button class="dropdown-item" type="button">일시중지</button></li>
-			    <li><button class="dropdown-item" type="button">진행중</button></li>
-			   	<li><button class="dropdown-item" type="button">완료</button></li>
-			  </ul>
-			  
-			</div>
-		  <input type="hidden" name="dno" th:value="${dto.dno}" />
-		  <label for="exampleFormControlInput1" class="form-label">작성자</label>
-		  <input type="text" readonly  class="form-control-plaintext" id="exampleFormControlInput1" th:value="${dto.dwriter}" >
-		</div>
-		<div class="mb-3">
+		
+		<div class="table-responsive">
+        	<table class="table table-bordered" id="dtailTable">
+        		<tr>
+					<div class="dropdown mb-4">
+				         <button class="btn btn-primary dropdown-toggle" type="button"
+				             id="dropdownMenuButton" th:text="${dto.dstatus}" data-toggle="dropdown" aria-haspopup="true"
+				             aria-expanded="false">
+				         </button>
+				         <div class="dropdown-menu animated--fade-in"
+				             aria-labelledby="dropdownMenuButton">
+				             <a class="dropdown-item" href="#">일시중지</a>
+				             <a class="dropdown-item" href="#">진행중</a>
+				             <a class="dropdown-item" href="#">완료</a>
+				         </div>
+				     </div>
+				</tr>
+        		<tr>
+					<th scope="col">작성자</th>
+					<td>[[${dto.dwriter}]]</td>
+				</tr>
+        	</table>
+	  	</div>
+		
+		
+		<input type="hidden" name="dno" th:value="${dto.dno}" />
+		<div class="card shadow mb-4">
+           <div class="card-header py-3">
+              <!--  <h6 class="m-0 font-weight-bold text-primary" th:text="${dto.dname}"></h6> -->
+               <input class="form-control form-control-sm" type="text" name="dname" th:value="${dto.dname}" id="" />
+           </div>
+           <div class="card-body">
+           <textarea class="form-control" name="dcontent" id="exampleFormControlTextarea1" rows="30" th:text="${dto.dcontent}"></textarea>
+           </div>
+       </div>
+       
+		<!-- <div class="mb-3">
 		  <label for="exampleFormControlTextarea1" class="form-label"></label>
 		  <textarea class="form-control" name="dcontent" id="exampleFormControlTextarea1" rows="3" th:text="${dto.dcontent}"></textarea>
-		</div>
+		</div> -->
 		
 			<span id = "headbutton">
                 
                	<button type="submit" class="btn btn-warning">수정하기</button>
-                <a th:href="@{todo(clno=${dto.clno})}"><button type="button" class="btn btn-info">할일등록</button></a>
-                <a th:href="@{list(clno=${dto.clno})}"><button type="button" class="btn btn-outline-secondary">목록</button></a>
+                <a th:href="@{todo}"><button type="button" class="btn btn-info">할일등록</button></a>
+                <a th:href="@{list}"><button type="button" class="btn btn-outline-secondary">목록</button></a>
 			  </span>
 		</form>
 
