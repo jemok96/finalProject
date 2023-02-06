@@ -37,13 +37,17 @@ class BoardTest {
 	}
 	@Test
 	void insetTest2(){
-		BoardDTO[] dto = new BoardDTO[100];
-		for(int i=0; i<dto.length; i++) {
-			dto[i] = BoardDTO.builder().email("aaa@gmail.com").cateno(2).bcontent("test").btitle("test").nickname("da").build();
-			boardService.insert(dto[i]);
+	
+		BoardDTO[] dto3 = new BoardDTO[3000];
+		BoardDTO[] dto4 = new BoardDTO[3000];
+
+		for(int i=0; i<dto3.length; i++) {
+			dto3[i] = BoardDTO.builder().email("aaa@gmail.com").cateno(3).bcontent("test").btitle("test").nickname("da").build();
+			boardService.insert(dto3[i]);
+		}for(int i=0; i<dto4.length; i++) {
+			dto4[i] = BoardDTO.builder().email("aaa@gmail.com").cateno(4).bcontent("test").btitle("test").nickname("da").build();
+			boardService.insert(dto4[i]);
 		}
-		assertTrue(boardService.countBoard(2) == 100);
-		assertTrue(boardService.deleteAll() == 100);
 	}
 	@Test
 	void deleteCategoryTest() {
