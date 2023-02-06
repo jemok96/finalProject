@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wegoing.dao.BoardDao;
 import com.wegoing.dto.BoardDTO;
@@ -29,7 +30,6 @@ public class BoardService {
 	
 	@Cacheable(value = "board")
 	public List<BoardDTO> selectCategory(int no){
-//		접속 후 한번 찍히고 다음부터 안찍힘
 		List<BoardDTO> dto = dao.selectCategory(no);
 		for(int i=0; i<dto.size(); i++) {
 			log.info("{}",dto.get(i));;
@@ -57,10 +57,11 @@ public class BoardService {
 	public int countBoard(int cateno) {
 		return dao.countBoard(cateno);
 	}
+	
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
 	}
-	@CacheEvict(value="board")
+	@Transactional
 	public int updateHit(int bno) {
 		return dao.updateHit(bno);
 	}

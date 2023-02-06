@@ -6,8 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -91,12 +96,14 @@ public class BoardController {
 
 	@GetMapping("/freeboard/{bno}")
 	public String freeboardDetail(@PathVariable Integer bno, Model model,
-			@AuthenticationPrincipal PrincipalDetails userDetails) {
+			@AuthenticationPrincipal PrincipalDetails userDetails, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		BoardDTO free = service.selectOne(bno); // 게시물 작성자
 		if (free == null) {
 			return "error-page/500";
 		}
+
 		// 접속자와 댓글쓴사람 닉네임이 같으면 수정삭제가능
 		String nickname = "";
 		String writer = free.getNickname(); // 게시물 작성자 닉네임
@@ -123,24 +130,31 @@ public class BoardController {
 		if (free == null) {
 			return "error-page/500";
 		}
-		model.addAttribute("board", new BoardDTO());
-		model.addAttribute("free", service.selectOne(bno));
+		model.addAttribute("board", service.selectOne(bno));
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		return "board/free/editBoard";
 	}
 
 	@PostMapping("/freeboard/{bno}/edit")
-	public String freeboardEditcheck(@PathVariable int bno, Model model, @RequestParam("btitle") String btitle,
-			@RequestParam("bcontent") String content) {
-		BoardDTO free = service.selectOne(bno);
-		model.addAttribute("free", free);
+	public String freeboardEditcheck(@Validated @ModelAttribute("board") BoardDTO board,
+			BindingResult bindingResult,
+			@PathVariable int bno, Model model) {
+		if (bindingResult.hasErrors()) {
+			log.info("erros={}", bindingResult);
+			return "board/free/editBoard";
+		}
+			Date date = new Date();
+			BoardDTO free = service.selectOne(bno);
+			
 
-		free.setBtitle(btitle);
-		free.setBcontent(content);
-
-		service.update(free);
-
-		return "redirect:/freeboard";
+			free.setBtitle(board.getBtitle());
+			free.setBcontent(board.getBcontent());
+			free.setBno(board.getBno());
+			free.setUp_dt(date);
+			
+			service.update(free);
+			model.addAttribute("board", free);
+			return "redirect:/freeboard";
 	}
 
 	@PostMapping("/freeboard/{bno}/delete")
@@ -192,24 +206,32 @@ public class BoardController {
 		if (free == null) {
 			return "error-page/500";
 		}
-		model.addAttribute("board", new BoardDTO());
-		model.addAttribute("free", service.selectOne(bno));
+
+		model.addAttribute("board", service.selectOne(bno));
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		return "board/pet/editBoard";
 	}
 
 	@PostMapping("/pet/{bno}/edit")
-	public String petboardEditcheck(@PathVariable int bno, Model model, @RequestParam("btitle") String btitle,
-			@RequestParam("bcontent") String content) {
-		BoardDTO free = service.selectOne(bno);
-		model.addAttribute("free", free);
+	public String petboardEditcheck(@Validated @ModelAttribute("board") BoardDTO board,
+			BindingResult bindingResult,
+			@PathVariable int bno, Model model) {
+		if(bindingResult.hasErrors()) {
+			log.info("erros={}", bindingResult);
+			return "board/pet/editBoard";
+		}
+			Date date = new Date();
+			BoardDTO free = service.selectOne(bno);
+			
 
-		free.setBtitle(btitle);
-		free.setBcontent(content);
-
-		service.update(free);
-
-		return "redirect:/pet";
+			free.setBtitle(board.getBtitle());
+			free.setBcontent(board.getBcontent());
+			free.setBno(board.getBno());
+			free.setUp_dt(date);
+			
+			service.update(free);
+			model.addAttribute("board", free);
+			return "redirect:/pet";
 	}
 
 	@PostMapping("/pet/{bno}/delete")
@@ -262,24 +284,32 @@ public class BoardController {
 		if (free == null) {
 			return "error-page/500";
 		}
-		model.addAttribute("board", new BoardDTO());
-		model.addAttribute("free", service.selectOne(bno));
+
+		model.addAttribute("board", service.selectOne(bno));
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		return "board/hobby/editBoard";
 	}
 
 	@PostMapping("/hobby/{bno}/edit")
-	public String hobbyboardEditcheck(@PathVariable int bno, Model model, @RequestParam("btitle") String btitle,
-			@RequestParam("bcontent") String content) {
-		BoardDTO free = service.selectOne(bno);
-		model.addAttribute("free", free);
+	public String hobbyboardEditcheck(@Validated @ModelAttribute("board") BoardDTO board,
+			BindingResult bindingResult,
+			@PathVariable int bno, Model model) {
+		if (bindingResult.hasErrors()) {
+			log.info("erros={}", bindingResult);
+			return "board/hobby/editBoard";
+		}
+			Date date = new Date();
+			BoardDTO free = service.selectOne(bno);
+			
 
-		free.setBtitle(btitle);
-		free.setBcontent(content);
-
-		service.update(free);
-
-		return "redirect:/hobby";
+			free.setBtitle(board.getBtitle());
+			free.setBcontent(board.getBcontent());
+			free.setBno(board.getBno());
+			free.setUp_dt(date);
+			
+			service.update(free);
+			model.addAttribute("board", free);
+			return "redirect:/hobby";
 	}
 
 	@PostMapping("/hobby/{bno}/delete")
@@ -333,31 +363,34 @@ public class BoardController {
 		if (free == null) {
 			return "error-page/500";
 		}
-		model.addAttribute("board", new BoardDTO());
-		model.addAttribute("free", service.selectOne(bno));
+
+		model.addAttribute("board", service.selectOne(bno));
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		return "board/career/editBoard";
 	}
 
 	@PostMapping("/career/{bno}/edit")
-	public String careerboardEditcheck(@Validated @ModelAttribute("board") BoardDTO board, BindingResult bindingResult,
+	public String careerboardEditcheck(@Validated @ModelAttribute("board") BoardDTO board,
+			BindingResult bindingResult,
 			@PathVariable int bno, Model model) {
+
 		if (bindingResult.hasErrors()) {
 			log.info("erros={}", bindingResult);
 			return "board/career/editBoard";
 		}
+			Date date = new Date();
+			BoardDTO free = service.selectOne(bno);
+			
 
-		Date date = new Date();
-		BoardDTO free = service.selectOne(bno);
-		model.addAttribute("free", free);
-
-		free.setBtitle(board.getBtitle());
-		free.setBcontent(board.getBcontent());
-		free.setBno(board.getBno());
-		free.setUp_dt(date);
-		service.update(free);
-
-		return "redirect:/career";
+			free.setBtitle(board.getBtitle());
+			free.setBcontent(board.getBcontent());
+			free.setBno(board.getBno());
+			free.setUp_dt(date);
+			
+			service.update(free);
+			model.addAttribute("board", free);
+			return "redirect:/career";
+		
 	}
 
 	@PostMapping("/career/{bno}/delete")

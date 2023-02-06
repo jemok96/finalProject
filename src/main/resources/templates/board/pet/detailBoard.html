@@ -80,7 +80,7 @@ margin-right: 3px;}
 
 				<div class="content__button">
 					<div class="content__edit">
-						 <a th:href="@{/career/{bno}/edit(bno=${free.bno})}">	
+						 <a th:href="@{/pet/{bno}/edit(bno=${free.bno})}">	
 							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
 							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
 						</a> 
