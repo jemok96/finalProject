@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.ClubDTO;
@@ -104,14 +105,30 @@ public class DocumentController {
 	}
 
 	
-	@GetMapping("/{clno}/document/write")
-	public String writeForm(@PathVariable("clno")int clno, Model model) {
-//		service.write(clno);
-		ClubDTO cdto = clubService.getOne(clno);
-		model.addAttribute("club", cdto);
-		
-		return "club/document/writeForm";
-	}
-	 
 
+	@PostMapping("/{clno}/document/write")
+	public String writeForm(@PathVariable("clno")int clno,@ModelAttribute("dto")DocumentDTO dto) {
+		service.write(dto,clno);
+		
+		return "redirect:/club/" + clno + "/document/list";
+	}
+	//칸반 dstatus update
+	@PostMapping("document/updateDstatus") 
+	@ResponseBody
+	public void updateDstatus(@RequestParam("dropzone")String dstatus, @RequestParam("dno") int dno) {
+		
+		if (dstatus.equals("start")) {
+			dstatus ="발의됨";
+		} else if ( dstatus.equals("ongoing")) {
+			dstatus = "진행중";
+		} else if ( dstatus.equals("stop")) {
+			dstatus = "일시중지";
+		} else if ( dstatus.equals("done")) {
+			dstatus ="완료";
+		} else {
+			log.info("이벤트 감지 이상");
+		}
+		
+		service.modify(dstatus, dno);
+	}
 }
