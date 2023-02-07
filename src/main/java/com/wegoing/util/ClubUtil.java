@@ -18,6 +18,7 @@ public final class ClubUtil {
 	public static List<ClubDTO> getClub(PrincipalDetails userDetails){
 		String loginEmail = "";
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
-		return cms.selectAll(loginEmail);
+		String cstatus ="y";
+		return cms.selectAll(loginEmail, cstatus);
 	}
 }

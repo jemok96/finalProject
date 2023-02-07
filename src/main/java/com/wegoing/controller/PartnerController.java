@@ -44,8 +44,6 @@ public class PartnerController {
 		
 		// 여기도 동일한 코드가 필요
 		if( userDetails != null ) loginEmail = userDetails.getMdto().getEmail();
-		List<ClubDTO> myClub= cms.selectAll(loginEmail);
-		model.addAttribute("myClub", myClub);
 		String pstatus = "n"; 
 		List<PartnerDTO> pto =  ps.selectRecPartner(loginEmail, pstatus);
 		model.addAttribute("recPartner", pto);

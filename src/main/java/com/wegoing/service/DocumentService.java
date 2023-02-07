@@ -54,6 +54,11 @@ public class DocumentService {
 		dao.updateDstatus(dstatus, dno);
 		
 	}
+
+	public int getDstatusCount(String dstatus, int clno) {
+		int result = dao.countDstatus(dstatus, clno);
+		return result;
+	}
 	
 	
 }

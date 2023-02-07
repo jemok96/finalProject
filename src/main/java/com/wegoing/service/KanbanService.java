@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.DocumentDAO;
-import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.DocumentDTO;
 
 

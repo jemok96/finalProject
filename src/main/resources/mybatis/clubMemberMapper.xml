@@ -10,12 +10,11 @@
 		#{clno}, #{email}, default)
 	</insert>
 	<select id="getAll" parameterType="String" resultType="ClubDTO" >
-		select clno, clname, clexplain
-		from club
-		where clno in ( select clno
-						from clubmember
-						where email = #{email})
-		order by clno desc
+		select A.clno, A.clname, A.clexplain
+		from club A
+		inner join clubmember B on A.clno = B.clno
+		where B.email = #{email} and B.cstatus = #{cstatus}
+		order by B.join_dt desc
 	</select>
 	<select id="getAllMembers" parameterType="int" resultType="ClubMemberDTO">
 	    select cno, cstatus, crank, clno, email, join_dt

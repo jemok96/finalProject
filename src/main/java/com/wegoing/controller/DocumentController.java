@@ -20,6 +20,7 @@ import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
 import com.wegoing.dto.DocumentDTO;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.Dstatus;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.DocumentService;
@@ -142,4 +143,5 @@ public class DocumentController {
 		
 		service.modify(dstatus, dno);
 	}
+	
 }
