@@ -100,4 +100,5 @@ class BoardTest {
 		
 		assertTrue(result ==2 );
 	}
+	
 }

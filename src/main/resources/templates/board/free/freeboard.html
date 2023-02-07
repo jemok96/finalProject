@@ -144,14 +144,14 @@ button[type="button"] {
 					th:href="@{/hobby}"><button type="button"
 						class="btn btn-outline-primary color">취미생활</button></a>
 			</div>
-			<form action="">
+			<form th:action method="GET">
 				<div class="box">
 					<div class="container-1">
-						<input type="search" id="search" placeholder="Search..." />
+						<input type="search" id="search" name="title" placeholder="Search..." />
 					</div>
 				</div>
 				<div>
-					<button type="button" class="btn btn-outline-secondary search">검색</button>
+					<input type="submit" class="btn btn-outline-secondary search" value="검색">
 				</div>
 			</form>
 			<div>
