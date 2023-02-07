@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+  <script
+      src="https://kit.fontawesome.com/8cc4eb714e.js"
+      crossorigin="anonymous"></script>
+    <style>
+      .notice-header{
+        display: flex;
+        margin: 0px 20px;
+      }
+      h1{
+      margin: 0px 20px 20px 20px;
+      }
+      .notice__header__column{
+        width: 50%;
+        display: flex;
+      }
+      .notice__header__column:last-child{
+        justify-content: flex-end;
+      }
+      form{
+      display: flex;
+      justify-content: flex-end;
+        align-items: center;}
+      .table-responsive{
+      	border-top: 2px solid;
+      }
+      .form-select{
+      	height: 30px;
+      }
+      .option{
+      	width: 70px;
+      }
+    </style>
+    <h1>공지사항</h1>
+    <div class="notice-header">
+      <div class="notice__header__column">총 30개의 게시물이 등록되어 있습니다.</div>
+      <div class="notice__header__column">
+      	<form action="">
+        <div>
+          <select class="form-select option" aria-label="Default select example">
+            <option value="title" selected>제목</option>
+            <option value="content">내용</option>
+          </select>
+        </div>
+        <div>
+          <input type="text"><button type="button" class="btn btn-outline-secondary search">
+            검색
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="notice-contents">
+      <div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%"cellspacing="0">
+					<thead>
+						<tr role="row">
+							<th scope="col" width="10%">번호</th>
+							<th scope="col">제목</th>
+							<th scope="col" width="20%">작성일</th>
+							<th scope="col" width="10%">조회수</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="notice : ${notice}">
+							<td th:text="${notice.notino}">번호</td>
+							<td th:text="${notice.ntitle}">제목</td>
+							<td th:text="${#dates.format(notice.reg_dt,'MM-dd HH:mm')}">작성일</td>
+							<td th:text="${notice.nhits}">조회수</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+
+  </th:block>
+</html>
