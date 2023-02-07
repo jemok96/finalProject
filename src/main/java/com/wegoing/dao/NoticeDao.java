@@ -12,6 +12,8 @@ import com.wegoing.dto.NoticeDTO;
 @Mapper
 public interface NoticeDao {
 	List<NoticeDTO> getNoticeList(Map<String, Integer> map);
+	NoticeDTO getNoticeOne(int notino);
 	int getNoticeCount();
 	int writeNotice(NoticeDTO notice);
+	int updateHits(int notino);
 }

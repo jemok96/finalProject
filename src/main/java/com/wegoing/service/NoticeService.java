@@ -3,6 +3,7 @@ package com.wegoing.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.NoticeDao;
@@ -18,14 +19,21 @@ public class NoticeService {
 		this.dao = dao;
 	}
 	
+	@Cacheable(value = "board")
 	public List<NoticeDTO> getNoticeList(Map<String, Integer>  map){
 		return dao.getNoticeList(map);
+	}
+	public NoticeDTO getNoticeOne(int notino) throws Exception{
+		return dao.getNoticeOne(notino);
 	}
 	public int getNoticeCount() {
 		return dao.getNoticeCount();
 	}
 	public int writeNotice(NoticeDTO notice) {
 		return dao.writeNotice(notice);
+	}
+	public int updateHits(int notino) {
+		return dao.updateHits(notino);
 	}
 
 }

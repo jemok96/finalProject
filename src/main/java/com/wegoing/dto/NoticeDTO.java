@@ -3,6 +3,9 @@ package com.wegoing.dto;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +14,11 @@ import lombok.Setter;
 @Setter
 public class NoticeDTO {
 	private Integer notino;
+	
+	@NotBlank(message = "제목은 필수입니다.")
+	@Size(max = 50, message = "50자 이내로 입력해주세요")
 	private String ntitle;
+	@NotBlank(message =  "내용은 필수입니다.")
 	private String ncontent;
 	private Date reg_dt;
 	private Date up_dt;
@@ -21,8 +28,8 @@ public class NoticeDTO {
 	
 	public NoticeDTO() {}
 	@Builder
-	public NoticeDTO(Integer notino, String ntitle, String ncontent, Date reg_dt, Date up_dt, Integer nhits,
-			String email, String importance) {
+	public NoticeDTO(Integer notino,@NotBlank(message = "제목은 필수입니다.")@Size(max = 50, message = "50자 이내로 입력해주세요")String ntitle,
+			@NotBlank(message =  "내용은 필수입니다.") String ncontent, Date reg_dt, Date up_dt, Integer nhits, String email, String importance) {
 		this.notino = notino;
 		this.ntitle = ntitle;
 		this.ncontent = ncontent;
@@ -32,6 +39,7 @@ public class NoticeDTO {
 		this.email = email;
 		this.importance = importance;
 	}
+	
 	
 	
 	@Override

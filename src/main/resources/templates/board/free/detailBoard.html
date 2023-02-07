@@ -55,13 +55,19 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: flex-start;
-	height: 500px;
+	height: auto;
 	margin-bottom: 20px;
 }
 .fa-eye,.fa-comment{
 margin: 3px 10px 0px 0px;}
 .content__edit{
 margin-right: 3px;}
+.content__contents{
+ white-space: pre-line;
+ padding-bottom:50px; 
+ 
+ 
+ }
 </style>
 	
 	<div class="content__wrapper" th:each="free:${free}">
