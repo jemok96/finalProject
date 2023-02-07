@@ -28,7 +28,7 @@ public class BoardService {
 		this.dao = dao;
 	}
 	
-	@Cacheable(value = "board")
+	@Cacheable(value="board", key="#no") 
 	public List<BoardDTO> selectCategory(int no){
 		List<BoardDTO> dto = dao.selectCategory(no);
 		for(int i=0; i<dto.size(); i++) {
@@ -61,7 +61,6 @@ public class BoardService {
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
 	}
-	@Transactional
 	public int updateHit(int bno) {
 		return dao.updateHit(bno);
 	}
