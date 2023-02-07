@@ -35,10 +35,18 @@
       .option{
       	width: 70px;
       }
+      .handler__center{
+      	display: flex;
+      	justify-content: center;
+      }
+      #countNotice{
+      margin-left: 3px;
+      font-weight: 700;
+      }
     </style>
     <h1>공지사항</h1>
     <div class="notice-header">
-      <div class="notice__header__column">총 30개의 게시물이 등록되어 있습니다.</div>
+      <div class="notice__header__column">총 <span id="countNotice" th:text="${count}"></span>개의 게시물이 등록되어 있습니다.</div>
       <div class="notice__header__column">
       	<form action="">
         <div>
@@ -55,7 +63,7 @@
         </form>
       </div>
     </div>
-
+	<div th:if="${auth=='ROLE_ADMIN'}" th:text="관리자임"></div>
     <div class="notice-contents">
       <div class="card-body">
 			<div class="table-responsive">
@@ -80,6 +88,28 @@
 			</div>
 		</div>
     </div>
+    <div class="handler__center">
+		<nav aria-label="Page navigation example cetner">
+			<ul class="pagination">
+				<li class="page-item" th:if="${ph.showPrev}"><a
+					class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"
+					th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
+					<a class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
+					th:text="${idx}"></a>
+				</li>
+				<li class="page-item" th:if="${ph.showNext}"><a
+					class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
 
   </th:block>
 </html>

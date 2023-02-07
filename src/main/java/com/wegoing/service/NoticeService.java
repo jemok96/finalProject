@@ -1,6 +1,7 @@
 package com.wegoing.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class NoticeService {
 		this.dao = dao;
 	}
 	
-	public List<NoticeDTO> getNoticeList(){
-		return dao.getNoticeList();
+	public List<NoticeDTO> getNoticeList(Map<String, Integer>  map){
+		return dao.getNoticeList(map);
 	}
 	public int getNoticeCount() {
 		return dao.getNoticeCount();

@@ -5,10 +5,13 @@
   
   
  <mapper namespace="com.wegoing.dao.NoticeDao">
- 	<select  id="getNoticeList" resultType="NoticeDTO">
+ 	<select  id="getNoticeList" resultType="NoticeDTO" parameterType="map">
  		SELECT notino, ntitle, reg_dt,nhits,importance
  		FROM notice
+ 		 ORDER BY reg_dt DESC
+        LIMIT #{offset}, #{pageSize}
  	</select>
+
  	<select id="getNoticeCount" resultType="int">
  		SELECT count(*) FROM notice
  	</select>

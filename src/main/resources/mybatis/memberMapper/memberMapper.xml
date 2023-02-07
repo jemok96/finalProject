@@ -55,4 +55,8 @@
         ON m.email = c.email
         WHERE c.clno = #{clno}
     </select>
+    <select id="getMemberAuth" parameterType="String" resultType="String">
+    	SELECT auth FROM member
+    	WHERE email =#{email}
+    </select>
 </mapper>
