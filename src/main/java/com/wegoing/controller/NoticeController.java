@@ -1,15 +1,26 @@
 package com.wegoing.controller;
 
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.NoticeDTO;
@@ -56,6 +67,76 @@ public class NoticeController {
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		model.addAttribute("notice",notice);
 		model.addAttribute("auth",auth);
+		
 		return "notice/noticeMain";
+	}
+	@GetMapping("/notice/{notino}")
+	public String noticeDetail(@PathVariable Integer notino,Model model
+			,HttpServletRequest request, HttpServletResponse response,@AuthenticationPrincipal PrincipalDetails userDetails) throws Exception {
+		
+		String auth = ClubUtil.getAuth(userDetails);
+		NoticeDTO notice = notieService.getNoticeOne(notino);
+		updateHitCookie(notino,request,response);
+		 
+		model.addAttribute("auth",auth);
+		model.addAttribute("notice",notice);
+		model.addAttribute("notino",notino);
+		
+		return "notice/noticeDetail";
+		
+	}
+	@GetMapping("/notice/{notino}/edit")
+	public String noticeEdit(@PathVariable Integer notino,Model model) throws Exception {
+		NoticeDTO notice = notieService.getNoticeOne(notino);
+		
+		model.addAttribute("notice",notice);
+		
+		return "notice/noticeEdit";
+	}
+	@PostMapping("/notice/{notino}/edit")
+	public String nodiecEditCheck(@PathVariable Integer notino,Model model, @Validated @ModelAttribute("notice") NoticeDTO notice
+			,BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			log.info("erros={}", bindingResult);
+			return "notice/noticeEdit";
+		}
+		log.info("title={}",notice.getNtitle());
+		log.info("content={}",notice.getNcontent());
+		
+		return "redirect:/notice";
+		
+	}
+	
+	
+	
+	
+	
+	
+	private void updateHitCookie(Integer notino,HttpServletRequest request, HttpServletResponse response) {
+		Cookie oldCookie = null;
+		 Cookie[] cookies = request.getCookies();
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		           if (cookie.getName().equals("postView")) {
+		                oldCookie = cookie;
+		           }
+		        }
+		    }
+		    if (oldCookie != null) {
+		        if (!oldCookie.getValue().contains("["+ notino.toString() +"]")) {
+		            notieService.updateHits(notino);
+		            oldCookie.setValue(oldCookie.getValue() + "_[" + notino + "]");
+		            oldCookie.setPath("/");
+		            oldCookie.setMaxAge(60 * 60 * 12);
+		            response.addCookie(oldCookie);
+		        }
+		    } else {
+		    	notieService.updateHits(notino);
+		        Cookie newCookie = new Cookie("postView", "[" + notino + "]");
+		        newCookie.setPath("/");
+		        newCookie.setMaxAge(60 * 60 * 12);
+		        response.addCookie(newCookie);
+		       
+		    }
 	}
 }

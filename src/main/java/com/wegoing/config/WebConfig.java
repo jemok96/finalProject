@@ -15,7 +15,7 @@ public class WebConfig {
 		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(new TimeFilter());
 		filterRegistrationBean.setOrder(1);
-		filterRegistrationBean.addUrlPatterns("/board");
+		filterRegistrationBean.addUrlPatterns("/board","/notice");
 		
 		return filterRegistrationBean;
 		
