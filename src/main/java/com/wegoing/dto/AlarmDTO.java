@@ -31,7 +31,7 @@ public class AlarmDTO {
 	}
 
 	public static AlarmDTO create(AlarmDTO alarm) {
-		 return new AlarmDTO(alarm.getAno(),alarm.getAcontent(), alarm.getUrl(),
-				 alarm.getEmail(), alarm.getType(), alarm.getReg_dt(), alarm.getChecked());
+		 return new AlarmDTO(alarm.getAno(),alarm.getAcontent(), alarm.getEmail(), 
+				 alarm.getUrl(), alarm.getType(), alarm.getReg_dt(), alarm.getChecked());
 	}
 }

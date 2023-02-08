@@ -25,8 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlarmController {
 	private final AlarmService alarmService;
-	
-	@GetMapping(value="/addMember", produces = "text/event-stream")
+
+	@GetMapping(value="/subscribe", produces = "text/event-stream")
 	@ResponseBody
 	public SseEmitter subscribe(@AuthenticationPrincipal PrincipalDetails userDetails,
 								@RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") 
@@ -45,7 +45,8 @@ public class AlarmController {
     
 	// 알람 삭제
     @PostMapping("/alarm/remove")
-    public void removeAlarm(@RequestParam("ano") long ano) {
+    public String removeAlarm(@RequestParam("ano") long ano) {
     	alarmService.removeAlarm(ano);
+    	return "redirect:/alarmList";
     }
 }

@@ -37,7 +37,7 @@ public class AlarmService {
 		
 		// 503 에러 방지를 위한 더미 이벤트 전송
 		String eventId = userId + "_" + System.currentTimeMillis();
-		sendAlarm(emitter, emitterId, "EventStream Created.[UserId=" + userId + "]");
+		sendAlarm(emitter, emitterId, "eventStream created.[userId=" + userId + "]");
 		
 		// lastEventId값이 헤더에 있는 경우 저장된 데이터 캐시에서 id값과 lastEventId값을 통해 유실된 데이터들만 다시 보내줌
 		if (!lastEventId.isEmpty()) {
@@ -51,10 +51,11 @@ public class AlarmService {
 	}
 	
 	private void sendAlarm(SseEmitter emitter, String emitterId, Object data) {
-		log.info("sendAlarm() >>> " + emitter, emitterId, data);
+		log.info("sendAlarm() >>> " + emitter + emitterId + data);
         try {
             emitter.send(SseEmitter.event()
                                    .id(emitterId)
+                                   .name("sse")
                                    .data(data));
         } catch (IOException exception) {
             emitterDao.deleteById(emitterId);
