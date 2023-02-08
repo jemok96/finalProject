@@ -40,20 +40,28 @@
 			</div>
 			<span class="add">>></span>
             <div class="clubmember">
-                <div th:each="clubmember : ${memberList}">
-                    <div class="clubmember-list-items">
-                        <div class="clubmember-info">
-                            <p class="clubmember-name" th:text="${clubmember.name}"></p>
-                            <p class="clubmember-email" th:text="${clubmember.email}"></p>
-                        </div>
-                        <div>                            
-                            <p class="clubhost" th:if="${clubmember.cldto.crank == 'host'}">관리자</p>
-                            <p class="waitAccept" th:if="${clubmember.cldto.cstatus == 'n'}">대기</p>
-                        </div>
-                    </div>
-                </div>
+                <form th:action="@{/}" method="post">
+	                <div th:each="clubmember : ${memberList}">
+	                    <div class="clubmember-list-items">
+	                        <div class="clubmember-info">
+	                            <input type="hidden" th:value="${clubmember.cldto.cno}" class="cno" name="cno" />
+	                            <p class="clubmember-name" th:text="${clubmember.name}"></p>
+	                            <p class="clubmember-email" th:text="${clubmember.email}"></p>
+	                        </div>
+	                        <div>                            
+	                            <p class="status clubhost" th:if="${clubmember.cldto.crank == 'host'}">관리자</p>
+	                            <p class="status wait-accept" th:if="${clubmember.cldto.cstatus == 'n'}">대기</p>
+	                            <button type="button" class="status delete-btn" th:attrappend="id=${clubmemberStat.index}"
+	                            th:if="${clubmember.cldto.cstatus == 'y' 
+	                                       && clubmember.cldto.crank != 'host'}">x</button>
+	                           <!--  <p class="status delete-btn" th:if="${clubmember.cldto.cstatus == 'y' && clubmember.cldto.crank != 'host'}">x</p> -->
+	                        </div>
+	                    </div>
+	                </div>
+               </form>
             </div>
         </div>
     </div>
     
 </th:block>
+<script type="text/javascript" src="../js/clubMember.js"></script>

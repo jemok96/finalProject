@@ -23,8 +23,22 @@
 	    where clno = #{clno}
 	</select>
     <select id="selectEmailByClno" parameterType="int" resultType="String">
-        select Email
+        select email
         from clubmember
         where clno = #{clno}
     </select>
+    <select id="getOneByClnoAndEmail" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+        select cno, cstatus, crank, clno, email, join_dt
+        from clubmember
+        where clno = #{clno} and email = #{email}
+    </select>
+    <update id="updateStatus" parameterType="ClubMemberDTO">
+        update clubmember
+        set cstatus = #{cstatus}
+        where clno = #{clno} and email = #{email}
+    </update>
+    <delete id="deleteClubMember" parameterType="long">
+        delete from clubmember
+        where cno = #{cno}
+    </delete>
 </mapper>

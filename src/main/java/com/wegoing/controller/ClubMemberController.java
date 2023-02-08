@@ -15,6 +15,9 @@ import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
 import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.ClubMemberStatus;
+import com.wegoing.enumpackage.ClubRank;
+import com.wegoing.service.AlarmService;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.MemberService;
@@ -29,6 +32,7 @@ public class ClubMemberController {
 	private ClubService cs;
 	private ClubMemberService cms; 
 	private MemberService ms;
+	private AlarmService as;
 	
 	@GetMapping("/club/{clno}/member")
 	public String clubMember(@PathVariable int clno, Model model,
@@ -54,14 +58,49 @@ public class ClubMemberController {
 	public String addClubMember(@RequestParam("clno") int clno,
 								@RequestParam("email") String email) {
 		log.info("추가 이메일 >>>>> " + email);
+		ClubDTO cdto = cs.getOne(clno);
 		ClubMemberDTO cmdto = ClubMemberDTO.builder()
 										   .clno(clno)
-										   .crank("guest")
+										   .crank(ClubRank.guest.crank())
 										   .cstatus("n")
 										   .email(email)
 										   .build();
-		cms.addClubMember(cmdto);
+		cms.addClubMember(cmdto, cdto);
+		
+//		as.createAddMemberAlarm(email, cdto);
 		return "redirect:/club/{clno}/member";
 	}
 
+	@PostMapping("/acceptInvitation")
+	public String acceptInvitation(@RequestParam("ano") long ano,
+							   @RequestParam("clno") int clno,
+							   @RequestParam("email") String email) {
+		ClubMemberDTO cmdto = cms.selectMemberByClnoAndEmail(clno, email);
+		cmdto.setCstatus(ClubMemberStatus.accept.cstatus());						   
+		cms.updateStatus(cmdto);
+		
+		as.readAlarm(ano);
+		return "redirect:/alarmList";
+	}
+	
+	@PostMapping("/rejectInvitation")
+	public String rejectInvitation(@RequestParam("ano") long ano,
+							   @RequestParam("clno") int clno,
+							   @RequestParam("email") String email) {
+		ClubMemberDTO cmdto = cms.selectMemberByClnoAndEmail(clno, email);
+		long cno = cmdto.getCno();
+		
+		as.readAlarm(ano);
+		cms.removeClubMember(cno);
+		return "redirect:/alarmList";
+	}
+	
+	@PostMapping("/deleteClubMember")
+	@ResponseBody
+	public String removeClubMember(@RequestParam("cno") long cno) {
+		cms.removeClubMember(cno);
+		return "";
+	}
+	
+	
 }
