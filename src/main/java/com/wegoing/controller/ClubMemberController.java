@@ -15,6 +15,7 @@ import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.ClubMemberDTO;
 import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.AlarmType;
 import com.wegoing.enumpackage.ClubMemberStatus;
 import com.wegoing.enumpackage.ClubRank;
 import com.wegoing.service.AlarmService;
@@ -44,11 +45,13 @@ public class ClubMemberController {
 		List<MemberDTO> partner = ms.getMyPartners(loginEmail);
 		List<MemberDTO> member = ms.getMembersInfo(clno);
 		List<String> memEmail = cms.getEmailByClno(clno);
+		ClubMemberDTO hostInfo = cms.getHost(clno, ClubRank.host.crank());
 
 		model.addAttribute("club", cdto);
 		model.addAttribute("partnerList", partner);		
 		model.addAttribute("memberList", member);
 		model.addAttribute("emailList", memEmail);
+		model.addAttribute("hostInfo", hostInfo);
 		
 		return "club/clubMember";
 	}
@@ -65,9 +68,11 @@ public class ClubMemberController {
 										   .cstatus("n")
 										   .email(email)
 										   .build();
-		cms.addClubMember(cmdto, cdto);
+		cms.addClubMember(cmdto);
 		
-//		as.createAddMemberAlarm(email, cdto);
+		String url = "/club/" + cdto.getClno();
+		String content = "[" + cdto.getClname() + "] 로부터 초대를 받았습니다.";
+		as.send(email, AlarmType.clubInvitaion, content, url);
 		return "redirect:/club/{clno}/member";
 	}
 
@@ -84,6 +89,7 @@ public class ClubMemberController {
 	}
 	
 	@PostMapping("/rejectInvitation")
+	@ResponseBody
 	public String rejectInvitation(@RequestParam("ano") long ano,
 							   @RequestParam("clno") int clno,
 							   @RequestParam("email") String email) {

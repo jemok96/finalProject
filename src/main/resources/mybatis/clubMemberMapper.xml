@@ -21,6 +21,7 @@
 	    select cno, cstatus, crank, clno, email, join_dt
 	    from clubmember
 	    where clno = #{clno}
+	    order by crank desc;
 	</select>
     <select id="selectEmailByClno" parameterType="int" resultType="String">
         select email
@@ -41,4 +42,9 @@
         delete from clubmember
         where cno = #{cno}
     </delete>
+    <select id="selectHost" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+        select cno, cstatus, crank, clno, email, join_dt
+        from clubmember
+        where clno = #{clno} and crank = #{crank}
+    </select>
 </mapper>

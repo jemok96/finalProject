@@ -19,4 +19,5 @@ public interface ClubMemberDAO {
 	List<String> selectEmailByClno(int clno);
 	void updateStatus(ClubMemberDTO cmdto);
 	void deleteClubMember(long cno);
+	ClubMemberDTO selectHost(long clno, String crank);
 }
