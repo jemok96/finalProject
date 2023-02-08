@@ -16,4 +16,6 @@ public interface NoticeDao {
 	int getNoticeCount();
 	int writeNotice(NoticeDTO notice);
 	int updateHits(int notino);
+	int noticeUpdate(NoticeDTO notice);
+	int noticeDelete(int notino);
 }

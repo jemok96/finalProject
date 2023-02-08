@@ -2,6 +2,7 @@ package com.wegoing.controller;
 
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.ModelAttribute;import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.NoticeDTO;
 import com.wegoing.dto.PageHandler;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.Message;
 import com.wegoing.service.MemberService;
 import com.wegoing.service.NoticeService;
 import com.wegoing.util.ClubUtil;
@@ -94,14 +96,31 @@ public class NoticeController {
 		return "notice/noticeEdit";
 	}
 	@PostMapping("/notice/{notino}/edit")
-	public String nodiecEditCheck(@PathVariable Integer notino,Model model, @Validated @ModelAttribute("notice") NoticeDTO notice
-			,BindingResult bindingResult) {
+	public String noticeEditCheck(@PathVariable Integer notino,Model model, @Validated @ModelAttribute("notice") NoticeDTO noticeM
+			,BindingResult bindingResult) throws Exception {
 		if(bindingResult.hasErrors()) {
 			log.info("erros={}", bindingResult);
 			return "notice/noticeEdit";
 		}
-		log.info("title={}",notice.getNtitle());
-		log.info("content={}",notice.getNcontent());
+		NoticeDTO notice = notieService.getNoticeOne(notino);
+		
+		model.addAttribute("notice",notice);
+		Date date = new Date();
+
+		
+		noticeM.setUp_dt(date);
+		noticeM.setNcontent(noticeM.getNcontent());
+		noticeM.setNtitle(noticeM.getNtitle());
+	
+		
+		notieService.noticeUpdate(noticeM);
+		return "redirect:/notice";
+		
+	}
+	@PostMapping("/notice/{notino}/delete")
+	public String noticeDelete(@PathVariable Integer notino,RedirectAttributes rattr) {
+		notieService.noticeDelete(notino);
+		rattr.addFlashAttribute(Message.SUCCESS.message(),Message.SUCMSG.message());
 		
 		return "redirect:/notice";
 		
