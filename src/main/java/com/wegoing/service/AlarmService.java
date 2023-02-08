@@ -26,8 +26,8 @@ public class AlarmService {
 	private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60; // 타임아웃 
 	
 	public SseEmitter subscribe(String userId, String lastEventId) {
+		log.info("subscribe()");
 		String emitterId = userId + "_" + System.currentTimeMillis();
-		
 		// sse 연결 요청에 응답하기 위해 sseEmitter 객체 생성
 		SseEmitter emitter = emitterDao.save(emitterId, new SseEmitter(DEFAULT_TIMEOUT));
 		

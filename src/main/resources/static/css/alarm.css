@@ -61,3 +61,11 @@
 	font-size: 11px;
 	margin-bottom: 3px;
 }
+
+.alarm-delete-btn {
+    width: 50px;
+    border: none;
+    background-color: white;
+    margin-left: 20px;
+    text-align: right;
+}
