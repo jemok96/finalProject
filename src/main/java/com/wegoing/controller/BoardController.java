@@ -6,13 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,10 +24,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.PageHandler;
 import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.enumpackage.Category;
+import com.wegoing.enumpackage.Message;
 import com.wegoing.service.BoardService;
 import com.wegoing.service.CommentService;
 import com.wegoing.util.ClubUtil;
-import com.wegoing.enumpackage.*;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

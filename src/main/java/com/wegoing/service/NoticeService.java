@@ -19,7 +19,7 @@ public class NoticeService {
 		this.dao = dao;
 	}
 	
-	@Cacheable(value = "board")
+	
 	public List<NoticeDTO> getNoticeList(Map<String, Integer>  map){
 		return dao.getNoticeList(map);
 	}
@@ -35,5 +35,12 @@ public class NoticeService {
 	public int updateHits(int notino) {
 		return dao.updateHits(notino);
 	}
-
+	public int noticeUpdate(NoticeDTO notice) {
+		
+		return dao.noticeUpdate(notice);
+	}
+	public int noticeDelete(int notino) {
+		
+		return dao.noticeDelete(notino);
+	}
 }

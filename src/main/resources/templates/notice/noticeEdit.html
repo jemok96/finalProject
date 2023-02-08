@@ -107,10 +107,12 @@ input {
 				class="notice__reg" th:text="${notice.nhits}">10</span>
 		</div>
 	</div>
+	<input type="hidden"  th:value="${notice.notino}"/>
 	<div class="notice-content">
-		<textarea name="ncontent" id="ncontent" cols="170" rows="35"
+		<textarea name="ncontent" id="ncontent" cols="170" rows="24"
 			th:text="${notice.ncontent}"></textarea>
 	</div>
+	<div class="field-error" th:errors="*{ncontent}"></div> 
 	</form>
 
 </th:block>

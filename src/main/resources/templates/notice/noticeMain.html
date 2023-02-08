@@ -72,6 +72,10 @@ a {
 	height: 40px;
 }
 </style>
+<script th:inline="javascript">
+	var msg = [[${SUCCESS}]];
+	if(msg !=null)alert(msg);
+</script>
 	<h1>공지사항</h1>
 	<div class="notice-header">
 		<div class="notice__header__column">
