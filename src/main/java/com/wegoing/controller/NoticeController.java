@@ -127,6 +127,7 @@ public class NoticeController {
 	}
 	@GetMapping("/notice/write")
 	public String noticeWrite(Model model) {
+		
 		model.addAttribute("notice",new NoticeDTO());
 		return "notice/noticeWrite";
 	}
