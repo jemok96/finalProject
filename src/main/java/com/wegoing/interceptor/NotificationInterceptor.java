@@ -39,6 +39,11 @@ public class NotificationInterceptor implements HandlerInterceptor{
            
             List <AlarmDTO> alarmList = alarmService.findAllAlarms(mdto.getEmail());
             modelAndView.addObject("alarmList", alarmList);
+            
+			/*
+			 * modelAndView.addObject("user", mdto); modelAndView.addObject("myClub",
+			 * ClubUtil.getClub((PrincipalDetails)authentication.getPrincipal()));
+			 */
         }
 		
 	}
