@@ -1,21 +1,25 @@
 package com.wegoing.config;
 
+import javax.servlet.Filter;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.wegoing.interceptor.NotificationInterceptor;
-
-import lombok.RequiredArgsConstructor;
+import com.wegoing.TimeFilter;
 
 @Configuration
-@RequiredArgsConstructor
-public class WebConfig implements WebMvcConfigurer{
-	private final NotificationInterceptor notificationInterceptor;
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(notificationInterceptor)
-				.excludePathPatterns("/css/**", "/js/**");
+public class WebConfig {
+	@Bean
+	public FilterRegistrationBean timeFilter() {
+		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+		filterRegistrationBean.setFilter(new TimeFilter());
+		filterRegistrationBean.setOrder(1);
+		filterRegistrationBean.addUrlPatterns("/board","/notice");
+		
+		return filterRegistrationBean;
+		
 	}
+
 }
+

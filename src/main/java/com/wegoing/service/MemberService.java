@@ -66,5 +66,8 @@ public class MemberService {
 	public List<MemberDTO> getMembersInfo(long clno){
 		return dao.selectClubMembersInfo(clno);
 	}
+	public String getMemberAuth(String email) {
+		return dao.getMemberAuth(email);
+	}
 	
 }

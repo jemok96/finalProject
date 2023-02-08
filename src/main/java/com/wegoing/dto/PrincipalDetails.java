@@ -8,9 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.wegoing.dto.MemberDTO;
-import com.wegoing.dto.PrincipalDetails;
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

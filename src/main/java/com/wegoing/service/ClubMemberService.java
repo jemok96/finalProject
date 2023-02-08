@@ -22,8 +22,8 @@ public class ClubMemberService {
 	}
 	
 	// 내가 속한 협업공간이름 구하기 
-	public List<ClubDTO> selectAll(String email){		
-		return cmDao.getAll(email);
+	public List<ClubDTO> selectAll(String email, String cstatus){		
+		return cmDao.getAll(email, cstatus);
 	}
 	
 	public List<ClubMemberDTO> selectMembers(int clno){

@@ -8,6 +8,21 @@
 #writeButton{
 	margin-left: 900px;
 }
+#wModal{
+	width: 800px;
+	
+}
+#responsiveDiv{
+	float: left;
+	width: 300px;
+}
+#cardtodo{
+	
+	width: 450px;
+}
+#cardtextarea{
+	clear: both;
+}
 	
 	
 /* ddtail.css */
@@ -26,4 +41,11 @@
 	border:none;
 	width: 100px;
 }
+#todoTable{
+	border-collapse:collapse;
+	
+}
+ #todoTable td, #todoTable th{
+	border:none;
+} 
 

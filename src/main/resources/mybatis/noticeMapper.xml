@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+ <mapper namespace="com.wegoing.dao.NoticeDao">
+ 	<select  id="getNoticeList" resultType="NoticeDTO" parameterType="map">
+ 		SELECT notino, ntitle, reg_dt,nhits
+ 		FROM notice
+ 		 ORDER BY reg_dt DESC
+        LIMIT #{offset}, #{pageSize}
+ 	</select>
+ 	<select id="getNoticeOne" parameterType="int" resultType="NoticeDTO">
+ 		SELECT notino, ntitle,ncontent, reg_dt,nhits,email
+ 		FROM notice
+ 		WHERE notino=#{notino}
+ 	</select>
+
+ 	<select id="getNoticeCount" resultType="int">
+ 		SELECT count(*) FROM notice
+ 	</select>
+ 	
+ 	<insert id="writeNotice" parameterType="NoticeDTO">
+ 		INSERT INTO notice(ntitle,ncontent)
+ 		VALUES (#{ntitle}, #{ncontent})
+ 	</insert>
+ 	<update id="updateHits" parameterType="int">
+ 		UPDATE notice
+		SET nhits = nhits+1
+		WHERE notino =#{notino}
+ 	</update>
+ 	
+ 	<update id="noticeUpdate" parameterType="NoticeDTO">
+ 		UPDATE notice
+ 		SET up_dt=#{up_dt},ntitle=#{ntitle},ncontent=#{ncontent}
+ 		WHERE notino=#{notino}
+ 	</update>
+ 	
+ 	<delete id="noticeDelete" parameterType="int">
+ 		DELETE FROM notice
+ 		WHERE notino = #{notino}
+ 	</delete>
+ </mapper>

@@ -4,21 +4,36 @@ package com.wegoing.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wegoing.dao.BoardDao;
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.SearchCondition;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
-@AllArgsConstructor
+@Slf4j
 public class BoardService {
 	
 	private final BoardDao dao;
 	
+	public BoardService(BoardDao dao) {
+		this.dao = dao;
+	}
+	
+	@Cacheable(value="board", key="#no") 
 	public List<BoardDTO> selectCategory(int no){
+		List<BoardDTO> dto = dao.selectCategory(no);
+		for(int i=0; i<dto.size(); i++) {
+			log.info("{}",dto.get(i));;
+		}
 		return dao.selectCategory(no);
 	}
 	public List<BoardDTO> selectboard(int no){
@@ -42,6 +57,7 @@ public class BoardService {
 	public int countBoard(int cateno) {
 		return dao.countBoard(cateno);
 	}
+	
 	public int update(BoardDTO dto) {
 		return dao.update(dto);
 	}

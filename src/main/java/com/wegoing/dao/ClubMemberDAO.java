@@ -13,7 +13,7 @@ import com.wegoing.dto.ClubMemberDTO;
 public interface ClubMemberDAO {
 	void insetClubMember(ClubMemberDTO dto);
 
-	List<ClubDTO> getAll(String email);
+	List<ClubDTO> getAll(String email, String cstatus);
 	List<ClubMemberDTO> getAllMembers(int clno);
 	ClubMemberDTO getOneByClnoAndEmail(long clno, String email);
 	List<String> selectEmailByClno(int clno);
