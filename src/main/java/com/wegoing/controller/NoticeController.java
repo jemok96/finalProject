@@ -144,7 +144,6 @@ public class NoticeController {
 		notice.setNtitle(notice.getNtitle());
 		notieService.writeNotice(notice);
 		
-		
 		return "redirect:/notice";
 	}
 	
