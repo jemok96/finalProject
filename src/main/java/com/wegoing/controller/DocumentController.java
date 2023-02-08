@@ -43,7 +43,7 @@ public class DocumentController {
 	ClubMemberService clubmemberservice;
 
 	// 협업 공간 디테일?
-	@GetMapping("/{clno}/document/list")
+	@GetMapping({"/{clno}/document/list", "/{clno}"})
 	public String clubDocumentlist(@PathVariable("clno") int clno, Model model,
 			@RequestParam(name = "cp", defaultValue = "1") int currentPage,@AuthenticationPrincipal PrincipalDetails userDetails) {
 

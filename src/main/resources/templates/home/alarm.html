@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/layout/default}">
+      
+<th:block layout:fragment="content">
+        <!-- <h1 th:text="${hasNotification}"></h1>
+        <h1 th:text="${alarmList}"></h1>
+        <h1 th:text="${alarmList}"></h1> -->
+    
+    <div class="alarmList-container">
+        <div class="title">
+            <p class="title-text">나의 알람</p>
+        </div>
+        <div class="alarmlist-box">
+                <form th:action="@{/}" method="post">
+                    <div th:each="alarm : ${alarmList}">
+                        <a th:href="@{${alarm.url}}">
+	                        <div class="alarm-list-items">
+	                            <div class="icon-circle bg-primary"><i class="fas fa-fw fa-folder text-white"></i></div>
+	                            <div class="alarm-info">
+	                                <input type="hidden" th:value="${alarm.ano}" class="ano" name="ano" />
+	                                <input type="hidden" th:value="${#strings.substring(alarm.url,6)}" class="clno" name="clno" /> 
+	                                <input type="hidden" th:value="${alarm.email}" class="email" name="email" />
+	                                <p class="alarm-content" th:text="${alarm.acontent}"></p>
+	                                <p class="alarm-regdt" th:text="${alarm.reg_dt}"></p>
+	                            </div>
+	                            <div class="club-btn-box" th:if="${alarm.type.equals('club_invitation') && alarm.checked == false}">
+		                            <button type="button" th:attrappend="id=${alarmStat.index}" 
+		                            class="accept-btn btn btn-primary">수락</button> 
+		                            <button type="button" th:attrappend="id=${alarmStat.index}" 
+		                            class="reject-btn btn btn-secondary reject-btn">거절</button>
+	                            </div>
+	                            <div th:unless="${alarm.type.equals('club_invitation') && alarm.checked == false}">
+		                            <button type="button" class="alarm-delete-btn" th:attrappend="id=${alarmStat.index}">x</button>
+	                            </div>
+	                        </div>
+                        </a>
+                    </div>
+                </form>
+        </div>
+     </div> 
+</th:block>
+<script th:src="@{/js/alarm.js}"></script>

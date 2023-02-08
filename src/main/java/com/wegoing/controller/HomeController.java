@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wegoing.dto.ClubDTO;
-import com.wegoing.dto.DocumentDTO;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.enumpackage.Dstatus;
 import com.wegoing.service.ClubService;

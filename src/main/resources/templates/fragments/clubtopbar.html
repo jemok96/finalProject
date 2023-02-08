@@ -57,11 +57,11 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none"><a
+            <!-- <li class="nav-item dropdown no-arrow d-sm-none"><a
                 class="nav-link dropdown-toggle" href="#" id="searchDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-            </a> <!-- Dropdown - Messages -->
+            </a> Dropdown - Messages
                 <div
                     class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                     aria-labelledby="searchDropdown">
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </form>
-                </div></li>
+                </div></li> -->
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
@@ -85,49 +85,29 @@
                 role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> 
                 <!-- Counter - Alerts -->
-                    <span class="badge badge-danger badge-counter">3+</span>
+                    <span th:if="${hasNotification}" class="badge badge-danger badge-counter">N</span>
             </a> 
             <!-- Dropdown - Alerts -->
-                <div
-                    class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="alertsDropdown">
+                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="alertsDropdown" >
                     <h6 class="dropdown-header" style="text-align: center;">알람</h6>
-                    <a class="dropdown-item text-center small text-gray-500" href="#">모든
-                        알람 보러가기</a> <a class="dropdown-item d-flex align-items-center"
-                        href="#">
-                        <div class="mr-3">
-                            <div class="icon-circle bg-primary">
-                                <i class="fas fa-file-alt text-white"></i>
+                    <a class="dropdown-item text-center small text-gray-500" th:href="@{/alarmList}">모든
+                        알람 보러가기</a> 
+                        <div th:each="alarm : ${alarmList}">
+                            <div th:if="${alarmStat.index lt 3 && alarm.checked == false}">
+		                        <a class="dropdown-item d-flex align-items-center" href="@{/alarmList}">
+		                        <div class="mr-3">
+		                            <div class="icon-circle bg-primary">
+		                                <i class="fas fa-fw fa-folder text-white"></i>
+		                            </div>
+		                        </div>
+		                        <div>
+		                            <div class="small text-gray-500" th:text="${alarm.reg_dt}"></div>
+		                            <span class="font-weight-bold" th:text="${alarm.acontent}"></span>
+		                        </div>
+		                       </a>
                             </div>
                         </div>
-                        <div>
-                            <div class="small text-gray-500">December 12, 2019</div>
-                            <span class="font-weight-bold">A new monthly report is
-                                ready to download!</span>
-                        </div>
-                    </a><a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="mr-3">
-                            <div class="icon-circle bg-warning">
-                                <i class="fas fa-exclamation-triangle text-white"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-500">December 2, 2019</div>
-                            Spending Alert: We've noticed unusually high spending for your
-                            account.
-                        </div>
-                    </a> <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="mr-3">
-                            <div class="icon-circle bg-warning">
-                                <i class="fas fa-exclamation-triangle text-white"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-500">December 2, 2019</div>
-                            Spending Alert: We've noticed unusually high spending for your
-                            account.
-                        </div>
-                    </a>
                 </div></li>
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow"><a
@@ -161,29 +141,7 @@
                 role="button" aria-haspopup="true"
                 aria-expanded="false"> <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small">멤버</span> <!-- Counter - Messages -->
-            </a> <!-- Dropdown - Members -->
-                <!-- <div
-                    class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="messagesDropdown">
-                    <h6 class="dropdown-header"
-                        style="border-bottom: gray solid 1px; text-align: center;">협업공간 멤버</h6>
-                    <a class="dropdown-item text-center small text-gray-500"
-                        href="partner">멤버 추가</a>
-                    <div style="overflow-X: hidden; height: 570px;">
-                        <div data-toggle="modal" data-target="#deletePartner">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle"
-                                        src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                                </div>
-                                <div>
-                                    <div class="text-truncate">이하나</div>
-                                    <div class="text-truncate text-gray-600">이메일</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div> -->
+            </a> 
             </li>
         </ul>
 </nav>
