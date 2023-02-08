@@ -126,7 +126,9 @@ public class NoticeController {
 		
 	}
 	@GetMapping("/notice/write")
-	public String noticeWrite() {
+	public String noticeWrite(Model model) {
+		
+		model.addAttribute("notice",new NoticeDTO());
 		return "notice/noticeWrite";
 	}
 	@PostMapping("/notice/write")
@@ -143,7 +145,6 @@ public class NoticeController {
 		notice.setNtitle(notice.getNtitle());
 		notieService.writeNotice(notice);
 		
-		model.addAttribute("notice",notice);
 		return "redirect:/notice";
 	}
 	
