@@ -6,13 +6,13 @@
   
  <mapper namespace="com.wegoing.dao.NoticeDao">
  	<select  id="getNoticeList" resultType="NoticeDTO" parameterType="map">
- 		SELECT notino, ntitle, reg_dt,nhits,importance
+ 		SELECT notino, ntitle, reg_dt,nhits
  		FROM notice
  		 ORDER BY reg_dt DESC
         LIMIT #{offset}, #{pageSize}
  	</select>
  	<select id="getNoticeOne" parameterType="int" resultType="NoticeDTO">
- 		SELECT notino, ntitle,ncontent, reg_dt,nhits,importance,email
+ 		SELECT notino, ntitle,ncontent, reg_dt,nhits,email
  		FROM notice
  		WHERE notino=#{notino}
  	</select>
@@ -22,8 +22,8 @@
  	</select>
  	
  	<insert id="writeNotice" parameterType="NoticeDTO">
- 		INSERT INTO notice(ntitle,ncontent,importance)
- 		VALUES (#{ntitle}, #{ncontent}, #{importance})
+ 		INSERT INTO notice(ntitle,ncontent)
+ 		VALUES (#{ntitle}, #{ncontent})
  	</insert>
  	<update id="updateHits" parameterType="int">
  		UPDATE notice

@@ -82,7 +82,7 @@ a {
 			총 <span id="countNotice" th:text="${count}"></span>개의 게시물이 등록되어 있습니다.
 		</div>
 		<div class="notice__header__column">
-			<form action="">
+			<form th:action="@{/notice/add}">
 				<div>
 					<select class="form-select option"
 						aria-label="Default select example">
@@ -99,7 +99,7 @@ a {
 		</div>
 	</div>
 	<div class="admin-btn " th:if="${auth=='ROLE_ADMIN'}">
-		<form th:action method="GET">
+		<form th:action="@{/notice/write}" method="GET">
 			<input type="submit" th:value="글쓰기" class="btn btn-primary edit" />
 		</form>
 	</div>

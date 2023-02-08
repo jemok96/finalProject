@@ -125,6 +125,27 @@ public class NoticeController {
 		return "redirect:/notice";
 		
 	}
+	@GetMapping("/notice/write")
+	public String noticeWrite() {
+		return "notice/noticeWrite";
+	}
+	@PostMapping("/notice/write")
+	public String noticeWriteOk(@Validated @ModelAttribute("notice") NoticeDTO notice
+			,BindingResult bindingResult,@AuthenticationPrincipal PrincipalDetails userDetails,Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			log.info("erros={}", bindingResult);
+			return "notice/noticeWrite";
+		}
+		
+		notice.setEmail(userDetails.getMdto().getEmail());
+		notice.setNcontent(notice.getNcontent());
+		notice.setNtitle(notice.getNtitle());
+		notieService.writeNotice(notice);
+		
+		model.addAttribute("notice",notice);
+		return "redirect:/notice";
+	}
 	
 	
 	
