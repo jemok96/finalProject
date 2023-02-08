@@ -9,7 +9,7 @@
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4-2 static-top shadow2">
         <!-- Sidebar Toggle (Topbar) -->
         <div class="club-info">
-            <a class="club-main" th:href="@{./list}">
+            <a class="club-main" th:href="@{/club/{clno}(clno=${club.clno})}">
             <span class="navbar-club-name" th:text="${club.clname}"></span></a>
             <span class="club-setting-btn" data-toggle="modal" data-target="#club-setting">
             <img src="/img/setting_btn.png" alt="설정버튼이미지" class="club-setting-img"/></span>
@@ -95,7 +95,7 @@
                         알람 보러가기</a> 
                         <div th:each="alarm : ${alarmList}">
                             <div th:if="${alarmStat.index lt 3 && alarm.checked == false}">
-		                        <a class="dropdown-item d-flex align-items-center" href="@{/alarmList}">
+		                        <a class="dropdown-item d-flex align-items-center" th:href="@{/alarmList}">
 		                        <div class="mr-3">
 		                            <div class="icon-circle bg-primary">
 		                                <i class="fas fa-fw fa-folder text-white"></i>
@@ -137,7 +137,7 @@
             <!-- Nav Item - Messages -->
             <li class="nav-item no-arrow mx-1">
             <a
-                class="nav-link" th:href="@{../member}" id="messagesDropdown"
+                class="nav-link" th:href="@{/club/{clno}/member(clno = ${club.clno})}" id="messagesDropdown"
                 role="button" aria-haspopup="true"
                 aria-expanded="false"> <span
                     class="mr-2 d-none d-lg-inline text-gray-600 small">멤버</span> <!-- Counter - Messages -->
@@ -151,7 +151,7 @@
 	       <div class="category-items"><a th:href="@{/club/{clno}/document/list(clno = ${club.clno})}">문 서</a></div>
 	       <div class="category-items"><a th:href="@{/club/{clno}/kanban(clno = ${club.clno})}">칸 반</a></div>
 	       <div class="category-items"><a href="#">캘 린 더</a></div>
-	       <div class="category-items"><a th:href="@{../file}">보 관 함</a></div>
+	       <div class="category-items"><a th:href="@{/club/{clno}/file(clno = ${club.clno})}">보 관 함</a></div>
 	       <div class="nav-underline"></div>
 	    </div>
     </div>
