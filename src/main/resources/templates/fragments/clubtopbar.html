@@ -91,7 +91,9 @@
                 class="nav-link dropdown-toggle" href="#" id="userDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false"><img class="img-profile rounded-circle"
-                    src="/img/undraw_profile.svg">
+                    th:if="${#authentication.principal.mdto.image == null}" th:src="@{/img/undraw_profile}">
+                    <img class="img-profile rounded-circle"
+                    th:unless="${#authentication.principal.mdto.image == null}" th:src="@{/img/} + ${#authentication.principal.mdto.image}">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"
                     style="margin-left: 10px" sec:authentication="principal.mdto.name"></span> 
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">님</span></a> <!-- Dropdown - User Information -->
@@ -125,7 +127,7 @@
 	    <div class="category">
 	       <div class="category-items"><a th:href="@{/club/{clno}/document/list(clno = ${club.clno})}">문 서</a></div>
 	       <div class="category-items"><a th:href="@{/club/{clno}/kanban(clno = ${club.clno})}">칸 반</a></div>
-	       <div class="category-items"><a href="#">캘 린 더</a></div>
+	       <!-- <div class="category-items"><a href="#">캘 린 더</a></div> -->
 	       <div class="category-items"><a th:href="@{/club/{clno}/file(clno = ${club.clno})}">보 관 함</a></div>
 	       <div class="nav-underline"></div>
 	    </div>

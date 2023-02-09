@@ -22,6 +22,7 @@ import com.wegoing.service.AlarmService;
 import com.wegoing.service.ClubMemberService;
 import com.wegoing.service.ClubService;
 import com.wegoing.service.MemberService;
+import com.wegoing.util.ClubUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,9 @@ public class ClubMemberController {
 	@GetMapping("/club/{clno}/member")
 	public String clubMember(@PathVariable int clno, Model model,
 							@AuthenticationPrincipal PrincipalDetails userDetails) {
+		model.addAttribute("user", userDetails.getMdto());
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
+		
 		ClubDTO cdto = cs.getOne(clno);
 		String loginEmail = userDetails.getMdto().getEmail();
 		log.info("Email >>>>> " + loginEmail);
@@ -52,6 +56,7 @@ public class ClubMemberController {
 		model.addAttribute("memberList", member);
 		model.addAttribute("emailList", memEmail);
 		model.addAttribute("hostInfo", hostInfo);
+		
 		
 		return "club/clubMember";
 	}
@@ -89,7 +94,6 @@ public class ClubMemberController {
 	}
 	
 	@PostMapping("/rejectInvitation")
-	@ResponseBody
 	public String rejectInvitation(@RequestParam("ano") long ano,
 							   @RequestParam("clno") int clno,
 							   @RequestParam("email") String email) {
@@ -102,10 +106,8 @@ public class ClubMemberController {
 	}
 	
 	@PostMapping("/deleteClubMember")
-	@ResponseBody
-	public String removeClubMember(@RequestParam("cno") long cno) {
+	public void removeClubMember(@RequestParam("cno") long cno) {
 		cms.removeClubMember(cno);
-		return "";
 	}
 	
 	
