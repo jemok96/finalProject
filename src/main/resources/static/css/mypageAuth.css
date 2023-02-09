@@ -6,14 +6,15 @@
     background-color: white;
     box-shadow: 0px 1px 5px;
     border-radius: 10px;
-    margin: 70px auto;
+    margin: 150px auto;
     padding-right: 1px;
 }
 
 .insert-pw {
 	width: 100%;
-	height: 100px;
+	height: 50px;
 	margin: 0px auto;
+	margin-top: 20px;
 }
 
 .pw-form {
@@ -23,8 +24,7 @@
 }
 
 #password {
-	width: 200px;
-	margin-left: 20px;
+	width: 250px;
 }
 
 .pw-btn {
@@ -50,17 +50,50 @@
     
 }
 
+.edit-form {
+	margin-top: 30px;
+}
+
 .myInfo{
-	
+	width: 90%;
+	height: 80px;
+	text-align: center;
+	/* display: flex;
+	justify-content: space-around;
+	align-items: center; */
 }
 label {
 	width: 100px;
-	margin: 10px;
+	margin-left: 50px;
 	color: black;
-	text-align: center;
+	font-weight: 600;
 }
-input[type="text"], input[type="password"] {
-	color: darkgray;
+.input-info {
+	width: 250px;
+	text-align: center;
+	background: white;
+	color: black;
 	border: none;
 	border-bottom: 1px dotted #cccccc;
+	margin-left: 50px;
+}
+
+.input-info:focus {
+	outline: none;
+	border-bottom: 1px solid blue;
+}
+
+.btn-box {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.update-btn, .reset-btn {
+    margin: 0px 5px;	
+}
+
+#pw-error, #name-error, 
+#tel-error, #checkpw-error, #nickname-error {
+	font-size: 13px;
+	margin-left: 200px;
 }

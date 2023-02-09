@@ -59,4 +59,9 @@
     	SELECT auth FROM member
     	WHERE email =#{email}
     </select>
+    <update id="updateOne" parameterType="MemberDTO">
+        update member
+        set name = #{name}, pw = #{pw}, nickname = #{nickname}, tel = #{tel}, image = #{image}
+        where email = #{email}
+    </update>
 </mapper>

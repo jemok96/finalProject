@@ -1,15 +1,22 @@
 package com.wegoing.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.wegoing.dto.MemberDTO;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.service.MemberService;
 import com.wegoing.util.ClubUtil;
@@ -20,11 +27,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberController {
 	
-	@Autowired
 	private MemberService memberService;
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	private final String uploadPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\img\\";
+	
+	public MemberController(MemberService memberService, PasswordEncoder passwordEncoder) {
+		super();
+		this.memberService = memberService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@PostMapping("/member/emailCheck")
 	@ResponseBody
@@ -74,7 +86,26 @@ public class MemberController {
 		return "/home/mypage";
 	}
 	
-	
-	
-	
+	@PostMapping("/mypage/editOk")
+	public String mypageEditOk(@AuthenticationPrincipal PrincipalDetails userDetails,
+								@ModelAttribute("Member") MemberDTO member, 
+								@RequestParam("file") MultipartFile file) throws IOException {
+		String filename = "";
+		String savefileName = "";
+		
+		if (!file.isEmpty()) {
+            filename = file.getOriginalFilename();
+            savefileName = UUID.randomUUID().toString() + "_" + filename;
+            File saveFile = new File(uploadPath, savefileName);
+            file.transferTo(saveFile);
+        }
+		member.setImage(savefileName);
+		
+		String encodePw = passwordEncoder.encode(member.getPw());
+		member.setPw(encodePw);
+		
+		memberService.editOne(member);
+		return "redirect:/main";
+	}
+
 }

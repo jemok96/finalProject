@@ -11,7 +11,7 @@
 	            <p>비밀번호 확인 후 마이페이지를 이용하실 수 있습니다.</p>
 	        </div>
 	        <div class="insert-pw">
-	            <form th:action="@{/mypage/edit}" method="post" class="pw-form">
+	            <form th:action="@{/mypage/edit}" method="post" class="pw-form" onsubmit="return false">
 	                <input type="password" name="password" class="form-control" id="password" placeholder="비밀번호 입력"/>
 	                <button type="button" class="pw-btn btn btn-light">확인</button>
 	            </form>

@@ -69,5 +69,9 @@ public class MemberService {
 	public String getMemberAuth(String email) {
 		return dao.getMemberAuth(email);
 	}
+
+	public void editOne(MemberDTO member) {
+		dao.updateOne(member);
+	}
 	
 }

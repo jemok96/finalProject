@@ -24,7 +24,7 @@ public class MemberDTO {
 	private String nickname;
 	private String pw;
 	private String tel;
-	private Blob image;
+	private String image;
 	private String auth;
 	private String join_dt;
 	
@@ -70,11 +70,11 @@ public class MemberDTO {
 		this.tel = tel;
 	}
 
-	public Blob getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Blob image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
