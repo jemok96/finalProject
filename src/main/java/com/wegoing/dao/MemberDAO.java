@@ -19,4 +19,5 @@ public interface MemberDAO {
 
 	List<MemberDTO> selectClubMembersInfo(int clno); 
 	String getMemberAuth(String email);
+	void updateOne(MemberDTO dto); // 회원정보 수정
 }

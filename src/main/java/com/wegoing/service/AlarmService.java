@@ -26,7 +26,7 @@ public class AlarmService {
 	private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60; // 타임아웃 
 	
 	public SseEmitter subscribe(String userId, String lastEventId) {
-		log.info("subscribe()");
+//		log.info("subscribe()");
 		String emitterId = userId + "_" + System.currentTimeMillis();
 		// sse 연결 요청에 응답하기 위해 sseEmitter 객체 생성
 		SseEmitter emitter = emitterDao.save(emitterId, new SseEmitter(DEFAULT_TIMEOUT));
@@ -51,7 +51,6 @@ public class AlarmService {
 	}
 	
 	private void sendAlarm(SseEmitter emitter, String emitterId, Object data) {
-		log.info("sendAlarm() >>> " + emitter + emitterId + data);
         try {
             emitter.send(SseEmitter.event()
                                    .id(emitterId)
@@ -65,7 +64,7 @@ public class AlarmService {
 	
 	@Async
 	public void send(String email, AlarmType type, String content, String url) {
-		log.info("send() >>> " + email + type + content + url);
+//		log.info("send() >>> " + email + type + content + url);
 	    AlarmDTO alarm = createAlarm(email, type, content, url);
 	    alarmDao.save(alarm);
 	    String receiverId = email;
