@@ -35,7 +35,6 @@ public class HomeController {
 		this.cs = cs;
 	}
 	
-	
 	@GetMapping("/main")
 	public String main(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
 		model.addAttribute("user", userDetails.getMdto());
