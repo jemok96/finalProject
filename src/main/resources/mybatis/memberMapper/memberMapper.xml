@@ -48,11 +48,13 @@
 	        <result column="email" property="email"/>        
        </association>
     </resultMap>
-    <select id="selectClubMembersInfo" parameterType="long" resultMap="ClubMemberInfoMap">
+    <select id="selectClubMembersInfo" parameterType="int" resultMap="ClubMemberInfoMap">
         SELECT m.email, m.name, c.cno, c.clno, c.crank, c.cstatus
         FROM member AS m
         INNER JOIN clubmember AS c
         ON m.email = c.email
         WHERE c.clno = #{clno}
     </select>
+    
+    
 </mapper>

@@ -38,4 +38,8 @@ public class ClubMemberService {
 	public List<String> getEmailByClno(int clno){
 		return cmDao.selectEmailByClno(clno);
 	}
+	
+	public ClubMemberDTO selectOne(ClubMemberDTO cmdto) {
+		return cmDao.getOneMembers(cmdto);
+	}
 }

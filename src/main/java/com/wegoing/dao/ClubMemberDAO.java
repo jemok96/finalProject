@@ -17,5 +17,6 @@ public interface ClubMemberDAO {
 	List<ClubMemberDTO> getAllMembers(int clno);
 	ClubMemberDTO getOneByClnoAndEmail(ClubMemberDTO cmdto);
 	List<String> selectEmailByClno(int clno);
+	ClubMemberDTO getOneMembers(ClubMemberDTO cmdto);
 	
 }

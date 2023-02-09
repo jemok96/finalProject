@@ -11,7 +11,7 @@
 		
 		
 	  	
-	  	<div class="table-responsive">
+	  	<div class="table-responsive" id="responsiveDtail">
         	<table class="table table-bordered" id="dtailTable">
         		<tr>
         		<div class="dropdown mb-4">
@@ -28,8 +28,32 @@
 				</tr>
         	</table>
 	  	</div>
+	  	<!-- 할일 리스트 -->
+ 		<div class="card shadow mb-4" id="detailtodo">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">To do list</h6>
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseCardExample">
+            <input type="hidden" id="hidedno" th:value="${dto.dno}" />
+                <div class="card-body" id="detailTodoList">
+                	
+                	<table class="table" id="dtailtodoTable" width="100%" cellspacing="0">
+                		<tr  th:each=" member : ${todoList}">
+                			<th th:text="${member.name}"></th>
+                			<td  width='185px' th:text="${member.tododto.tname}"></td>
+                			<td th:text="${member.tododto.tstatus}"></td>
+                			<td><button class='btn btn-danger btn-circle btn-sm' th:value="${member.tododto.tno}"><i class='fas fa-trash'></i></button></td>
+                		</tr>
+                	</table>
+                </div>
+            </div>
+        </div>
+	  	
 	  	<!-- 예시 -->
-	  	<div class="card shadow mb-4">
+	  	<div class="card shadow mb-4" id="dtailTextarea">
            <div class="card-header py-3">
                <h6 class="m-0 font-weight-bold text-primary" th:text="${dto.dname}"></h6>
            </div>
