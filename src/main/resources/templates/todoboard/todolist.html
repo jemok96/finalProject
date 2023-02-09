@@ -16,6 +16,13 @@
 				<div class="table-responsive" id="todoList">
 
 					<table class="table table-bordered" id="todoTable" width="100%" cellspacing="0">
+							<colgroup> 
+							   <col width="50%" /> 
+							   <col width="50%" /> 
+							   <col width="130%" />
+							   <col width="50%" />
+							   <col width="50%" />
+							   </colgroup>
 						<thead>
 							<tr role="row">
 								<th class="m-0 font-weight-bold text-info" scope="col">협업공간</th>
@@ -27,8 +34,8 @@
 						</thead>
 						<tbody class="table-group-divider" id="todolistBody">
 							<tr th:each=" memberdto : ${list}">
-								<td><a th:href="@{/club/{clno}/document/list(clno = ${memberdto.clubdto.clno})}" th:text="${memberdto.clubdto.clname}"></a></td>
-								<td>
+								<td scope='col' class='clubname' width="30%"><a th:href="@{/club/{clno}/document/list(clno = ${memberdto.clubdto.clno})}" th:text="${memberdto.clubdto.clname}"></a></td>
+								<td scope="col">
 								<div class="dropdown mb-4">
 							         <button class="btn btn-success dropdown-toggle" type="button"
 							              th:text="${memberdto.tododto.tstatus}" data-toggle="dropdown" aria-haspopup="true"
@@ -42,9 +49,9 @@
 							         </div>
 							     </div>
 								</td>
-								<th scope="row" th:text="${memberdto.tododto.tname}"></th>
-								<td th:text="${memberdto.tododto.tstart_dt}"></td>
-								<td th:text="${memberdto.tododto.tend_dt}"></td>
+								<th  scope="col" th:text="${memberdto.tododto.tname}"></th>
+								<td scope="col" th:text="${memberdto.tododto.tstart_dt}"></td>
+								<td scope="col" th:text="${memberdto.tododto.tend_dt}"></td>
 							</tr>
 						</tbody>
 					</table>
