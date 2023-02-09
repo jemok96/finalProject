@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+
+#todoList{
+	height: 600px;
+	-ms-overflow-style: none; 
+  	scrollbar-width: none; 
+  	overflow-y: scroll; 
+}
+#todoList::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

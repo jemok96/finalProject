@@ -13,9 +13,11 @@ import com.wegoing.dto.TodoDTO;
 public interface TodoDAO {
 	public void insertOne(TodoDTO dto);
 	public List<MemberDTO> dnoSelectOne(int dno);
+	List<MemberDTO> todoIdSelectOne(String email);
 	void deleteOne(int tno);
 	void modifyManager(TodoDTO dto);
 	void modifyStatus(TodoDTO dto);
 	void modifyTname(TodoDTO dto);
 	void deleteDno(int dno);
+	List<TodoDTO> selectAll();
 }

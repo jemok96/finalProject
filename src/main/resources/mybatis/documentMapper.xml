@@ -6,7 +6,7 @@
   <mapper namespace="com.wegoing.dao.DocumentDAO">
   
  	<select id="pagingSelect" parameterType="StartEnd" resultType="DocumentDTO">
- 		SELECT dno, dname, dcontent, dstatus, dwriter, reg_dt, up_dt, clno
+ 		SELECT dno, dname, dcontent, dstatus, dwriter,DATE_FORMAT(reg_dt, '%y-%m-%d')AS reg_dt, up_dt, clno
         FROM document 
         where clno = #{clno}
         ORDER by reg_dt desc
