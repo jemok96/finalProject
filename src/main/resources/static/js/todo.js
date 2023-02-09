@@ -23,8 +23,8 @@ $(function(){
 					
 					
 					data += "<tr>";
-					data += "<td><a href='/club/"+list[i].clubdto.clno+"/document/list'>"+list[i].clubdto.clname+"</a></td>";
-					data += "<td>";
+					data += "<td scope='col' class='clubname'><a href='/club/"+list[i].clubdto.clno+"/document/list'>"+list[i].clubdto.clname+"</a></td>";
+					data += "<td scope='col'>";
 					data += "<div class='dropdown mb-4'>";
 					data += "<button class='btn btn-success dropdown-toggle' type='button'";
 				    data += " data-toggle='dropdown' aria-haspopup='true'";
@@ -39,9 +39,9 @@ $(function(){
 				    data += "</div>";
 					data += "</td>";
 			
-					data += "<th scope='row'>"+list[i].tododto.tname+"</th>";
-					data += "<td>"+list[i].tododto.tstart_dt+"</td>";
-					data += "<td>"+list[i].tododto.tend_dt+"</td>";
+					data += "<th scope='col'>"+list[i].tododto.tname+"</th>";
+					data += "<td scope='col'>"+list[i].tododto.tstart_dt+"</td>";
+					data += "<td scope='col'>"+list[i].tododto.tend_dt+"</td>";
 					data += "</tr>";
 					
 					
