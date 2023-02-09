@@ -44,9 +44,10 @@ public class DocumentService {
 	}
 
 
-	public void write(DocumentDTO dto,int clno) {
-		dto.setClno(clno);
+	public void write(DocumentDTO dto) {
+
 		dao.insertOne(dto);
+		
 		
 	}
 

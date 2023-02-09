@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/layout/default}">
+	>
+<th:block th:replace="fragments/head :: headFragment"></th:block>
 
-<th:block layout:fragment="content">
 <script src="https://kit.fontawesome.com/8cc4eb714e.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
 		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -77,8 +77,18 @@
 .btn-default{
 border : 1px solid rgba(0,0,0,0.2)}
 </style>
-
-	<div class="content__wrapper" th:each="free:${free}">
+<th:block layout:fragment="content">
+<body id="page-top">
+        <div id="wrapper">
+            <!-- 사이드바-->
+            <th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- 상단바-->
+                    <th:block th:replace="fragments/topbar :: topbarFragment"></th:block>
+                    <!-- 본문-->
+                    <th:block layout:fragment="content">
+                    	<div class="content__wrapper" th:each="free:${free}">
 		<div class="content__header">
 			<div class="content__title" th:text="${free.btitle}">제목</div>
 			<div class="content__nick" th:text="${free.nickname}">닉네임</div>
@@ -146,6 +156,16 @@ border : 1px solid rgba(0,0,0,0.2)}
 
 
 	</div>
+                    </th:block>                   
+                </div>
+                 <!-- 공통 하단-->
+                <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+            </div>
+        </div>
+        <!-- 공통 스크립트-->
+        <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+    </body>
+	
 
 
 

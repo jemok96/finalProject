@@ -37,7 +37,7 @@
  	</delete>
  	
  	
- 	<insert id="insertOne" parameterType="DocumentDTO">
+ 	<insert id="insertOne" parameterType="DocumentDTO" useGeneratedKeys="true" keyProperty="dno">
  		INSERT INTO document(dname,dcontent,dstatus,dwriter,reg_dt,up_dt,clno)
  		VALUES (#{dname},#{dcontent},#{dstatus},#{dwriter}, sysdate(), sysdate(),#{clno})
  	</insert>

@@ -55,6 +55,7 @@ public class BoardController {
 		model.addAttribute("pet", pet);
 		model.addAttribute("career", career);
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
+		
 		return "board/boardmain";
 	}
 
