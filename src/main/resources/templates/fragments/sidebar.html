@@ -6,15 +6,15 @@
 		class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
 		id="accordionSidebar">
 		<!-- Sidebar - Brand -->
-		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="main">
+		<a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/main}">
 			<div class="sidebar-brand-text mx-3">
-				<img src="../img/logo.png" alt="logo" width="200px">
+				<img src="/img/logo.png" alt="logo" width="200px">
 			</div>
 		</a>
 		<!-- Divider -->
 		<hr class="sidebar-divider my-0">
 		<!-- Nav Item - Dashboard -->
-		<li class="nav-item"><a class="nav-link" th:href="@{main}"> <i
+		<li class="nav-item"><a class="nav-link" th:href="@{/main}"> <i
 				class="fas fa-fw fa-home"></i> <span>홈</span></a></li>
 		<!-- Nav Item - Tables -->
 		<li class="nav-item"><a class="nav-link" href="tables.html">
@@ -105,7 +105,7 @@
 					<h6 class="collapse-header">내 협업공간 리스트</h6>
 
 					<div  th:each="myclub : ${myClub}" >
-					<a th:href="@{/document/list{clno}(clno=${myclub.clno})}" class="collapse-item" th:text="${myclub.clname}" style="overflow: hidden; text-overflow: ellipsis; display: block; width: 100%;" ></a>
+					<a th:href="@{/club/{clno}/document/list(clno = ${myclub.clno})}" class="collapse-item" th:text="${myclub.clname}" style="overflow: hidden; text-overflow: ellipsis; display: block; width: 100%;" ></a>
 
 					</div>
 				</div>

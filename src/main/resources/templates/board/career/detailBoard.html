@@ -4,7 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-
+<script src="https://kit.fontawesome.com/8cc4eb714e.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
 		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 		crossorigin="anonymous">
@@ -103,12 +103,11 @@ border : 1px solid rgba(0,0,0,0.2)}
 
 
 					<div class="content__delete">
-						<form th:action="@{/career/{bno}/delete(bno=${free.bno})}"
-							method="POST">
+						<form action="" id="form">
 							<input value="삭제" th:if="${nick}!='YES'" th:type="hidden"
 								class="btn btn-outline-primary" /> <input value="삭제"
 								th:unless="${nick}!='YES'" th:type="submit"
-								class="btn btn-outline-primary" />
+								class="btn btn-outline-primary btn-delete" />
 						</form>
 					</div>
 				</div>
@@ -150,6 +149,7 @@ border : 1px solid rgba(0,0,0,0.2)}
 	<script>
 	var bno = [[${bno}]];
 	
+	//댓글 목록
 	$(document).ready(function getCommentList() {
         $.ajax({
             type: "POST",
@@ -166,10 +166,16 @@ border : 1px solid rgba(0,0,0,0.2)}
             .always(function() {
                 console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
             })
-    }
-	
+    	}
 	);
-	// 댓글 목록 가져오기
+	$('.btn-delete').on('click',function(){
+		if(!confirm("정말로 삭제하시겠습니까?"))return
+		let form = $('#form');
+		form.attr("action", "/career/"+bno+"/delete")
+		form.attr("method","post");
+		form.submit();
+	})
+
 	function getCommentList() {
         $.ajax({
             type: "POST",
@@ -187,7 +193,6 @@ border : 1px solid rgba(0,0,0,0.2)}
                 console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
             })
     }
-	
 	//댓글 추가 후 페이지 reload
 	function insertComment() {
 		var content =$('#cmcontent').val();
@@ -210,24 +215,6 @@ border : 1px solid rgba(0,0,0,0.2)}
             })
     }
 	
-	function deleteComment() {
-        $.ajax({
-            type: "POST",
-            url: "/comment/delte/"+cmno,
-            data: {'cmcontent':content}, 
-            dataType: "text"
-        })
-            .done(function (result) {
-           		console.log(content);
-           		$.ajax(getCommentList());
-            })
-            .fail(function(jqXHR) {
-                console.log(jqXHR);
-            })
-            .always(function() {
-                console.log("요청, 응답 결과에 상관없이, 이건 항상 실행됩니다.");
-            })
-    }
 	</script>
 
 </th:block>

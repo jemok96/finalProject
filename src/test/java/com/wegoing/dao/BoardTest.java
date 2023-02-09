@@ -1,15 +1,16 @@
 package com.wegoing.dao;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.PageHandler;
+import com.wegoing.dto.SearchCondition;
 import com.wegoing.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,11 @@ class BoardTest {
 	@Autowired
 	BoardService boardService;
 	
-	@BeforeEach
-	void deleteAll() {
-		boardService.deleteAll();
-	}
-	
+//	@BeforeEach
+//	void deleteAll() {
+//		boardService.deleteAll();
+//	}
+//	
 	@Test
 	void insertTest() {
 		
@@ -58,7 +59,7 @@ class BoardTest {
 		
 	}
 	@Test
-    public void test(){
+    void PageHandlertest(){
         PageHandler ph = new PageHandler(255,11);
         log.info("11/10*10+1 = {}" , 11/10*10+1);
         ph.print();
@@ -67,4 +68,32 @@ class BoardTest {
        assertTrue(ph.getEndPage() ==20);
     }
 
+	@Test
+	void serachSelectPageTest() {
+		boardService.deleteCategory(3);
+		for(int i=1; i<=20; i++) {
+			BoardDTO boardDTO = BoardDTO.builder().btitle("title"+i).bcontent("asdsa").cateno(3).email("aaa@gmail.com")
+					.nickname("JM").build();
+			boardService.insert(boardDTO);
+		}
+		SearchCondition sc = new SearchCondition(1,10,"T","title2",3);
+		System.out.println(sc.getOffset()+""+sc.getPage());
+		List<BoardDTO> list = boardService.searchSelectPage(sc);
+		System.out.println("list = "+list);
+		assertTrue(list.size() ==2 );
+	}
+	@Test
+	void serachResultCntTest() {
+		boardService.deleteCategory(3);
+		for(int i=1; i<=20; i++) {
+			BoardDTO boardDTO = BoardDTO.builder().btitle("title"+i).bcontent("asdsa").cateno(3).email("aaa@gmail.com")
+					.nickname("JM").build();
+			boardService.insert(boardDTO);
+		}
+		SearchCondition sc = new SearchCondition(1,10,"T","title2",3);
+		
+		int result = boardService.searchResultCnt(sc);
+		
+		assertTrue(result ==2 );
+	}
 }

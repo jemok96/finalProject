@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.wegoing.dto.MemberDTO;
@@ -17,4 +18,5 @@ public interface MemberDAO {
 	String findEmailByNameAndTel(MemberDTO dto); // 이메일 찾기
 	void updatePw(MemberDTO dto); // 비밀번호 재설정
 	List<MemberDTO> selectMyPartners(String email); // 내파트너 조회하기, 이미지도 불러와야해서 MemberDAO이용
+	List<MemberDTO> selectClubMembersInfo(int clno); 
 }

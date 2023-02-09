@@ -1,50 +1,243 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/layout/default}">
+	layout:decorate="~{/layout/club}">
 
 
 <th:block layout:fragment="content">
 
-	<h3>[[${clno}]]</h3>
+	
 	<div class="container">
-		<h3>협업 문서 공간</h3>
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">작성자</th>
-					<th scope="col">제목</th>
-					<th scope="col">작성 일자</th>
-				</tr>
-			</thead>
-			<tbody class="table-group-divider">
-				<tr th:each=" dto : ${list}">
-					<td th:text="${dto.dwriter}"></td>
-					<th scope="row">
-						<a th:href="@{/document/dtail(dno=${dto.dno},clno=${clno})}">[[${dto.dname}]]</a>
-					</th>
-					<td th:text="${dto.reg_dt}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="paging">
-		<nav aria-label="Page navigation example">
-			<ul class="pagination" th:with="start=${map['startPage']}, end=${map['endPage']}">
-				<li class="page-item" th:if="${map['isPre']}">
-					<a class="page-link" th:href="@{list(cp=${map['currentPage']-5}),clno=${clno}}" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-				<li class="page-item" th:each="i : ${#numbers.sequence(start, end)}">
-					<a class="page-link" th:href="@{list(cp=${i},clno=${clno})}" th:text="${i}"></a>
-				</li>
-				<li class="page-item" th:if="${map['isNext']}">
-					<a class="page-link" th:href="@{list(cp=${map['currentPage']+5}),clno=${clno}}" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
-		</nav>
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<span class="m-0 font-weight-bold text-info">문서</span>
+				 <a th:href="@{write}" id="writeButton"  data-toggle="modal" data-target="#writeModal" class="btn btn-info btn-icon-split">
+                    
+                    <span  class="text" >작성</span>
+                </a>
+                	
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+				
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr role="row">
+							<th scope="col">작성자</th>
+							<th scope="col">제목</th>
+							<th scope="col">작성 일자</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each=" dto : ${list}">
+							<td th:text="${dto.dwriter}"></td>
+							<th scope="row">
+								<a th:href="@{dtail(dno=${dto.dno})}">[[${dto.dname}]]</a>
+							</th>
+							<td th:text="${dto.reg_dt}"></td>
+						</tr>
+					</tbody>
+				</table>
+		    	
+		    	
+		    	<!--  페이징 -->
+				<div class="paging">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination" th:with="start=${map['startPage']}, end=${map['endPage']}">
+						<li class="page-item" th:if="${map['isPre']}">
+							<a class="page-link" th:href="@{list(cp=${map['currentPage']-5})}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item" th:each="i : ${#numbers.sequence(start, end)}">
+							<a class="page-link" th:href="@{list(cp=${i})}" th:text="${i}"></a>
+						</li>
+						<li class="page-item" th:if="${map['isNext']}">
+							<a class="page-link" th:href="@{list(cp=${map['currentPage']+5})}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				</div>
+				
+				<!-- document write modal -->
+					<div class="modal fade" id="writeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content" id="wModal">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="exampleModalLabel">문서 작성</h5>
+			                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			                <form action="write" method="post">
+			                <div class="modal-body">
+			                
+			                
+							<!-- 상태 값 -->
+							<input type="hidden" id="hidestatus" name="dstatus" th:value="진행중" />
+							
+							<div class="table-responsive" id="responsiveDiv">
+					        	<table class="table table-bordered" id="dtailTable">
+					        		<tr>
+										<div class="dropdown mb-4">
+									         <button class="btn btn-primary dropdown-toggle" type="button"
+									             id="dropdownMenuButton" th:text="진행중" data-toggle="dropdown" aria-haspopup="true"
+									             aria-expanded="false">
+									         </button>
+									         <div id="dropdownWrite" class="dropdown-menu animated--fade-in"
+									             aria-labelledby="dropdownMenuButton">
+									             <a class="dropdown-item" href="#">일시중지</a>
+									             <a class="dropdown-item" href="#">진행중</a>
+									             <a class="dropdown-item" href="#">완료</a>
+									         </div>
+									     </div>
+									</tr>
+					        		<tr>
+										<th scope="col">작성자</th>
+										<td>[[${#authentication.principal.mdto.name}]]</td>
+										<!-- <input class="form-control form-control-sm" type="text" readonly="readonly" name="dwriter" th:value="${#authentication.principal.mdto.name}" id="" /> -->
+										<input type="hidden" name="dwriter" th:value="${#authentication.principal.mdto.name}" />
+									</tr>
+					        	</table>
+						  	</div>
+						  	<!-- 할일 리스트 -->
+						  	 <div class="card shadow mb-4" id="cardtodo">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-primary">To do list</h6>
+                                </a>
+                                
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body" id="todobody">
+                                    <input type="hidden" name="ajson" id="ajson" />
+                                    <table class="table" id="writeTable" ></table>
+                                    </div>
+                                </div>
+                            </div>
+							
+							<div class="card shadow mb-4" id="cardtextarea">
+					           <div class="card-header py-3">
+					           
+					               <input class="form-control form-control-sm" type="text" name="dname" id="" />
+					           </div>
+					           <div class="card-body" >
+					           <textarea class="form-control" name="dcontent" id="exampleFormControlTextarea1" rows="20" cols="100"></textarea>
+					           </div>
+					       </div>
+       
+       
+			                </div>
+			                <div class="modal-footer">
+			                    <button class="btn btn-secondary" type="button" data-dismiss="modal">돌아가기</button>
+			                    
+			                    <!-- 할일 모달로 가기 -->
+								 <a id="todoButton"  data-toggle="modal" data-target="#todoModal" class="btn btn-primary">
+				                 <span  class="text" >할일 추가</span>
+				                 </a>
+                				<button class="btn btn-primary" type="submit" >작성</button>
+			                </div>
+			                </form>
+			            </div>
+			        </div>
+			    	</div>
+				<!--End modal -->
+				
+				
+				
+				<!-- todo modal -->
+					<div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			        aria-hidden="true">
+			        <div class="modal-dialog" role="todo">
+			            <div class="modal-content" id="tModal">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" id="exampleModalLabel">할 일 작성</h5>
+			                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+			                        <span aria-hidden="true">×</span>
+			                    </button>
+			                </div>
+			                <!-- <form action="" method="post"> -->
+			                <div class="modal-body">
+			                
+			                
+							<!-- 상태 값 -->
+							<input type="hidden" id="hidetodostatus" name="tstatus" th:value="진행중" />
+							
+							<div class="table-responsive">
+					        	<table class="table table-bordered" id="todoTable">
+					        		<tr>
+					        			<td>
+										<div class="dropdown mb-4">
+									         <button class="btn btn-primary dropdown-toggle" type="button"
+									             id="todoMenuButton" th:text="진행중" data-toggle="dropdown" aria-haspopup="true"
+									             aria-expanded="false">
+									         </button>
+									         <div id="todostatusMenu" class="dropdown-menu animated--fade-in"
+									             aria-labelledby="dropdownMenuButton">
+									             <a class="dropdown-item" href="#">일시중지</a>
+									             <a class="dropdown-item" href="#">진행중</a>
+									             <a class="dropdown-item" href="#">완료</a>
+									         </div>
+									         	
+									     </div>
+					        			</td>
+					        			
+		        						<td>시작일</td>
+		        						<td><input class="form-control form-control-sm" type="text" id="startDay" /></td>
+		        						<td>마감일</td>
+		        						<td><input class="form-control form-control-sm" type="text" id="endDay" /></td>
+					        			 
+									</tr>
+					        		<tr>
+										<th scope="col">담당자</th>
+										<th scope="col">할 일</th>
+									</tr>
+									<tr>
+										<td>
+										<div class="dropdown mb-4">
+											<input type="hidden" id="hidecno" th:value="${cmdto.cno}" />
+									         <button class="btn btn-light dropdown-toggle" type="button"
+									             id="MemberSelect" th:text="${#authentication.principal.mdto.name}" data-toggle="dropdown" aria-haspopup="true"
+									             aria-expanded="false">
+									         </button>
+									         <div id="dropdownMember" class="dropdown-menu animated--fade-in"
+									             aria-labelledby="dropdownMenuButton" >
+									             <option class="dropdown-item" th:each=" member : ${cmlist}"th:text="${member.name}" th:value="${member.cldto.cno}"></option>
+									         </div>
+									     </div>
+										</td>
+										<td colspan="4">
+											<input class="form-control form-control-sm" type="text" id="tname" />
+										</td>
+									</tr>
+					        	</table>
+						  	</div>
+						  	
+						  	</div>
+					  	    <div class="modal-footer">
+			                    <button class="btn btn-secondary" type="button" data-dismiss="modal">돌아가기</button>
+			                    <button class="btn btn-primary" id="writeTodo" type="button" data-dismiss="modal" >작성</button>
+			                </div>
+			                <!-- </form> -->
+						  	   
+                                </div>
+                            </div>
+       
+			                </div>
+			               
+			            </div>
+			        </div>
+			    	</div>
+				<!--End modal -->
+				
+				</div>
+			</div>
 		</div>
 	</div>
+	
+	
 
 </th:block>

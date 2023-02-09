@@ -4,7 +4,7 @@
 	layout:decorate="~{/layout/default}">
 
 <th:block layout:fragment="content">
-
+<script src="https://kit.fontawesome.com/8cc4eb714e.js" crossorigin="anonymous"></script>
 	<style>
 	
 .section1 {
@@ -75,6 +75,13 @@
 a {
 	text-decoration: none;
 	color: inherit;
+}
+#title {
+  width : 150px;     
+  text-overflow: ellipsis;  
+  white-space: nowrap;    
+  overflow : hidden;    
+  display : block;   
 }
 .black{
 color:black;
@@ -155,7 +162,7 @@ color:black;
 				</div>
 				<div class="section__column" th:each="hobby: ${hobby}">
 					<div class="section__title">
-						<a th:href="@{/hobby/{bno}(bno=${hobby.bno})}"><span th:text="${hobby.btitle}">제목</span></a>
+						<a th:href="@{/hobby/{bno}(bno=${hobby.bno})}"><span id="title" th:text="${hobby.btitle}">제목</span></a>
 					</div>
 					<div class="section__hits">
 						<span class="section__hitIcon"><i
