@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+    <div>
+	    <div class="auth-container">
+	        <div class="title">
+	            <p class="title-text">비밀번호확인</p>
+	            <p>비밀번호 확인 후 마이페이지를 이용하실 수 있습니다.</p>
+	        </div>
+	        <div class="insert-pw">
+	            <form th:action="@{/mypage/edit}" method="post" class="pw-form" onsubmit="return false">
+	                <input type="password" name="password" class="form-control" id="password" placeholder="비밀번호 입력"/>
+	                <button type="button" class="pw-btn btn btn-light">확인</button>
+	            </form>
+	                <p class="errorMsg"></p>
+	        </div>
+	    </div>
+    </div>
+
+</th:block>
