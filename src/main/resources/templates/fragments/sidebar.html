@@ -81,13 +81,13 @@
     </div>
 		<li class="nav-item">
 			<form
-			class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+			class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" onsubmit="return clubSearch()" name="frmSearch" th:action="@{/search}">
 			<div class="input-group">
 				<input type="text" class="form-control bg-white border-0 small"
 					placeholder="협업공간 이름" aria-label="Search"
-					aria-describedby="basic-addon2" style="width: 115px;">
+					aria-describedby="basic-addon2" style="width: 115px;" id="searchValue" name="searchValue" >
 				<div class="input-group-append">
-					<button class="btn btn-primary" type="submit">
+					<button class="btn btn-primary">
 						<i class="fas fa-search fa-sm"></i>
 					</button>
 				</div>

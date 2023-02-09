@@ -9,14 +9,14 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class PartnerDTO {
-	private long pno; 
+	private Long pno; 
 	private String pemail;
 	private String padd_dt;
 	private String pstatus; 
 	private String email; 
 	
 	@Builder
-	public PartnerDTO(long pno, String pemail, String padd_dt, String pstatus, String email ) {
+	public PartnerDTO(Long pno, String pemail, String padd_dt, String pstatus, String email ) {
 		this.pno = pno;
 		this.pemail = pemail;
 		this.padd_dt =  padd_dt;

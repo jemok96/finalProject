@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+	<!-- Begin Page Content -->
+	<!-- 나중에 반복문 쓸 것도 있음 -->
+	<div class="container-fluid">
+		<div class="d-sm-flex align-items-center justify-content-between mb-3">
+			<h6 class="h6 mb-0 text-gray-600">협업공간 이름 검색 결과</h6>
+		</div>
+		<!-- Content Row -->
+		<div class="row" >
+			<th:block th:each="dto: ${clubList}">
+			<div class="col-xl-3 col-md-6 mb-4"  >
+				<div class="card border-left-primary shadow h-100 py-2">
+					<div class="card-body">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<div
+									class="h5 mb-0 font-weight-bold text-primary mb-1" style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;">
+									<a th:href="@{club/{clno}/document/list(clno=${dto.clno})}" style="text-decoration-line: none;" th:text="${dto.clname}"> </a>
+								</div>
+								<div  style="overflow: hidden; text-overflow: ellipsis; display: block; white-space: nowrap; width: 100%;"  class="text-xs font font-weight-bold text-gray-800"  th:text="${dto.clexplain}"></div>
+							</div>
+							<div class="col-auto">
+								</i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</th:block>			
+		</div> 
+	</div>
+</th:block>
+</html>
