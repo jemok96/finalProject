@@ -19,7 +19,7 @@ public class NoticeService {
 		this.dao = dao;
 	}
 	
-	
+	@Cacheable("layoutCaching")
 	public List<NoticeDTO> getNoticeList(Map<String, Integer>  map){
 		return dao.getNoticeList(map);
 	}

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{/layout/default}">
+	>
+<th:block th:replace="fragments/head :: headFragment"></th:block>
 
-<th:block layout:fragment="content">
 <script src="https://kit.fontawesome.com/8cc4eb714e.js" crossorigin="anonymous"></script>
 	<style>
 .content__wrapper {
@@ -72,8 +72,18 @@
 }
 
 </style>
-
-	<form th:action method="POST"  th:object="${board}">
+	<th:block layout:fragment="content">
+	<body id="page-top">
+        <div id="wrapper">
+            <!-- 사이드바-->
+            <th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- 상단바-->
+                    <th:block th:replace="fragments/topbar :: topbarFragment"></th:block>
+                    <!-- 본문-->
+                    <th:block layout:fragment="content">
+                    	<form th:action method="POST"  th:object="${board}">
 		<div class="content__wrapper" th:each="board:${board}">
 			<div class="content__header">
 				<div>
@@ -117,5 +127,15 @@
 			
 		</div>
 	</form>
+                    </th:block>                   
+                </div>
+                 <!-- 공통 하단-->
+                <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+            </div>
+        </div>
+        <!-- 공통 스크립트-->
+        <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+    </body>
+	
 </th:block>
 </html>

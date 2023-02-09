@@ -28,12 +28,9 @@ public class BoardService {
 		this.dao = dao;
 	}
 	
-	@Cacheable(value="board", key="#no") 
+	@Cacheable(value="layoutCaching", key="#no") 
 	public List<BoardDTO> selectCategory(int no){
 		List<BoardDTO> dto = dao.selectCategory(no);
-		for(int i=0; i<dto.size(); i++) {
-			log.info("{}",dto.get(i));;
-		}
 		return dao.selectCategory(no);
 	}
 	public List<BoardDTO> selectboard(int no){
