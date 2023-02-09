@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+.alarmList-container {
+	width: 55%;
+	height: 650px;
+    background-color: white;
+    box-shadow: 0px 1px 5px;
+    border-radius: 10px;
+    margin: 70px auto;
+    padding-right: 1px;
+    overflow: auto;
+}
+.title {
+    padding: 20px;
+    margin: 10px 0px;
+    text-align: center;
+}
+.title-text {
+    font-size: 30px;
+    font-weight: 600;
+    color: black;
+    padding-top: 20px;
+    margin-bottom: 0px;
+}
+
+.alarm-list-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 50px;
+    margin: 10px auto;
+    width: 90%;
+    height: 80px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+	box-shadow: 0px 1px 5px #eeeeee;
+}
+
+.alarm-info {
+	width: 75%;
+	margin-left:10px;
+}
+
+.club-btn-box {
+    display: flex;
+}
+
+.accept-btn, .reject-btn {
+	font-size: 13px;
+	margin-left: 10px;
+	width: 50px;
+	height: 30px;
+}
+
+.alarm-content {
+	color: black;
+	margin-top: 10px;
+	margin-bottom: 3px;
+}
+.alarm-regdt {
+	font-size: 11px;
+	margin-bottom: 3px;
+}
+
+.alarm-delete-btn {
+    width: 50px;
+    border: none;
+    background-color: white;
+    margin-left: 20px;
+    text-align: right;
+}
