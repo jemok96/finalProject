@@ -30,6 +30,7 @@ public class MemberDTO {
 	
 	private ClubMemberDTO cldto;
 	private TodoDTO tododto;
+	private ClubDTO clubdto;
 
 	public String getEmail() {
 		return email;
@@ -109,6 +110,14 @@ public class MemberDTO {
 
 	public TodoDTO getTododto() {
 		return tododto;
+	}
+
+	public ClubDTO getClubdto() {
+		return clubdto;
+	}
+
+	public void setClubdto(ClubDTO clubdto) {
+		this.clubdto = clubdto;
 	}
 	
 	

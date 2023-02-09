@@ -25,6 +25,14 @@ public class TodoService {
 	@Autowired
 	TodoDAO dao;
 	
+	
+	public List<MemberDTO> idTodoList(String email){
+		return dao.todoIdSelectOne(email);
+	}
+	
+	
+	
+	
 	public void write(int dno, String ajson) {
 		if(ajson != null) {
 

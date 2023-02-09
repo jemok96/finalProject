@@ -5,16 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wegoing.dto.MemberDTO;
+import com.wegoing.dto.PrincipalDetails;
+import com.wegoing.dto.TodoDTO;
 import com.wegoing.service.MemberService;
 import com.wegoing.service.TodoService;
+import com.wegoing.util.ClubUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,25 +33,61 @@ public class TodoController {
 	@Autowired
 	MemberService memberservice;
 	
+	
+	@GetMapping("/todo")
+	public String list(Model model,@AuthenticationPrincipal PrincipalDetails userDetails) {
+		String email = userDetails.getMdto().getEmail();
+		List<MemberDTO> list = todoservice.idTodoList(email);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
+		model.addAttribute("list", list);
+		return "todoboard/todolist";
+	}
+	
+	@PostMapping("/todo/statusupdate")
+	@ResponseBody
+	public List<MemberDTO> tstatusUpdate(@RequestParam("tno")int tno,
+										@RequestParam("tstatus")String tstatus,
+										@AuthenticationPrincipal PrincipalDetails userDetails){
+		todoservice.updateStatus(tno, tstatus);
+		String email = userDetails.getMdto().getEmail();
+		List<MemberDTO> list = todoservice.idTodoList(email);
+		
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// --------------------ajax---------------------
 	@PostMapping("club/{clno}/todo/deletetodo")
 	@ResponseBody
 	public List<MemberDTO> deleteOne(@PathVariable("clno")String clno,
 									@RequestParam("tno")int tno,
 									@RequestParam("dno")int dno){
-		log.info("<<<<<<<<<<<<<<<<<<<<deletetodo " + dno);
+		
 		todoservice.remove(tno);
 		List<MemberDTO> todoList = todoservice.selectdno(dno);
 		
 		
 		return todoList;
 	}
+	
 	// modifyForm에서 삭제
 	@PostMapping("club/{clno}/todo/modifydelete")
 	@ResponseBody
 	public Map<String,List<MemberDTO>> deleteModify(@PathVariable("clno")int clno,
 													@RequestParam("tno")int tno,
 													@RequestParam("dno")int dno){
-		log.info("<<<<<<<<<<<<<<<<<<<<deletetodo " + dno);
+		
 		todoservice.remove(tno);
 		List<MemberDTO> todoList = todoservice.selectdno(dno);
 		List<MemberDTO> cmlist = memberservice.getMembersInfo(clno);
@@ -131,12 +172,9 @@ public class TodoController {
 			@RequestParam("tname")String tname,
 			@RequestParam("dno")int dno,
 			@RequestParam("tno")int tno){
-		log.info("tname" + tname);
-		log.info("dno" + dno);
-		log.info("tno" + tno);
+		
 		
 		todoservice.updateTname(tno, tname);
-		log.info("updateTname");
 		List<MemberDTO> todoList = todoservice.selectdno(dno);
 		
 		List<MemberDTO> cmlist = memberservice.getMembersInfo(clno);
@@ -144,8 +182,6 @@ public class TodoController {
 		Map<String, List<MemberDTO>> maplist = new HashMap<String, List<MemberDTO>>();
 		maplist.put("todoList", todoList);
 		maplist.put("cmlist", cmlist);
-		
-		
 		
 		return maplist;
 	}
