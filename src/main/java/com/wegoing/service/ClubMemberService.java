@@ -40,7 +40,7 @@ public class ClubMemberService {
 	
 	public ClubMemberDTO selectOne(ClubMemberDTO cmdto) {
 		return cmDao.getOneMembers(cmdto);
-
+	}
 	public void updateStatus(ClubMemberDTO cmdto) {
 		cmDao.updateStatus(cmdto);
 	}
