@@ -29,6 +29,10 @@ public class ClubService {
 	public void modifyOne(ClubDTO cdto) {
 		clubDao.updateOne(cdto);
 	}
+
+	public List<ClubDTO> getAdminClub(String email, String crank) {
+		return clubDao.selectAdminClub(email, crank);
+	}
 	
 
 }

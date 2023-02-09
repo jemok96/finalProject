@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
+	</script>
+	<style>
+.notice-header {
+	display: flex;
+	margin: 0px 20px;
+}
+
+h1 {
+	margin: 0px 20px 20px 20px;
+}
+
+.notice__header__column {
+	width: 50%;
+	display: flex;
+}
+
+.notice__header__column:last-child {
+	justify-content: flex-end;
+}
+
+form {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.table-responsive {
+	border-top: 2px solid;
+}
+
+.form-select {
+	height: 30px;
+}
+
+.option {
+	width: 70px;
+}
+
+.handler__center {
+	display: flex;
+	justify-content: center;
+}
+
+#countNotice {
+	margin-left: 3px;
+	font-weight: 700;
+}
+
+.admin-btn {
+	display: flex;
+	justify-content: flex-start;
+	margin-left: 20px;
+}
+
+a {
+	font-weight: 800;
+	color: inherit;
+}
+
+.edit {
+	width: 80px;
+	height: 40px;
+}
+</style>
+<script th:inline="javascript">
+	var msg = [[${SUCCESS}]];
+	if(msg !=null)alert(msg);
+</script>
+	<h1>공지사항</h1>
+	<div class="notice-header">
+		<div class="notice__header__column">
+			총 <span id="countNotice" th:text="${count}"></span>개의 게시물이 등록되어 있습니다.
+		</div>
+		<div class="notice__header__column">
+			<form th:action="@{/notice/add}">
+				<div>
+					<select class="form-select option"
+						aria-label="Default select example">
+						<option value="title" selected>제목</option>
+						<option value="content">내용</option>
+					</select>
+				</div>
+				<div>
+					<input type="text">
+					<button type="button" class="btn btn-outline-secondary search">
+						검색</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="admin-btn " th:if="${auth=='ROLE_ADMIN'}">
+		<form th:action="@{/notice/write}" method="GET">
+			<input type="submit" th:value="글쓰기" class="btn btn-primary edit" />
+		</form>
+	</div>
+	<div class="notice-contents">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%"
+					cellspacing="0">
+					<thead>
+						<tr role="row">
+							<th scope="col" width="10%">번호</th>
+							<th scope="col">제목</th>
+							<th scope="col" width="20%">작성일</th>
+							<th scope="col" width="10%">조회수</th>
+							
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="notice : ${notice}">
+							<td th:text="${notice.notino}">번호</td>
+							<td><a
+								th:href="@{/notice/{notino}(notino=${notice.notino})}"
+								th:text="${notice.ntitle}">제목</a></td>
+							<td th:text="${#dates.format(notice.reg_dt,'MM-dd HH:mm')}">작성일</td>
+							<td th:text="${notice.nhits}">조회수</td>
+		
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+	<div class="handler__center">
+		<nav aria-label="Page navigation example cetner">
+			<ul class="pagination">
+				<li class="page-item" th:if="${ph.showPrev}"><a
+					class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+				<li class="page-item"
+					th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
+					<a class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
+					th:text="${idx}"></a>
+				</li>
+				<li class="page-item" th:if="${ph.showNext}"><a
+					class="page-link"
+					th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
+	
+
+
+</th:block>
+</html>

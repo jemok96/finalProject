@@ -81,10 +81,22 @@
 	height: 30px;
 }
 
-.clubhost, .waitAccept, .request {
+.clubhost, .wait-accept, .request {
 	margin-bottom: 1px;
 	font-size: 13px;
 	
+}
+.status {
+	width: 40px;
+	text-align: center;
+}
+
+.delete-btn {
+	text-align: right;
+	margin-bottom: 1px;
+	border: none;
+	background: white;
+	color: #aaaaaa;
 }
 
 .add {

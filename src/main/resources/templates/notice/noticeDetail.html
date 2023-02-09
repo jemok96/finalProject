@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous">
+	</script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
+	</script>
+	<style>
+.notice-header {
+	border-top: 2px solid;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 140px;
+}
+
+.notice__header {
+	margin-bottom: 20px;
+}
+
+.notice-content {
+	height: auto;
+}
+
+.divider {
+	margin: 0px 3px;
+}
+
+.font {
+	font-size: 20px;
+	font-weight: 800;
+}
+
+h1, .notice__header {
+	margin-left: 20px;
+}
+
+.notice-content {
+	margin-left:10px;
+	white-space: pre-line;
+}
+.edit, .delete{
+	width: 80px;
+	height: 40px;
+}
+.admin-btn{
+	margin-left: 20px;
+	display: flex;
+}
+.admin__column{
+	margin-right: 5px;
+}
+</style>
+	<h1>공지사항</h1>
+	<div class="admin-btn " th:if="${auth=='ROLE_ADMIN'}" >
+	<div class="admin__column">
+		<form th:action="@{/notice/{notino}/edit(notino=${notice.notino})}" method="GET">
+		<input type="submit"  th:value="수정" class="btn btn-primary edit"/>
+	</form>
+	</div>
+	<div class="admin__column">
+		<form id="delete-form">
+		<input type="submit"  th:value="삭제" class="btn btn-primary delete" id="delete"/>
+	</form>
+	</div>
+	</div>
+
+	
+	<div class="notice-header">
+		<div class="notice__header font" th:text="${notice.ntitle}">제목</div>
+		<div class="notice__header">
+			<span class="notice__reg">등록일</span> <span class="notice__reg"
+				th:text="${#dates.format(notice.reg_dt,'MM-dd HH:mm')}">2020</span> <span class="divider">|</span> <span
+				class="notice__writer">작성자</span> <span class="notice__reg"
+				th:text="${notice.email}">관리자</span> <span class="divider">|</span>
+			<span class="notice__hits">조회</span> <span class="notice__reg"
+				th:text="${notice.nhits}">10</span>
+		</div>
+	</div>
+	<div class="notice-content">
+		<div class="notice-content" th:text="${notice.ncontent}">내용</div>
+	</div>
+	
+	
+	<script>
+		var notino = [[${notino}]];
+	   $('#delete').on('click',function (){
+           if(!confirm("정말로 삭제하시겠습니까?"))return
+           let form = $('#delete-form');
+          form.attr("action","/notice/"+notino+"/delete" );
+          form.attr("method","post");
+          form.submit();
+       });
+	
+	
+	</script>
+</th:block>
+</html>

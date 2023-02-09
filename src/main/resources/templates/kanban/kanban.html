@@ -13,7 +13,7 @@
                         <div class="card draggable shadow-sm" th:id="'cd'+${start.dno}"  draggable="true" ondragstart="drag(event)">
                             <div class="card-body p-2">
                                 <div class="card-title">
-                                    <a th:href="@{document/detail(dno = ${start.dno})}" class="font-weight-light" th:text="${start.dname}"></a>
+                                    <a th:href="@{document/dtail(dno = ${start.dno})}" class="font-weight-light" th:text="${start.dname}"></a>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                         <div class="card draggable shadow-sm" th:id="'cd'+${ongoing.dno}" draggable="true" ondragstart="drag(event)">
                             <div class="card-body p-2">
                                 <div class="card-title">
-                                    <a th:href="@{document/detail(dno = ${ongoing.dno})}" class="font-weight-light" th:text="${ongoing.dname}"></a>
+                                    <a th:href="@{document/dtail(dno = ${ongoing.dno})}" class="font-weight-light" th:text="${ongoing.dname}"></a>
                                 </div>
                             </div>
                         </div>  
@@ -70,7 +70,7 @@
                         <div class="card draggable shadow-sm" th:id="'cd'+${stop.dno}" draggable="true" ondragstart="drag(event)">
                             <div class="card-body p-2">
                                 <div class="card-title">
-                                    <a th:href="@{document/detail(dno = ${stop.dno})}" class="font-weight-light" th:text="${stop.dname}"></a>
+                                    <a th:href="@{document/dtail(dno = ${stop.dno})}" class="font-weight-light" th:text="${stop.dname}"></a>
                                 </div>
                             </div>
                         </div>  
@@ -98,7 +98,7 @@
 							<div class="card draggable shadow-sm" th:id="'cd'+${done.dno}" draggable="true" ondragstart="drag(event)">
                             <div class="card-body p-2">
                                 <div class="card-title">
-                                    <a th:href="@{document/detail(dno = ${done.dno})}" class="font-weight-light"  th:text="${done.dname}"></a>
+                                    <a th:href="@{document/dtail(dno = ${done.dno})}" class="font-weight-light"  th:text="${done.dname}"></a>
                                 </div>
                             </div>
                         </div>

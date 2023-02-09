@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+	<script src="https://kit.fontawesome.com/8cc4eb714e.js"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
+	</script>
+	<style>
+.notice-header {
+	border-top: 2px solid;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 140px;
+}
+
+.notice__header {
+	margin-bottom: 20px;
+}
+
+.notice-content {
+	height: auto;
+}
+
+.divider {
+	margin: 0px 3px;
+}
+.field-error {
+	font-size: 18px;
+	color: #dc3545;
+	border-color: #dc3545;
+	margin-left: 20px;
+}
+
+.font {
+	font-size: 20px;
+	font-weight: 800;
+}
+
+h1, .notice__header {
+	margin-left: 20px;
+}
+
+.notice-content {
+	margin-left: 20px;
+	white-space: pre-line;
+}
+
+textarea, input {
+	height: auto;
+	width: auto;
+	border: 1px solid rgba(0,0,0,0.1);
+}
+
+input {
+	width: 500px;
+	
+}
+.notice__wrapper{
+	display: flex;
+}
+.notice__title{
+	display: flex;
+	width: 60%;
+	justify-content: flex-start;
+}
+.notice__edit{
+	display: flex;
+	width:50%;
+	justify-content: flex-end;
+	margin-right: 20px;
+}
+.write{
+	width: 80px;
+	height: 40px;
+}
+</style>
+	<h1>공지사항</h1>
+	<form  method="POST" th:object="${notice}">
+	<div class="notice-header">
+		<div class="notice__header font">
+			<div class="notice__wrapper">
+				<div class="notice__title">
+					<input  type="text" name="ntitle" id="ntitle"  placeholder="제목 입력"/>
+				</div>
+				
+				<div class="notice__edit">
+				
+					<button class="btn btn-primary write" >저장</button>
+				
+				</div>
+				
+			</div>
+		</div>
+		<div class="field-error" th:errors="*{ntitle}"></div> 
+	</div>
+	
+	<div class="notice-content">
+		<textarea name="ncontent" id="ncontent" cols="170" rows="24" required placeholder="내용 입력"
+			></textarea>
+	</div>
+	
+	</form>
+
+</th:block>
+</html>

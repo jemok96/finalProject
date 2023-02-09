@@ -14,4 +14,5 @@ public interface ClubDAO {
 	void createClub (ClubDTO dto);
 	ClubDTO readOne(int clno);
 	void updateOne(ClubDTO cdto);
+	List<ClubDTO> selectAdminClub(String email, String crank);
 }

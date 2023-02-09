@@ -24,7 +24,9 @@
 	margin-bottom: 20px;
 	
 }
-
+.content__contents{
+ white-space: pre-line;
+ }
 .content__more {
 	display: flex;
 	width:100%;
@@ -56,14 +58,15 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: flex-start;
-	height: 500px;
+	height: auto;
 	margin-bottom: 20px;
 }
 
 .fa-eye,.fa-comment{
 margin: 3px 10px 0px 0px;}
 .content__edit{
-margin-right: 3px;}
+margin-right: 3px;
+padding-bottom:50px; }
 </style>
 	
 	<div class="content__wrapper" th:each="free:${free}">
@@ -80,7 +83,7 @@ margin-right: 3px;}
 
 				<div class="content__button">
 					<div class="content__edit">
-						 <a th:href="@{/career/{bno}/edit(bno=${free.bno})}">	
+						 <a th:href="@{/pet/{bno}/edit(bno=${free.bno})}">	
 							<input value="수정" th:if="${nick}!='YES'" th:type="hidden"   class="btn btn-outline-primary"> 
 							<input value="수정" th:unless="${nick}!='YES'" th:type="submit"  class="btn btn-outline-primary"/>
 						</a> 

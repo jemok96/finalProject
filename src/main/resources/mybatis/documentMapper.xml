@@ -57,4 +57,9 @@
   		set dstatus = #{dstatus}
   		where dno = #{dno}
   	</update>
+  	<select id="countDstatus" parameterType="map" resultType="int">
+  		SELECT COUNT(*)
+  		FROM document		
+  		WHERE clno = #{clno} and dstatus = #{dstatus}
+  	</select>
   </mapper>

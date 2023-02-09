@@ -18,4 +18,12 @@
 	   SET clname = #{clname}, clexplain = #{clexplain}
 	   WHERE clno = #{clno}
 	</update>
+	<select id="selectAdminClub" parameterType="String" resultType="ClubDTO">
+		select A.clno, A.clname, A.clexplain, A.cre_dt
+		from club A 
+		inner join clubmember B on A.clno = B.clno
+		inner join member C on C.email = B.email
+		where C.email=#{email} and B.crank=#{crank}
+		order by A.clno desc
+	</select>
  </mapper>
