@@ -16,7 +16,7 @@
 		where B.email = #{email} and B.cstatus = #{cstatus}
 		order by B.join_dt desc
 	</select>
-	<select id="getAllMembers" parameterType="int" resultType="ClubMemberDTO">
+	<select id="getAllMembers" parameterType="long" resultType="ClubMemberDTO">
 	    select cno, cstatus, crank, clno, email, join_dt
 	    from clubmember
 	    where clno = #{clno}
@@ -27,6 +27,13 @@
         from clubmember
         where clno = #{clno}
     </select>
+    
+    <select id="getOneMembers" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+	    select cno, cstatus, crank, clno, email, join_dt
+	    from clubmember
+	    where clno = #{clno}
+	    and email = #{email}
+	</select>
     <select id="getOneByClnoAndEmail" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
         select cno, cstatus, crank, clno, email, join_dt
         from clubmember

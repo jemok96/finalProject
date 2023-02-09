@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wegoing.dto.ClubDTO;
 import com.wegoing.dto.PrincipalDetails;
 import com.wegoing.enumpackage.Dstatus;
 import com.wegoing.service.ClubService;
@@ -67,5 +68,18 @@ public class HomeController {
 		double i = (double)value/sum;
 		int result = (int) Math.round((i*100));
 		return result; 
+	}
+	
+	// 협업공간이름 검색
+	@GetMapping("/search") 	
+	public String searchClubName(@RequestParam(value = "searchValue")String searchValue, Model model,@AuthenticationPrincipal PrincipalDetails userDetails ) {
+		// 해당 단어가 속하는지  
+		log.info(searchValue);
+		List<ClubDTO> clubList = cs.searchKeyword(searchValue, userDetails.getMdto().getEmail() );
+		model.addAttribute("clubList", clubList);
+		log.info( "search" + searchValue);
+		model.addAttribute("myClub", ClubUtil.getClub(userDetails)); 
+		return "home/search";
+        
 	}
 }

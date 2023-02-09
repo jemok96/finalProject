@@ -41,8 +41,8 @@ function partnerInsert() {
 	}
 }
 
-function moveText(){
-	var recEmail = $("#recEmail").text();
+function moveText(e){
+	var recEmail = e.innerHTML;
 	$("#searchPartner").val(recEmail);
 }
 
