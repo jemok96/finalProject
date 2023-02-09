@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{/layout/default}">
+<th:block layout:fragment="content">
+    <div class="mypage-container">
+        <form action="">
+	        <div class="title">
+	            <p class="title-text">회원정보수정</p>
+	        </div>
+	        <div class="myInfo">
+	            <label for="email">이메일</label>
+	            <input type="text" th:value="${user.email}" class="" id="" disabled="disabled" />
+	        </div>
+	        <div class="myInfo">
+	            <label for="name">이름</label>
+	            <input type="text" th:value="${user.name}" class="" id="" />
+	        </div>
+	        <div class="myInfo">
+	            <label for="pw">비밀번호</label>
+	            <input type="password" class="" id="" />
+	        </div>
+	        <div class="myInfo">
+	            <label for="checkpw">비밀번호 확인</label>
+	            <input type="password" class="" id="" />
+	        </div>
+	        <div class="myInfo">
+	            <label for="name">전화번호</label>
+	            <input type="text" th:value="${user.tel}" class="" id="" />
+	        </div>
+        </form>
+        
+    </div>
+
+
+</th:block>
