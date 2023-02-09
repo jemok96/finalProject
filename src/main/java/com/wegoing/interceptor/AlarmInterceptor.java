@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class NotificationInterceptor implements HandlerInterceptor{
+public class AlarmInterceptor implements HandlerInterceptor{
 	private final AlarmDAO alarmDao;
 	private final AlarmService alarmService;	
 	
@@ -35,7 +35,7 @@ public class NotificationInterceptor implements HandlerInterceptor{
 				&& authentication.getPrincipal() instanceof PrincipalDetails) {
             MemberDTO mdto = ((PrincipalDetails)authentication.getPrincipal()).getMdto();
             long count = alarmDao.countByMemberEmail(mdto);
-            modelAndView.addObject("hasNotification", count > 0); // 알람이 있는 경우 true, 없으면 false
+            modelAndView.addObject("hasAlarm", count > 0); // 알람이 있는 경우 true, 없으면 false
            
             List <AlarmDTO> alarmList = alarmService.findAllAlarms(mdto.getEmail());
             modelAndView.addObject("alarmList", alarmList);
