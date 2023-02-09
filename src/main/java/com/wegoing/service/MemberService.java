@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wegoing.dao.MemberDAO;
+import com.wegoing.dto.ClubMemberDTO;
 import com.wegoing.dto.MemberDTO;
 
 @Service
@@ -63,11 +64,13 @@ public class MemberService {
 		dao.updatePw(dto);
 	}
 	
-	public List<MemberDTO> getMembersInfo(long clno){
+	public List<MemberDTO> getMembersInfo(int clno){
 		return dao.selectClubMembersInfo(clno);
 	}
 	public String getMemberAuth(String email) {
 		return dao.getMemberAuth(email);
 	}
+	
+	
 	
 }

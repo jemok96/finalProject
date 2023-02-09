@@ -38,6 +38,9 @@ public class ClubMemberService {
 		return cmDao.selectEmailByClno(clno);
 	}
 	
+	public ClubMemberDTO selectOne(ClubMemberDTO cmdto) {
+		return cmDao.getOneMembers(cmdto);
+
 	public void updateStatus(ClubMemberDTO cmdto) {
 		cmDao.updateStatus(cmdto);
 	}

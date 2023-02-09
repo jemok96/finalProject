@@ -29,6 +29,7 @@ public class MemberDTO {
 	private String join_dt;
 	
 	private ClubMemberDTO cldto;
+	private TodoDTO tododto;
 
 	public String getEmail() {
 		return email;
@@ -100,6 +101,14 @@ public class MemberDTO {
 
 	public void setCldto(ClubMemberDTO cldto) {
 		this.cldto = cldto;
+	}
+
+	public void setTododto(TodoDTO tododto) {
+		this.tododto = tododto;
+	}
+
+	public TodoDTO getTododto() {
+		return tododto;
 	}
 	
 	
