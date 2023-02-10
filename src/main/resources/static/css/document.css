@@ -8,9 +8,64 @@
 #writeButton{
 	margin-left: 900px;
 }
+#wModal{
+	width: 800px;
+	
+}
+#responsiveDiv{
+	float: left;
+	width: 300px;
+}
+#cardtodo{
+	position: absolute;
+	right: 18px;
+	width: 450px;
+	z-index: +1;
+}
+#cardtextarea{
+	
+	clear: both;
+}
+#todomodify{
+	position: absolute;
+	right: 500px;
+	width: 600px;
+	z-index: +1;
+}
+
+/* #todoTable{
+	margin: auto;
+} */
+#todoTable td, #todoTable th{
+	text-align: center;
+}
+#tModal{
+	width: 600px;
+}
+#startDay, #endDay{
+	width:100px;
+}
+#writeTable{
+	width: 420px;
+	table-layout: fixed;
+}
+#dtailtodoTable{
+	width: 518px;
+	table-layout: fixed;
+}
+
 	
 	
 /* ddtail.css */
+
+#responsiveDtail{
+	float: left;
+	width: 300px;
+}
+#dtailTextarea{
+	clear: both;
+}
+
 #headbutton{
 	position: absolute;
 	right: 100px;
@@ -26,4 +81,39 @@
 	border:none;
 	width: 100px;
 }
+#todoTable{
+	border-collapse:collapse;
+	
+}
+ #todoTable td, #todoTable th{
+	border:none;
+} 
+#detailtodo{
+	width: 560px;
+	position: absolute;
+	right: 300px;
+	z-index: +1;
+}
 
+/* modify.css */
+
+#modifyresponsive{
+	float: left;
+	width: 300px;
+}
+#inputcard{
+	clear: both;
+}
+#modifytodoTable{
+	width: 580px;
+	table-layout: fixed;
+}
+.collapse{
+	height: 250px;
+	-ms-overflow-style: none; 
+  	scrollbar-width: none; 
+  	overflow-y: scroll; 
+}
+.collapse::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

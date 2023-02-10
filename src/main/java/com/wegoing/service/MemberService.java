@@ -63,8 +63,17 @@ public class MemberService {
 		dao.updatePw(dto);
 	}
 	
-	public List<MemberDTO> getMembersInfo(long clno){
+	public List<MemberDTO> getMembersInfo(int clno){
 		return dao.selectClubMembersInfo(clno);
 	}
+	public String getMemberAuth(String email) {
+		return dao.getMemberAuth(email);
+	}
+
+	public void editOne(MemberDTO member) {
+		dao.updateOne(member);
+	}
+	
+	
 	
 }

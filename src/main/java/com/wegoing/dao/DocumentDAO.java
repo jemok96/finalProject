@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.wegoing.dto.BoardDTO;
 import com.wegoing.dto.DocumentDTO;
 import com.wegoing.dto.StartEnd;
 
@@ -24,4 +23,5 @@ public interface DocumentDAO {
 	public List<DocumentDTO> selectAllList(int clno);
 	public List<DocumentDTO> selectDstatusList(@Param("dstatus")String dstatus,@Param("clno") int clno);
 	public void updateDstatus(@Param("dstatus")String dstatus,@Param("dno") int dno);
+	public int countDstatus(@Param("dstatus")String dstatus,@Param("clno") int clno);
 }

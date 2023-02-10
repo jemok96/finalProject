@@ -43,7 +43,7 @@
 										<div th:each="pto: ${recPartner}">
 											<a class="dropdown-item d-flex align-items-center" href="#">
 												<div>
-													<div class="text-truncate" id="recEmail" th:text="${pto.email}" onclick="moveText();"></div>
+													<div class="text-truncate"  th:text="${pto.email}" onclick="moveText(this)"></div>
 												</div>
 											</a>
 										</div>

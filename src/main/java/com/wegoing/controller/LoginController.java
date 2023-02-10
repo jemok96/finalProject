@@ -17,11 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@AllArgsConstructor
 public class LoginController {
 
 	private MemberService memberService;
 	private PasswordEncoder passwordEncoder;
+	
+	public LoginController(MemberService memberService, PasswordEncoder passwordEncoder) {
+		super();
+		this.memberService = memberService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@GetMapping("/register")
 	public String registerForm(Model model) {

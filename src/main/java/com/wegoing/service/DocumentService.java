@@ -44,15 +44,21 @@ public class DocumentService {
 	}
 
 
-	public void write(DocumentDTO dto,int clno) {
-		dto.setClno(clno);
+	public void write(DocumentDTO dto) {
+
 		dao.insertOne(dto);
+		
 		
 	}
 
 	public void modify(String dstatus, int dno) {
 		dao.updateDstatus(dstatus, dno);
 		
+	}
+
+	public int getDstatusCount(String dstatus, int clno) {
+		int result = dao.countDstatus(dstatus, clno);
+		return result;
 	}
 	
 	

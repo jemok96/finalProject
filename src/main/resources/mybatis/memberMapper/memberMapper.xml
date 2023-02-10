@@ -48,11 +48,20 @@
 	        <result column="email" property="email"/>        
        </association>
     </resultMap>
-    <select id="selectClubMembersInfo" parameterType="long" resultMap="ClubMemberInfoMap">
+    <select id="selectClubMembersInfo" parameterType="int" resultMap="ClubMemberInfoMap">
         SELECT m.email, m.name, c.cno, c.clno, c.crank, c.cstatus
         FROM member AS m
         INNER JOIN clubmember AS c
         ON m.email = c.email
         WHERE c.clno = #{clno}
     </select>
+    <select id="getMemberAuth" parameterType="String" resultType="String">
+    	SELECT auth FROM member
+    	WHERE email =#{email}
+    </select>
+    <update id="updateOne" parameterType="MemberDTO">
+        update member
+        set name = #{name}, pw = #{pw}, nickname = #{nickname}, tel = #{tel}, image = #{image}
+        where email = #{email}
+    </update>
 </mapper>

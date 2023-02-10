@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.wegoing.dao.TodoDAO">
+  
+  
+  	<select id="selectAll" resultType="TodoDTO">
+  		SELECT tno, tname, tstatus, reg_dt, up_dt, tstart_dt, tend_dt, cno, dno
+  		FROM todo
+  	</select>
+  	
+  	
+  	
+  	<insert id="insertOne" parameterType="TodoDTO">
+  		INSERT INTO todo
+  		VALUES (null, #{tname}, #{tstatus}, sysdate(), sysdate(), #{tstart_dt}, #{tend_dt},#{cno}, #{dno})
+  	</insert>
+  	
+  	<resultMap type="com.wegoing.dto.MemberDTO" id="MemberInfoMap">
+	        <id column="email" property="email"/>
+	        <result column="name" property="name"/>
+       <collection property="cldto" javaType="com.wegoing.dto.ClubMemberDTO">
+       		<result column="cno" property="cno"/>
+	        <result column="email" property="email"/>
+       </collection>
+       <collection property="clubdto" javaType="com.wegoing.dto.ClubDTO">
+       		<result column="clno" property="clno"/>
+	        <result column="clname" property="clname"/>
+       </collection>
+       <collection property="tododto" javaType="com.wegoing.dto.TodoDTO">
+       		<result column="tno" property="tno"/>
+	        <result column="tname" property="tname"/>
+	        <result column="tstatus" property="tstatus"/>
+	        <result column="dno" property="dno"/>
+	        <result column="cno" property="cno"/>
+	        <result column="tstart_dt" property="tstart_dt"/>
+	        <result column="tend_dt" property="tend_dt"/>
+       </collection>
+    </resultMap>
+  	
+  	<select id="dnoSelectOne" parameterType="int" resultMap="MemberInfoMap">
+  		SELECT t.tno, t.tname, t.tstatus, t.reg_dt, t.up_dt, t.tstart_dt, t.tend_dt, t.cno, t.dno, m.name
+  		FROM member m , clubmember c , todo t
+  		WHERE m.email = c.email
+  		AND c.cno = t.cno
+  		AND t.dno = #{dno}
+  	</select>
+  	
+  	<select id="todoIdSelectOne" parameterType="String" resultMap="MemberInfoMap">
+  		SELECT b.clname,b.clno,t.tno, t.tname, t.tstatus, t.reg_dt, t.up_dt, DATE_FORMAT(t.tstart_dt, '%y-%m-%d')AS tstart_dt, DATE_FORMAT(t.tend_dt, '%y-%m-%d')AS tend_dt, t.cno, t.dno, m.name
+  		FROM member m , clubmember c , todo t, club b
+  		WHERE m.email = c.email
+  		AND c.cno = t.cno
+  		AND c.clno = b.clno
+  		AND m.email = #{email}
+  	</select>
+  	
+  	<delete id="deleteOne" parameterType="int">
+  		DELETE FROM todo
+  		WHERE tno = #{tno}
+  	</delete>
+  	<delete id="deleteDno" parameterType="int">
+  		DELETE FROM todo
+  		WHERE dno = #{dno}
+  	</delete>
+  	
+  	<update id="modifyManager" parameterType="TodoDTO">
+  		UPDATE todo
+  		SET cno = #{cno}
+  		WHERE tno = #{tno}
+  	</update>
+  	
+  	<update id="modifyStatus" parameterType="TodoDTO">
+  		UPDATE todo
+  		SET tstatus = #{tstatus}
+  		WHERE tno = #{tno}
+  	</update>
+  	
+  	<update id="modifyTname" parameterType="TodoDTO">
+  		UPDATE todo
+  		SET tname = #{tname}
+  		WHERE tno = #{tno}
+  	</update>
+  	
+  </mapper>

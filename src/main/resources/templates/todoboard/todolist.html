@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/default}">
+
+<th:block layout:fragment="content">
+
+
+	<div class="container">
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<span class="m-0 font-weight-bold text-info">나의 할 일 리스트</span>
+
+			</div>
+			<div class="card-body" >
+				<div class="table-responsive" id="todoList">
+
+					<table class="table table-bordered" id="todoTable" width="100%" cellspacing="0">
+							<colgroup> 
+							   <col width="50%" /> 
+							   <col width="50%" /> 
+							   <col width="130%" />
+							   <col width="50%" />
+							   <col width="50%" />
+							   </colgroup>
+						<thead>
+							<tr role="row">
+								<th class="m-0 font-weight-bold text-info" scope="col">협업공간</th>
+								<th class="m-0 font-weight-bold text-info" scope="col">진행 상태</th>
+								<th class="m-0 font-weight-bold text-info" scope="col">내용</th>
+								<th class="m-0 font-weight-bold text-info" scope="col">시작일</th>
+								<th class="m-0 font-weight-bold text-info" scope="col">마감일</th>
+							</tr>
+						</thead>
+						<tbody class="table-group-divider" id="todolistBody">
+							<tr th:each=" memberdto : ${list}">
+								<td scope='col' class='clubname' width="30%"><a th:href="@{/club/{clno}/document/list(clno = ${memberdto.clubdto.clno})}" th:text="${memberdto.clubdto.clname}"></a></td>
+								<td scope="col">
+								<div class="dropdown mb-4">
+							         <button class="btn btn-success dropdown-toggle" type="button"
+							              th:text="${memberdto.tododto.tstatus}" data-toggle="dropdown" aria-haspopup="true"
+							             aria-expanded="false">
+							         </button>
+							         <div class="dropdown-menu animated--fade-in"
+							             aria-labelledby="dropdownMenuButton">
+							             <option class="dropdown-item" th:text='일시중지' th:value='${memberdto.tododto.tno}'></option>
+							             <option class="dropdown-item" th:text='진행중' th:value='${memberdto.tododto.tno}'></option>
+							             <option class="dropdown-item" th:text='완료' th:value='${memberdto.tododto.tno}'></option>
+							         </div>
+							     </div>
+								</td>
+								<th  scope="col" th:text="${memberdto.tododto.tname}"></th>
+								<td scope="col" th:text="${memberdto.tododto.tstart_dt}"></td>
+								<td scope="col" th:text="${memberdto.tododto.tend_dt}"></td>
+							</tr>
+						</tbody>
+					</table>
+
+
+					
+
+				</div>
+			</div>
+		</div>
+		<!--End modal -->
+
+	</div>
+
+</th:block>

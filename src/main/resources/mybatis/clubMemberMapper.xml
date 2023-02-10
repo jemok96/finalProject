@@ -10,21 +10,47 @@
 		#{clno}, #{email}, default)
 	</insert>
 	<select id="getAll" parameterType="String" resultType="ClubDTO" >
-		select clno, clname, clexplain
-		from club
-		where clno in ( select clno
-						from clubmember
-						where email = #{email})
-		order by clno desc
+		select A.clno, A.clname, A.clexplain
+		from club A
+		inner join clubmember B on A.clno = B.clno
+		where B.email = #{email} and B.cstatus = #{cstatus}
+		order by B.join_dt desc
 	</select>
-	<select id="getAllMembers" parameterType="int" resultType="ClubMemberDTO">
+	<select id="getAllMembers" parameterType="long" resultType="ClubMemberDTO">
 	    select cno, cstatus, crank, clno, email, join_dt
 	    from clubmember
 	    where clno = #{clno}
+	    order by crank desc;
 	</select>
     <select id="selectEmailByClno" parameterType="int" resultType="String">
-        select Email
+        select email
         from clubmember
         where clno = #{clno}
+    </select>
+    
+    <select id="getOneMembers" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+	    select cno, cstatus, crank, clno, email, join_dt
+	    from clubmember
+	    where clno = #{clno}
+	    and email = #{email}
+	</select>
+    <select id="getOneByClnoAndEmail" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+        select cno, cstatus, crank, clno, email, join_dt
+        from clubmember
+        where clno = #{clno} and email = #{email}
+    </select>
+    <update id="updateStatus" parameterType="ClubMemberDTO">
+        update clubmember
+        set cstatus = #{cstatus}
+        where clno = #{clno} and email = #{email}
+    </update>
+    <delete id="deleteClubMember" parameterType="long">
+        delete from clubmember
+        where cno = #{cno}
+    </delete>
+    <select id="selectHost" parameterType="ClubMemberDTO" resultType="ClubMemberDTO">
+        select cno, cstatus, crank, clno, email, join_dt
+        from clubmember
+        where clno = #{clno} and crank = #{crank}
     </select>
 </mapper>
