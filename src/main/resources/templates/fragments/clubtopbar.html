@@ -9,7 +9,7 @@
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4-2 static-top shadow2">
         <!-- Sidebar Toggle (Topbar) -->
         <div class="club-info">
-            <a class="club-main" th:href="@{/club/{clno}(clno=${club.clno})}">
+            <a class="club-main" th:href="@{/club/{clno}/document/list(clno=${club.clno})}">
             <span class="navbar-club-name" th:text="${club.clname}"></span></a>
             <span class="club-setting-btn" data-toggle="modal" data-target="#club-setting">
             <img src="/img/setting_btn.png" alt="설정버튼이미지" class="club-setting-img"/></span>
