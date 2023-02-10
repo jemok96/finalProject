@@ -16,7 +16,7 @@
         <div class="alarmlist-box">
                 <form th:action="@{/}" method="post">
                     <div th:each="alarm : ${alarmList}">
-                        <a th:href="@{${alarm.url}}">
+                       <!--  <a th:href="@{${alarm.url}}"> -->
 	                        <div class="alarm-list-items">
 	                            <div class="icon-circle bg-primary"><i class="fas fa-fw fa-folder text-white"></i></div>
 	                            <div class="alarm-info">
@@ -36,7 +36,7 @@
 		                            <button type="button" class="alarm-delete-btn" th:attrappend="id=${alarmStat.index}">x</button>
 	                            </div>
 	                        </div>
-                        </a>
+                      <!--   </a> -->
                     </div>
                 </form>
         </div>
