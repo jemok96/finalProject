@@ -81,7 +81,9 @@ public class MemberController {
 	
 	@PostMapping("/mypage/edit")
 	public String mypageEdit(@AuthenticationPrincipal PrincipalDetails userDetails, Model model) {
-		model.addAttribute("user", userDetails.getMdto());
+		String email = userDetails.getMdto().getEmail();
+		MemberDTO user  = memberService.findMemberByEmail(email);
+		model.addAttribute("user", user);
 		model.addAttribute("myClub", ClubUtil.getClub(userDetails));
 		return "/home/mypage";
 	}
@@ -103,6 +105,8 @@ public class MemberController {
 		
 		String encodePw = passwordEncoder.encode(member.getPw());
 		member.setPw(encodePw);
+		
+		userDetails.setMdto(member);
 		
 		memberService.editOne(member);
 		return "redirect:/main";
