@@ -60,6 +60,10 @@ public class MemberService {
 		return dao.findEmailByNameAndTel(dto);
 	}
 	
+	public MemberDTO findMemberByEmail(String email) {
+		return dao.findMemberByEmail(email);
+	}
+	
 	public void updatePw(MemberDTO dto) {
 		dao.updatePw(dto);
 	}
@@ -74,7 +78,4 @@ public class MemberService {
 	public void editOne(MemberDTO member) {
 		dao.updateOne(member);
 	}
-	
-	
-	
 }
