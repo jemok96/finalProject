@@ -41,7 +41,7 @@
 	                        <div>                            
 	                            <p class="status clubhost" th:if="${clubmember.cldto.crank == 'host'}">관리자</p>
 	                            <p class="status wait-accept" th:if="${clubmember.cldto.cstatus == 'n'}">대기</p>
-	                            <button type="button" class="status delete-btn" th:attrappend="id=${clubmemberStat.index}"
+	                            <button type="button" class="status member-delete-btn" th:attrappend="id=${clubmemberStat.index}"
 	                            th:if="${clubmember.cldto.cstatus.equals('y') && !clubmember.cldto.crank.equals('host')
 	                                       && #authentication.principal.username.equals(hostInfo.email)}">x</button>
 	                        </div>

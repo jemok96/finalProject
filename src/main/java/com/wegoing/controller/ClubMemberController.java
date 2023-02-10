@@ -106,8 +106,9 @@ public class ClubMemberController {
 	}
 	
 	@PostMapping("/deleteClubMember")
-	public void removeClubMember(@RequestParam("cno") long cno) {
+	public String removeClubMember(@RequestParam("cno") long cno) {
 		cms.removeClubMember(cno);
+		return "redirect:/";
 	}
 	
 	

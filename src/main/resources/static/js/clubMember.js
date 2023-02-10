@@ -30,7 +30,7 @@ $(function(){
         }
     })
     
-    $(".delete-btn").on("click", function(){
+    $(".member-delete-btn").on("click", function(){
         console.log("멤버 삭제 버튼 클릭");
         
         if(confirm("정말 삭제하시겠습니까?") == true){
